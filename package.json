@@ -42,11 +42,14 @@
   "engines": {
     "vscode": "^1.75.0"
   },
-
+  
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "chevrotain": "^11.0.3"
   }
 }
