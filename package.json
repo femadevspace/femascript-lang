@@ -28,10 +28,14 @@
     "email": "thiago_ausechi@icloud.com",
     "url": "https://www.linkedin.com/in/thiagoausechi/"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/femadevspace/algoritmo-vscode-extension"
+  },
   "bugs": {
     "url": "https://github.com/femadevspace/algoritmo-vscode-extension/issues"
   },
-  
+
   "module": "./src/main.ts",
   "type": "module",
 
