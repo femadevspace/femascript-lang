@@ -1,5 +1,36 @@
 {
   "name": "algoritmo-vscode-extension",
+  "displayName": "FEMA - Linguagem de Algoritmo",
+  "description": "Suporte a linguaguem Algoritmo (inspirado em Portugol) utilizado na Fundação Educacional Do Município De Assis (FEMA).",
+  "version": "0.1.0",
+  "icon": "assets/fema-logo.png",
+  "publisher": "fema",
+  "pricing": "Free",
+  "categories": [
+    "Programming Languages",
+    "Education",
+    "Formatters"
+  ],
+  "keywords": [
+    "portugol",
+    "algoritmo",
+    "algorithm",
+    "fema",
+    "ciência da computação",
+    "computação",
+    "linguagem",
+    "suporte",
+    "formatter",
+    "formatador"
+  ],
+  "author": {
+    "name": "Thiago Ausechi",
+    "email": "thiago_ausechi@icloud.com",
+    "url": "https://www.linkedin.com/in/thiagoausechi/"
+  },
+  "bugs": {
+    "url": "https://github.com/femadevspace/algoritmo-vscode-extension/issues"
+  },
   "module": "./src/main.ts",
   "type": "module",
   "devDependencies": {
