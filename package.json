@@ -31,8 +31,14 @@
   "bugs": {
     "url": "https://github.com/femadevspace/algoritmo-vscode-extension/issues"
   },
+  
   "module": "./src/main.ts",
   "type": "module",
+
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+
   "devDependencies": {
     "@types/bun": "latest"
   },
