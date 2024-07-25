@@ -1,5 +1,4 @@
 import { build, type Pattern } from "xregexp";
-
 export class FragmentsRegistry {
   static #instance: FragmentsRegistry;
   private fragments: Record<string, Pattern> = {};
@@ -18,10 +17,6 @@ export class FragmentsRegistry {
 
   public makePattern(def: string, flags?: string) {
     return build(def, this.fragments, flags);
-  }
-
-  public async loadAllFragments() {
-    await import("./fragments");
   }
 }
 
