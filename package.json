@@ -50,6 +50,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "chevrotain": "^11.0.3"
+    "chevrotain": "^11.0.3",
+    "xregexp": "^5.1.1"
   }
 }
