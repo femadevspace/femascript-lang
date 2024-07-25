@@ -21,9 +21,7 @@ export class FragmentsRegistry {
 }
 
 const fragmentsRegistry = FragmentsRegistry.instance;
-const add = FragmentsRegistry.instance.add.bind(FragmentsRegistry.instance);
-const makePattern = FragmentsRegistry.instance.makePattern.bind(
-  FragmentsRegistry.instance
-);
+const add = fragmentsRegistry.add.bind(fragmentsRegistry);
+const makePattern = fragmentsRegistry.makePattern.bind(fragmentsRegistry);
 
 export { add, fragmentsRegistry, makePattern };
