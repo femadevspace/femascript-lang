@@ -36,7 +36,7 @@
     "url": "https://github.com/femadevspace/algoritmo-vscode-extension/issues"
   },
 
-  "module": "./src/main.ts",
+  "module": "./src/index.ts",
   "type": "module",
 
   "engines": {
