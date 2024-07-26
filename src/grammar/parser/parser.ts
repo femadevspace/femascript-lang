@@ -36,9 +36,12 @@ export class Parser extends CstParser {
 
     const constDefinition = $.RULE("constDefinition", () => {
       $.CONSUME(tokens.ConstantKeyword);
+      $.SUBRULE(StrictAssignmentExpression);
+      $.CONSUME(tokens.SemiColon);
 
       $.MANY(() => {
-        $.SUBRULE(AssignmentExpression);
+        $.SUBRULE2(StrictAssignmentExpression);
+        $.CONSUME2(tokens.SemiColon);
       });
     });
 
@@ -81,8 +84,16 @@ export class Parser extends CstParser {
       $.SUBRULE(VariableId);
       $.CONSUME(tokens.AssignmentOperator);
       $.SUBRULE(Expression);
-      $.CONSUME(tokens.SemiColon);
     });
+
+    const StrictAssignmentExpression = $.RULE(
+      "StrictAssignmentExpression",
+      () => {
+        $.CONSUME(tokens.Identifier);
+        $.CONSUME(tokens.AssignmentOperator);
+        $.SUBRULE(Expression);
+      }
+    );
 
     const Value = $.RULE("Value", () => {
       $.OR([
@@ -142,7 +153,12 @@ export class Parser extends CstParser {
 
     const Statement = $.RULE("Statement", () => {
       $.OR([
-        { ALT: () => $.SUBRULE(AssignmentExpression) },
+        {
+          ALT: () => {
+            $.SUBRULE(AssignmentExpression);
+            $.CONSUME(tokens.SemiColon);
+          },
+        },
         { ALT: () => $.SUBRULE(Block) },
         { ALT: () => $.SUBRULE(IfStatement) },
         { ALT: () => $.SUBRULE(IterationStatement) },
@@ -304,8 +320,9 @@ export class Parser extends CstParser {
             $.CONSUME(tokens.ForKeyword);
             $.CONSUME3(tokens.LParen);
             $.SUBRULE(AssignmentExpression);
-            $.SUBRULE3(Expression);
             $.CONSUME2(tokens.SemiColon);
+            $.SUBRULE3(Expression);
+            $.CONSUME3(tokens.SemiColon);
             $.SUBRULE2(AssignmentExpression);
             $.CONSUME3(tokens.RParen);
             $.CONSUME3(tokens.DoKeyword);
@@ -340,7 +357,7 @@ export class Parser extends CstParser {
 
       $.MANY(() => {
         $.CONSUME(tokens.Comma);
-        $.CONSUME2(tokens.Identifier);
+        $.SUBRULE2(VariableId);
       });
 
       $.CONSUME(tokens.SemiColon);
