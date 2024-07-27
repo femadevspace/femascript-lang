@@ -395,3 +395,36 @@ export type ParserEntryPoint = Exclude<
   keyof ICstNodeVisitor<never, never>,
   keyof ICstVisitor<never, never>
 >;
+
+export type CstNodeTypes = {
+  program: ProgramCstNode;
+  header: HeaderCstNode;
+  constDefinition: ConstDefinitionCstNode;
+  varDefinition: VarDefinitionCstNode;
+  VariableId: VariableIdCstNode;
+  VariableDeclaration: VariableDeclarationCstNode;
+  AssignmentExpression: AssignmentExpressionCstNode;
+  StrictAssignmentExpression: StrictAssignmentExpressionCstNode;
+  Value: ValueCstNode;
+  ArrayAccessor: ArrayAccessorCstNode;
+  ArrayAccessors: ArrayAccessorsCstNode;
+  TypeKeyword: TypeKeywordCstNode;
+  algorithm: AlgorithmCstNode;
+  Statement: StatementCstNode;
+  Block: BlockCstNode;
+  Expression: ExpressionCstNode;
+  BinaryExpression: BinaryExpressionCstNode;
+  BinaryExpressionDeclaration: BinaryExpressionDeclarationCstNode;
+  Operators: OperatorsCstNode;
+  RelationalOperator: RelationalOperatorCstNode;
+  NotOperator: NotOperatorCstNode;
+  MultiplicativeOperator: MultiplicativeOperatorCstNode;
+  AdditiveOperator: AdditiveOperatorCstNode;
+  LogicalOperator: LogicalOperatorCstNode;
+  IfStatement: IfStatementCstNode;
+  ElseStatement: ElseStatementCstNode;
+  IterationStatement: IterationStatementCstNode;
+  UnaryExpression: UnaryExpressionCstNode;
+  PrintOperator: PrintOperatorCstNode;
+  ReadOperator: ReadOperatorCstNode;
+};
