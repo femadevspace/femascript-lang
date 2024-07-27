@@ -20,6 +20,6 @@ const createAndRegisterToken = (tokenConfig: TokenConfig) =>
     ...handleTextmateScope(tokenConfig),
   });
 
-const getTokens = () => tokensRegistry.values();
+const getTokens = () => Array.from(tokensRegistry);
 
 export { createAndRegisterToken, getTokens, registerToken };
