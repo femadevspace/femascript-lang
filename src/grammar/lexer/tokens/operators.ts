@@ -1,5 +1,5 @@
 import { Lexer } from "chevrotain";
-import { add as TOKEN } from "../tokens.registry";
+import { createAndRegisterToken as TOKEN } from "../tokens-registry";
 import { Minus, Plus, Slash, Star } from "./special-characters";
 
 export const ArithmeticOperator = TOKEN({

@@ -1,5 +1,5 @@
 import { makePattern } from "../fragments.registry";
-import { add as TOKEN } from "../tokens.registry";
+import { createAndRegisterToken as TOKEN } from "../tokens-registry";
 
 export const NumberLiteral = TOKEN({
   name: "NumberLiteral",

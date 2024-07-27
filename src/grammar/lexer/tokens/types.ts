@@ -1,5 +1,5 @@
 import { Lexer } from "chevrotain";
-import { add as TOKEN } from "../tokens.registry";
+import { createAndRegisterToken as TOKEN } from "../tokens-registry";
 
 const textmateScope = "support.type.primitive";
 

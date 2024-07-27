@@ -1,4 +1,4 @@
-import { add as TOKEN } from "../tokens.registry";
+import { createAndRegisterToken as TOKEN } from "../tokens-registry";
 
 export const Exclamation = TOKEN({
   name: "Exclamation",

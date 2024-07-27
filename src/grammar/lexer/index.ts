@@ -6,6 +6,6 @@ import "./tokens";
 
 export * from "./tokens";
 
-export * from "./tokens.registry";
+export * from "./tokens-registry";
 
 export * from "./lexer";
