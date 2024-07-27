@@ -391,3 +391,7 @@ export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
   ReadOperator(children: ReadOperatorCstChildren, param?: IN): OUT;
 }
 
+export type ParserEntryPoint = Exclude<
+  keyof ICstNodeVisitor<never, never>,
+  keyof ICstVisitor<never, never>
+>;

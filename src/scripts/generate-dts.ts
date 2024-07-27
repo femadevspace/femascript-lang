@@ -8,6 +8,10 @@ const typesDefenitionsFileContent = `/**
  */
 
 ${generateCstDts(new AlgoritmoLanguageParser().getGAstProductions())}
+export type ParserEntryPoint = Exclude<
+  keyof ICstNodeVisitor<never, never>,
+  keyof ICstVisitor<never, never>
+>;
 `;
 
 Bun.write("./src/types/cst.d.ts", typesDefenitionsFileContent);
