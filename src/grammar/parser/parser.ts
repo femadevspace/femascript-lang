@@ -1,10 +1,10 @@
 import { CstParser } from "chevrotain";
-import { tokensRegistry } from "../lexer";
+import { getTokens } from "../lexer";
 import * as tokens from "../lexer/tokens";
 
 export class AlgoritmoLanguageParser extends CstParser {
   constructor() {
-    super(tokensRegistry.getAllTokens(), {
+    super(getTokens(), {
       recoveryEnabled: true,
       maxLookahead: 3,
     });
