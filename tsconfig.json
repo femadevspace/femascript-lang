@@ -24,6 +24,8 @@
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
 
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+
     // Paths
     "baseUrl": "./src",
     "paths": {

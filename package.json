@@ -47,6 +47,8 @@
     "prepublish": "bun run ./src/scripts/generate-dts.ts"
   },
   
+  "types": "./src/types/cst.d.ts",
+  
   "devDependencies": {
     "@types/bun": "latest",
     "vitest": "^2.0.4"
