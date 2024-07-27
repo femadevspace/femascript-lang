@@ -1,6 +1,6 @@
+import { getTokens } from "@/grammar/lexer";
+import * as tokens from "@/grammar/lexer/tokens";
 import { CstParser } from "chevrotain";
-import { getTokens } from "../lexer";
-import * as tokens from "../lexer/tokens";
 
 export class AlgoritmoLanguageParser extends CstParser {
   constructor() {

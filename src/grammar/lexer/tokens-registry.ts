@@ -1,8 +1,5 @@
+import { handleTextmateScope, type MaybeTextmateScoped } from "@/utils";
 import { createToken, type ITokenConfig, type TokenType } from "chevrotain";
-import {
-  handleTextmateScope,
-  type MaybeTextmateScoped,
-} from "../../utils/textmate";
 
 export type Token = TokenType & MaybeTextmateScoped;
 export type TokenConfig = ITokenConfig & MaybeTextmateScoped;

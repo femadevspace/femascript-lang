@@ -1,7 +1,7 @@
+import { lexer } from "@/grammar/lexer";
+import { AlgoritmoLanguageParser } from "@/grammar/parser";
+import { handleLexErrors, handleParserErrors } from "@/utils";
 import type { CstNode } from "chevrotain";
-import { lexer } from "./grammar/lexer";
-import { AlgoritmoLanguageParser } from "./grammar/parser";
-import { handleLexErrors, handleParserErrors } from "./utils";
 
 const parser = new AlgoritmoLanguageParser();
 

@@ -1,4 +1,4 @@
-import type { TokenConfig } from "../grammar/lexer";
+import type { TokenConfig } from "@/grammar/lexer";
 
 export type WithTextmateScope = { textmateScope: string };
 export type SkipTextmateScope = { skipTextmateScope: true };
