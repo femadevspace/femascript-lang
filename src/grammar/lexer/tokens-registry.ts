@@ -11,6 +11,7 @@ const tokensRegistry = new Set<Token>();
 
 const registerToken = (token: Token) => {
   tokensRegistry.add(token);
+  return token;
 };
 
 const createAndRegisterToken = (tokenConfig: TokenConfig) =>
