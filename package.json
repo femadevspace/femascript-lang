@@ -43,6 +43,10 @@
     "vscode": "^1.75.0"
   },
   
+  "scripts": {
+    "prepublish": "bun run ./src/scripts/generate-dts.ts"
+  },
+  
   "devDependencies": {
     "@types/bun": "latest",
     "vitest": "^2.0.4"
