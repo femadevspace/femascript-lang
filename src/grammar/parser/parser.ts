@@ -220,13 +220,13 @@ export class AlgoritmoLanguageParser extends CstParser {
       $.OR([
         {
           ALT: () => {
-            $.CONSUME2(tokens.GreaterThan);
+            $.CONSUME2(tokens.Greater);
             $.CONSUME3(tokens.Equals);
           },
         },
         {
           ALT: () => {
-            $.CONSUME4(tokens.LessThan);
+            $.CONSUME4(tokens.Less);
             $.CONSUME5(tokens.Equals);
           },
         },
@@ -236,8 +236,8 @@ export class AlgoritmoLanguageParser extends CstParser {
             $.CONSUME7(tokens.Equals);
           },
         },
-        { ALT: () => $.CONSUME(tokens.GreaterThan) },
-        { ALT: () => $.CONSUME(tokens.LessThan) },
+        { ALT: () => $.CONSUME(tokens.Greater) },
+        { ALT: () => $.CONSUME(tokens.Less) },
         { ALT: () => $.CONSUME(tokens.Equals) },
       ]);
     });
@@ -246,7 +246,7 @@ export class AlgoritmoLanguageParser extends CstParser {
       $.OR([
         { ALT: () => $.CONSUME(tokens.Exclamation) },
         { ALT: () => $.CONSUME(tokens.Tilde) },
-        { ALT: () => $.CONSUME(tokens.Not) },
+        { ALT: () => $.CONSUME(tokens.NotKeyword) },
       ]);
     });
 

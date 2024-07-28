@@ -1,4 +1,19 @@
-import { createAndRegisterToken as TOKEN } from "../tokens-registry";
+import { resolveCategories } from "@/utils/tokens";
+import { Lexer } from "chevrotain";
+import { createAndRegisterToken, type TokenConfig } from "../tokens-registry";
+import { LogicalOperator, UnaryPrefixOperator } from "./operators";
+
+export const RestrictedKeyword = createAndRegisterToken({
+  name: "RestrictedKeyword",
+  pattern: Lexer.NA,
+  skipTextmateScope: true,
+});
+
+const TOKEN = ({ categories, ...rest }: TokenConfig) =>
+  createAndRegisterToken({
+    ...rest,
+    categories: resolveCategories(categories, [RestrictedKeyword]),
+  });
 
 export const AlgorithmKeyword = TOKEN({
   name: "Algorithm",
@@ -66,15 +81,25 @@ export const ForKeyword = TOKEN({
   textmateScope: "keyword.control.loop",
 });
 
+export const NotKeyword = TOKEN({
+  name: "NotKeyword",
+  pattern: /\b(not|nao|não)/,
+  label: "'not'",
+  categories: [UnaryPrefixOperator],
+  textmateScope: "keyword.operator.logical",
+});
+
 export const OrKeyword = TOKEN({
   name: "Or",
-  pattern: /\b(OR|OU|\|\|)/,
+  pattern: /\b(OR|OU)/,
+  categories: [LogicalOperator],
   textmateScope: "keyword.operator.logical",
 });
 
 export const AndKeyword = TOKEN({
   name: "And",
-  pattern: /\b(AND|E|&&)/,
+  pattern: /\b(AND|E)/,
+  categories: [LogicalOperator],
   textmateScope: "keyword.operator.logical",
 });
 
