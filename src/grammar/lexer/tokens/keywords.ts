@@ -81,6 +81,24 @@ export const ForKeyword = TOKEN({
   textmateScope: "keyword.control.loop",
 });
 
+export const SwitchKeyword = TOKEN({
+  name: "Switch",
+  pattern: /\b(CHECK|TEST|TESTE|AVALIE|ANALISE)/,
+  textmateScope: "keyword.control.switch",
+});
+
+export const CaseKeyword = TOKEN({
+  name: "Case",
+  pattern: /\b(WHEN|CASE|QUANDO|CASO)/,
+  textmateScope: "keyword.control.switch",
+});
+
+export const DefaultKeyword = TOKEN({
+  name: "Default",
+  pattern: /\b(?:DEFAULT|PADR[AÃ]O|CASO_?CONTR[AÁ]RIO)/,
+  textmateScope: "keyword.control.switch",
+});
+
 export const NotKeyword = TOKEN({
   name: "NotKeyword",
   pattern: /\b(not|nao|não)/,
