@@ -105,6 +105,13 @@ export const Exclamation = TOKEN({
   textmateScope: "keyword.operator.logical",
 });
 
+export const Question = TOKEN({
+  name: "Question",
+  pattern: /(\?)/,
+  label: "'?'",
+  textmateScope: "keyword.operator.ternary",
+});
+
 export const AndAnd = TOKEN({
   name: "AndAnd",
   pattern: /(&&)/,
