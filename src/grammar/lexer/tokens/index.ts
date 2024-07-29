@@ -11,8 +11,6 @@ export * from "./keywords";
 
 export * from "./types";
 
-export * from "./constants";
-
 export * from "./operators";
 
 export * from "./literals";
