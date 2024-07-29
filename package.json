@@ -44,6 +44,7 @@
   },
   
   "scripts": {
+    "dev": "bun run ./src/scripts/generate-diagram.ts",
     "prepublish": "bun run ./src/scripts/generate-dts.ts"
   },
   
