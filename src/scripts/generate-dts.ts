@@ -24,11 +24,6 @@ const typesDefinitionFileContent = `/**
  */
 
 ${generateCstDts(parser.getGAstProductions())}
-export type ParserEntryPoint = Exclude<
-  keyof ICstNodeVisitor<never, never>,
-  keyof ICstVisitor<never, never>
->;
-
 export type CstNodeTypes = {
 ${generateCstNodeTypes()}
 };

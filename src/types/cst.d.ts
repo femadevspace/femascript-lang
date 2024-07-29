@@ -6,16 +6,16 @@
 
 import type { CstNode, ICstVisitor, IToken } from "chevrotain";
 
-export interface ProgramCstNode extends CstNode {
-  name: "program";
-  children: ProgramCstChildren;
+export interface AlgorithmCstNode extends CstNode {
+  name: "algorithm";
+  children: AlgorithmCstChildren;
 }
 
-export type ProgramCstChildren = {
+export type AlgorithmCstChildren = {
   header: HeaderCstNode[];
-  constDefinition?: ConstDefinitionCstNode[];
-  varDefinition?: VarDefinitionCstNode[];
-  algorithm: AlgorithmCstNode[];
+  constantsDeclarators?: ConstantsDeclaratorsCstNode[];
+  variablesDeclarators?: VariablesDeclaratorsCstNode[];
+  program: ProgramCstNode[];
 };
 
 export interface HeaderCstNode extends CstNode {
@@ -25,406 +25,408 @@ export interface HeaderCstNode extends CstNode {
 
 export type HeaderCstChildren = {
   Algorithm: IToken[];
-  Identifier?: IToken[];
-  StringLiteral?: IToken[];
+  Identifier: IToken[];
   SemiColon?: IToken[];
 };
 
-export interface ConstDefinitionCstNode extends CstNode {
-  name: "constDefinition";
-  children: ConstDefinitionCstChildren;
+export interface ConstantsDeclaratorsCstNode extends CstNode {
+  name: "constantsDeclarators";
+  children: ConstantsDeclaratorsCstChildren;
 }
 
-export type ConstDefinitionCstChildren = {
+export type ConstantsDeclaratorsCstChildren = {
   Constant: IToken[];
-  StrictAssignmentExpression: (StrictAssignmentExpressionCstNode)[];
+  Identifier: IToken[];
+  AssignmentOperator: IToken[];
+  expression: ExpressionCstNode[];
   SemiColon: (IToken)[];
 };
 
-export interface VarDefinitionCstNode extends CstNode {
-  name: "varDefinition";
-  children: VarDefinitionCstChildren;
+export interface VariablesDeclaratorsCstNode extends CstNode {
+  name: "variablesDeclarators";
+  children: VariablesDeclaratorsCstChildren;
 }
 
-export type VarDefinitionCstChildren = {
+export type VariablesDeclaratorsCstChildren = {
   Variable: IToken[];
-  VariableDeclaration?: VariableDeclarationCstNode[];
+  variableDeclarator: VariableDeclaratorCstNode[];
+  SemiColon: (IToken)[];
 };
 
-export interface VariableIdCstNode extends CstNode {
-  name: "VariableId";
-  children: VariableIdCstChildren;
+export interface ProgramCstNode extends CstNode {
+  name: "program";
+  children: ProgramCstChildren;
 }
 
-export type VariableIdCstChildren = {
-  Identifier?: (IToken)[];
-  ArrayAccessors?: ArrayAccessorsCstNode[];
-};
-
-export interface VariableDeclarationCstNode extends CstNode {
-  name: "VariableDeclaration";
-  children: VariableDeclarationCstChildren;
-}
-
-export type VariableDeclarationCstChildren = {
-  Identifier: (IToken)[];
-  Comma?: IToken[];
-  Colon: IToken[];
-  TypeKeyword: TypeKeywordCstNode[];
-  SemiColon: IToken[];
-};
-
-export interface AssignmentExpressionCstNode extends CstNode {
-  name: "AssignmentExpression";
-  children: AssignmentExpressionCstChildren;
-}
-
-export type AssignmentExpressionCstChildren = {
-  VariableId: VariableIdCstNode[];
-  AssignmentOperator: IToken[];
-  Expression: ExpressionCstNode[];
-};
-
-export interface StrictAssignmentExpressionCstNode extends CstNode {
-  name: "StrictAssignmentExpression";
-  children: StrictAssignmentExpressionCstChildren;
-}
-
-export type StrictAssignmentExpressionCstChildren = {
-  Identifier: IToken[];
-  AssignmentOperator: IToken[];
-  Expression: ExpressionCstNode[];
-};
-
-export interface ValueCstNode extends CstNode {
-  name: "Value";
-  children: ValueCstChildren;
-}
-
-export type ValueCstChildren = {
-  Identifier?: IToken[];
-  NumberLiteral?: IToken[];
-  StringLiteral?: IToken[];
-  True?: IToken[];
-  False?: IToken[];
-  Null?: IToken[];
-};
-
-export interface ArrayAccessorCstNode extends CstNode {
-  name: "ArrayAccessor";
-  children: ArrayAccessorCstChildren;
-}
-
-export type ArrayAccessorCstChildren = {
-  LSquare: IToken[];
-  Identifier?: IToken[];
-  NumberLiteral?: IToken[];
-  RSquare: IToken[];
-};
-
-export interface ArrayAccessorsCstNode extends CstNode {
-  name: "ArrayAccessors";
-  children: ArrayAccessorsCstChildren;
-}
-
-export type ArrayAccessorsCstChildren = {
-  ArrayAccessor: (ArrayAccessorCstNode)[];
-};
-
-export interface TypeKeywordCstNode extends CstNode {
-  name: "TypeKeyword";
-  children: TypeKeywordCstChildren;
-}
-
-export type TypeKeywordCstChildren = {
-  RealType?: IToken[];
-  IntegerType?: IToken[];
-  CharType?: IToken[];
-  TextType?: IToken[];
-  BooleanType?: IToken[];
-  ArrayType?: IToken[];
-  ArrayAccessors?: ArrayAccessorsCstNode[];
-  Of?: IToken[];
-  TypeKeyword?: TypeKeywordCstNode[];
-};
-
-export interface AlgorithmCstNode extends CstNode {
-  name: "algorithm";
-  children: AlgorithmCstChildren;
-}
-
-export type AlgorithmCstChildren = {
+export type ProgramCstChildren = {
   Start: IToken[];
-  Statement?: StatementCstNode[];
+  statement: StatementCstNode[];
   End: IToken[];
 };
 
 export interface StatementCstNode extends CstNode {
-  name: "Statement";
+  name: "statement";
   children: StatementCstChildren;
 }
 
 export type StatementCstChildren = {
-  AssignmentExpression?: AssignmentExpressionCstNode[];
-  SemiColon?: IToken[];
-  Block?: BlockCstNode[];
-  IfStatement?: IfStatementCstNode[];
-  IterationStatement?: IterationStatementCstNode[];
-  UnaryExpression?: UnaryExpressionCstNode[];
+  assignmentStatement?: AssignmentStatementCstNode[];
+  controlStatements?: ControlStatementsCstNode[];
+  operationsStatements?: OperationsStatementsCstNode[];
 };
 
-export interface BlockCstNode extends CstNode {
-  name: "Block";
-  children: BlockCstChildren;
+export interface AssignmentStatementCstNode extends CstNode {
+  name: "assignmentStatement";
+  children: AssignmentStatementCstChildren;
 }
 
-export type BlockCstChildren = {
-  LCurly: IToken[];
-  Statement?: StatementCstNode[];
-  RCurly: IToken[];
+export type AssignmentStatementCstChildren = {
+  assignmentExpression: AssignmentExpressionCstNode[];
+  SemiColon: IToken[];
 };
 
-export interface ExpressionCstNode extends CstNode {
-  name: "Expression";
-  children: ExpressionCstChildren;
+export interface ControlStatementsCstNode extends CstNode {
+  name: "controlStatements";
+  children: ControlStatementsCstChildren;
 }
 
-export type ExpressionCstChildren = {
-  BinaryExpression: BinaryExpressionCstNode[];
+export type ControlStatementsCstChildren = {
+  iterationStatements?: IterationStatementsCstNode[];
+  conditionalStatements?: ConditionalStatementsCstNode[];
 };
 
-export interface BinaryExpressionCstNode extends CstNode {
-  name: "BinaryExpression";
-  children: BinaryExpressionCstChildren;
+export interface OperationsStatementsCstNode extends CstNode {
+  name: "operationsStatements";
+  children: OperationsStatementsCstChildren;
 }
 
-export type BinaryExpressionCstChildren = {
-  BinaryExpressionDeclaration: (BinaryExpressionDeclarationCstNode)[];
-  Operators?: OperatorsCstNode[];
+export type OperationsStatementsCstChildren = {
+  printExpression?: PrintExpressionCstNode[];
+  readExpression?: ReadExpressionCstNode[];
 };
 
-export interface BinaryExpressionDeclarationCstNode extends CstNode {
-  name: "BinaryExpressionDeclaration";
-  children: BinaryExpressionDeclarationCstChildren;
+export interface IterationStatementsCstNode extends CstNode {
+  name: "iterationStatements";
+  children: IterationStatementsCstChildren;
 }
 
-export type BinaryExpressionDeclarationCstChildren = {
-  Value?: ValueCstNode[];
-  NotOperator?: NotOperatorCstNode[];
-  LParen?: IToken[];
-  Expression?: ExpressionCstNode[];
-  RParen?: IToken[];
+export type IterationStatementsCstChildren = {
+  doWhileStatement?: DoWhileStatementCstNode[];
+  whileDoStatement?: WhileDoStatementCstNode[];
+  forLoopStatement?: ForLoopStatementCstNode[];
 };
 
-export interface OperatorsCstNode extends CstNode {
-  name: "Operators";
-  children: OperatorsCstChildren;
+export interface DoWhileStatementCstNode extends CstNode {
+  name: "doWhileStatement";
+  children: DoWhileStatementCstChildren;
 }
 
-export type OperatorsCstChildren = {
-  RelationalOperator?: RelationalOperatorCstNode[];
-  MultiplicativeOperator?: MultiplicativeOperatorCstNode[];
-  AdditiveOperator?: AdditiveOperatorCstNode[];
-  LogicalOperator?: LogicalOperatorCstNode[];
+export type DoWhileStatementCstChildren = {
+  Do: IToken[];
+  block: BlockCstNode[];
+  While: IToken[];
+  LParen: IToken[];
+  expression: ExpressionCstNode[];
+  RParen: IToken[];
+  SemiColon: IToken[];
 };
 
-export interface RelationalOperatorCstNode extends CstNode {
-  name: "RelationalOperator";
-  children: RelationalOperatorCstChildren;
+export interface WhileDoStatementCstNode extends CstNode {
+  name: "whileDoStatement";
+  children: WhileDoStatementCstChildren;
 }
 
-export type RelationalOperatorCstChildren = {
-  GreaterThan?: (IToken)[];
-  Equals?: (IToken)[];
-  LessThan?: (IToken)[];
-  NotOperator?: NotOperatorCstNode[];
+export type WhileDoStatementCstChildren = {
+  While: IToken[];
+  LParen: IToken[];
+  expression: ExpressionCstNode[];
+  RParen: IToken[];
+  Do: IToken[];
+  block: BlockCstNode[];
 };
 
-export interface NotOperatorCstNode extends CstNode {
-  name: "NotOperator";
-  children: NotOperatorCstChildren;
+export interface ForLoopStatementCstNode extends CstNode {
+  name: "forLoopStatement";
+  children: ForLoopStatementCstChildren;
 }
 
-export type NotOperatorCstChildren = {
-  Exclamation?: IToken[];
-  Tilde?: IToken[];
-  Not?: IToken[];
+export type ForLoopStatementCstChildren = {
+  For: IToken[];
+  LParen: IToken[];
+  assignmentExpression: (AssignmentExpressionCstNode)[];
+  SemiColon: (IToken)[];
+  expression: ExpressionCstNode[];
+  RParen: IToken[];
+  Do: IToken[];
+  block: BlockCstNode[];
 };
 
-export interface MultiplicativeOperatorCstNode extends CstNode {
-  name: "MultiplicativeOperator";
-  children: MultiplicativeOperatorCstChildren;
+export interface ConditionalStatementsCstNode extends CstNode {
+  name: "conditionalStatements";
+  children: ConditionalStatementsCstChildren;
 }
 
-export type MultiplicativeOperatorCstChildren = {
-  Star?: IToken[];
-  Slash?: IToken[];
-};
-
-export interface AdditiveOperatorCstNode extends CstNode {
-  name: "AdditiveOperator";
-  children: AdditiveOperatorCstChildren;
-}
-
-export type AdditiveOperatorCstChildren = {
-  Plus?: IToken[];
-  Minus?: IToken[];
-};
-
-export interface LogicalOperatorCstNode extends CstNode {
-  name: "LogicalOperator";
-  children: LogicalOperatorCstChildren;
-}
-
-export type LogicalOperatorCstChildren = {
-  And?: IToken[];
-  Or?: IToken[];
+export type ConditionalStatementsCstChildren = {
+  ifStatement?: IfStatementCstNode[];
+  switchStatement?: SwitchStatementCstNode[];
 };
 
 export interface IfStatementCstNode extends CstNode {
-  name: "IfStatement";
+  name: "ifStatement";
   children: IfStatementCstChildren;
 }
 
 export type IfStatementCstChildren = {
   If: IToken[];
   LParen: IToken[];
-  Expression: ExpressionCstNode[];
+  expression: ExpressionCstNode[];
   RParen: IToken[];
   Then: IToken[];
-  Block: BlockCstNode[];
-  ElseStatement?: ElseStatementCstNode[];
+  block: BlockCstNode[];
+  elseStatement?: ElseStatementCstNode[];
 };
 
 export interface ElseStatementCstNode extends CstNode {
-  name: "ElseStatement";
+  name: "elseStatement";
   children: ElseStatementCstChildren;
 }
 
 export type ElseStatementCstChildren = {
   Else: IToken[];
-  IfStatement?: IfStatementCstNode[];
-  Block?: BlockCstNode[];
+  ifStatement?: IfStatementCstNode[];
+  block?: BlockCstNode[];
 };
 
-export interface IterationStatementCstNode extends CstNode {
-  name: "IterationStatement";
-  children: IterationStatementCstChildren;
+export interface SwitchStatementCstNode extends CstNode {
+  name: "switchStatement";
+  children: SwitchStatementCstChildren;
 }
 
-export type IterationStatementCstChildren = {
-  Do?: (IToken)[];
-  Block?: (BlockCstNode)[];
-  While?: (IToken)[];
-  LParen?: (IToken)[];
-  Expression?: (ExpressionCstNode)[];
-  RParen?: (IToken)[];
-  SemiColon?: (IToken)[];
-  For?: IToken[];
-  AssignmentExpression?: (AssignmentExpressionCstNode)[];
+export type SwitchStatementCstChildren = {
+  Switch: IToken[];
+  variableAccess?: (VariableAccessCstNode)[];
+  LParen?: IToken[];
+  RParen?: IToken[];
+  LCurly: IToken[];
+  Case: IToken[];
+  StringLiteral?: IToken[];
+  Do: (IToken)[];
+  block?: (BlockCstNode)[];
+  Colon?: IToken[];
+  statement?: StatementCstNode[];
+  SemiColon?: IToken[];
+  Default?: IToken[];
+  RCurly: IToken[];
+};
+
+export interface ExpressionCstNode extends CstNode {
+  name: "expression";
+  children: ExpressionCstChildren;
+}
+
+export type ExpressionCstChildren = {
+  ternaryExpression: TernaryExpressionCstNode[];
+};
+
+export interface TernaryExpressionCstNode extends CstNode {
+  name: "ternaryExpression";
+  children: TernaryExpressionCstChildren;
+}
+
+export type TernaryExpressionCstChildren = {
+  binaryExpression: BinaryExpressionCstNode[];
+  Question?: IToken[];
+  expression?: (ExpressionCstNode)[];
+  Colon?: IToken[];
+};
+
+export interface BinaryExpressionCstNode extends CstNode {
+  name: "binaryExpression";
+  children: BinaryExpressionCstChildren;
+}
+
+export type BinaryExpressionCstChildren = {
+  unaryExpression: (UnaryExpressionCstNode)[];
+  BinaryOperator?: IToken[];
 };
 
 export interface UnaryExpressionCstNode extends CstNode {
-  name: "UnaryExpression";
+  name: "unaryExpression";
   children: UnaryExpressionCstChildren;
 }
 
 export type UnaryExpressionCstChildren = {
-  PrintOperator?: PrintOperatorCstNode[];
-  ReadOperator?: ReadOperatorCstNode[];
+  primaryExpression: PrimaryExpressionCstNode[];
 };
 
-export interface PrintOperatorCstNode extends CstNode {
-  name: "PrintOperator";
-  children: PrintOperatorCstChildren;
+export interface PrimaryExpressionCstNode extends CstNode {
+  name: "primaryExpression";
+  children: PrimaryExpressionCstChildren;
 }
 
-export type PrintOperatorCstChildren = {
+export type PrimaryExpressionCstChildren = {
+  variableAccess?: VariableAccessCstNode[];
+  parenthesisExpression?: ParenthesisExpressionCstNode[];
+};
+
+export interface ParenthesisExpressionCstNode extends CstNode {
+  name: "parenthesisExpression";
+  children: ParenthesisExpressionCstChildren;
+}
+
+export type ParenthesisExpressionCstChildren = {
+  UnaryPrefixOperator?: IToken[];
+  LParen: IToken[];
+  expression: ExpressionCstNode[];
+  RParen: IToken[];
+};
+
+export interface AssignmentExpressionCstNode extends CstNode {
+  name: "assignmentExpression";
+  children: AssignmentExpressionCstChildren;
+}
+
+export type AssignmentExpressionCstChildren = {
+  variableAccess: VariableAccessCstNode[];
+  AssignmentOperator?: IToken[];
+  expression?: ExpressionCstNode[];
+  UnarySuffixOperator?: IToken[];
+};
+
+export interface PrintExpressionCstNode extends CstNode {
+  name: "printExpression";
+  children: PrintExpressionCstChildren;
+}
+
+export type PrintExpressionCstChildren = {
   Print: IToken[];
-  Expression: (ExpressionCstNode)[];
+  expression: ExpressionCstNode[];
   Comma?: IToken[];
   SemiColon: IToken[];
 };
 
-export interface ReadOperatorCstNode extends CstNode {
-  name: "ReadOperator";
-  children: ReadOperatorCstChildren;
+export interface ReadExpressionCstNode extends CstNode {
+  name: "readExpression";
+  children: ReadExpressionCstChildren;
 }
 
-export type ReadOperatorCstChildren = {
+export type ReadExpressionCstChildren = {
   Read: IToken[];
-  VariableId: (VariableIdCstNode)[];
+  variableAccess: VariableAccessCstNode[];
   Comma?: IToken[];
   SemiColon: IToken[];
+};
+
+export interface VariableDeclaratorCstNode extends CstNode {
+  name: "variableDeclarator";
+  children: VariableDeclaratorCstChildren;
+}
+
+export type VariableDeclaratorCstChildren = {
+  Identifier: IToken[];
+  Comma?: IToken[];
+  Colon: IToken[];
+  PrimitiveTypes?: (IToken)[];
+  ArrayType?: IToken[];
+  arrayAccessSuffix?: ArrayAccessSuffixCstNode[];
+  Of?: IToken[];
+};
+
+export interface VariableAccessCstNode extends CstNode {
+  name: "variableAccess";
+  children: VariableAccessCstChildren;
+}
+
+export type VariableAccessCstChildren = {
+  Identifier: IToken[];
+  arrayAccessSuffix?: ArrayAccessSuffixCstNode[];
+};
+
+export interface ArrayAccessSuffixCstNode extends CstNode {
+  name: "arrayAccessSuffix";
+  children: ArrayAccessSuffixCstChildren;
+}
+
+export type ArrayAccessSuffixCstChildren = {
+  LSquare: IToken[];
+  Identifier?: IToken[];
+  NumberLiteral?: IToken[];
+  RSquare: IToken[];
+};
+
+export interface BlockCstNode extends CstNode {
+  name: "block";
+  children: BlockCstChildren;
+}
+
+export type BlockCstChildren = {
+  LCurly: IToken[];
+  statement: StatementCstNode[];
+  RCurly: IToken[];
 };
 
 export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
-  program(children: ProgramCstChildren, param?: IN): OUT;
-  header(children: HeaderCstChildren, param?: IN): OUT;
-  constDefinition(children: ConstDefinitionCstChildren, param?: IN): OUT;
-  varDefinition(children: VarDefinitionCstChildren, param?: IN): OUT;
-  VariableId(children: VariableIdCstChildren, param?: IN): OUT;
-  VariableDeclaration(children: VariableDeclarationCstChildren, param?: IN): OUT;
-  AssignmentExpression(children: AssignmentExpressionCstChildren, param?: IN): OUT;
-  StrictAssignmentExpression(children: StrictAssignmentExpressionCstChildren, param?: IN): OUT;
-  Value(children: ValueCstChildren, param?: IN): OUT;
-  ArrayAccessor(children: ArrayAccessorCstChildren, param?: IN): OUT;
-  ArrayAccessors(children: ArrayAccessorsCstChildren, param?: IN): OUT;
-  TypeKeyword(children: TypeKeywordCstChildren, param?: IN): OUT;
   algorithm(children: AlgorithmCstChildren, param?: IN): OUT;
-  Statement(children: StatementCstChildren, param?: IN): OUT;
-  Block(children: BlockCstChildren, param?: IN): OUT;
-  Expression(children: ExpressionCstChildren, param?: IN): OUT;
-  BinaryExpression(children: BinaryExpressionCstChildren, param?: IN): OUT;
-  BinaryExpressionDeclaration(children: BinaryExpressionDeclarationCstChildren, param?: IN): OUT;
-  Operators(children: OperatorsCstChildren, param?: IN): OUT;
-  RelationalOperator(children: RelationalOperatorCstChildren, param?: IN): OUT;
-  NotOperator(children: NotOperatorCstChildren, param?: IN): OUT;
-  MultiplicativeOperator(children: MultiplicativeOperatorCstChildren, param?: IN): OUT;
-  AdditiveOperator(children: AdditiveOperatorCstChildren, param?: IN): OUT;
-  LogicalOperator(children: LogicalOperatorCstChildren, param?: IN): OUT;
-  IfStatement(children: IfStatementCstChildren, param?: IN): OUT;
-  ElseStatement(children: ElseStatementCstChildren, param?: IN): OUT;
-  IterationStatement(children: IterationStatementCstChildren, param?: IN): OUT;
-  UnaryExpression(children: UnaryExpressionCstChildren, param?: IN): OUT;
-  PrintOperator(children: PrintOperatorCstChildren, param?: IN): OUT;
-  ReadOperator(children: ReadOperatorCstChildren, param?: IN): OUT;
+  header(children: HeaderCstChildren, param?: IN): OUT;
+  constantsDeclarators(children: ConstantsDeclaratorsCstChildren, param?: IN): OUT;
+  variablesDeclarators(children: VariablesDeclaratorsCstChildren, param?: IN): OUT;
+  program(children: ProgramCstChildren, param?: IN): OUT;
+  statement(children: StatementCstChildren, param?: IN): OUT;
+  assignmentStatement(children: AssignmentStatementCstChildren, param?: IN): OUT;
+  controlStatements(children: ControlStatementsCstChildren, param?: IN): OUT;
+  operationsStatements(children: OperationsStatementsCstChildren, param?: IN): OUT;
+  iterationStatements(children: IterationStatementsCstChildren, param?: IN): OUT;
+  doWhileStatement(children: DoWhileStatementCstChildren, param?: IN): OUT;
+  whileDoStatement(children: WhileDoStatementCstChildren, param?: IN): OUT;
+  forLoopStatement(children: ForLoopStatementCstChildren, param?: IN): OUT;
+  conditionalStatements(children: ConditionalStatementsCstChildren, param?: IN): OUT;
+  ifStatement(children: IfStatementCstChildren, param?: IN): OUT;
+  elseStatement(children: ElseStatementCstChildren, param?: IN): OUT;
+  switchStatement(children: SwitchStatementCstChildren, param?: IN): OUT;
+  expression(children: ExpressionCstChildren, param?: IN): OUT;
+  ternaryExpression(children: TernaryExpressionCstChildren, param?: IN): OUT;
+  binaryExpression(children: BinaryExpressionCstChildren, param?: IN): OUT;
+  unaryExpression(children: UnaryExpressionCstChildren, param?: IN): OUT;
+  primaryExpression(children: PrimaryExpressionCstChildren, param?: IN): OUT;
+  parenthesisExpression(children: ParenthesisExpressionCstChildren, param?: IN): OUT;
+  assignmentExpression(children: AssignmentExpressionCstChildren, param?: IN): OUT;
+  printExpression(children: PrintExpressionCstChildren, param?: IN): OUT;
+  readExpression(children: ReadExpressionCstChildren, param?: IN): OUT;
+  variableDeclarator(children: VariableDeclaratorCstChildren, param?: IN): OUT;
+  variableAccess(children: VariableAccessCstChildren, param?: IN): OUT;
+  arrayAccessSuffix(children: ArrayAccessSuffixCstChildren, param?: IN): OUT;
+  block(children: BlockCstChildren, param?: IN): OUT;
 }
 
-export type ParserEntryPoint = Exclude<
-  keyof ICstNodeVisitor<never, never>,
-  keyof ICstVisitor<never, never>
->;
-
 export type CstNodeTypes = {
-  program: ProgramCstNode;
-  header: HeaderCstNode;
-  constDefinition: ConstDefinitionCstNode;
-  varDefinition: VarDefinitionCstNode;
-  VariableId: VariableIdCstNode;
-  VariableDeclaration: VariableDeclarationCstNode;
-  AssignmentExpression: AssignmentExpressionCstNode;
-  StrictAssignmentExpression: StrictAssignmentExpressionCstNode;
-  Value: ValueCstNode;
-  ArrayAccessor: ArrayAccessorCstNode;
-  ArrayAccessors: ArrayAccessorsCstNode;
-  TypeKeyword: TypeKeywordCstNode;
   algorithm: AlgorithmCstNode;
-  Statement: StatementCstNode;
-  Block: BlockCstNode;
-  Expression: ExpressionCstNode;
-  BinaryExpression: BinaryExpressionCstNode;
-  BinaryExpressionDeclaration: BinaryExpressionDeclarationCstNode;
-  Operators: OperatorsCstNode;
-  RelationalOperator: RelationalOperatorCstNode;
-  NotOperator: NotOperatorCstNode;
-  MultiplicativeOperator: MultiplicativeOperatorCstNode;
-  AdditiveOperator: AdditiveOperatorCstNode;
-  LogicalOperator: LogicalOperatorCstNode;
-  IfStatement: IfStatementCstNode;
-  ElseStatement: ElseStatementCstNode;
-  IterationStatement: IterationStatementCstNode;
-  UnaryExpression: UnaryExpressionCstNode;
-  PrintOperator: PrintOperatorCstNode;
-  ReadOperator: ReadOperatorCstNode;
+  header: HeaderCstNode;
+  constantsDeclarators: ConstantsDeclaratorsCstNode;
+  variablesDeclarators: VariablesDeclaratorsCstNode;
+  program: ProgramCstNode;
+  statement: StatementCstNode;
+  assignmentStatement: AssignmentStatementCstNode;
+  controlStatements: ControlStatementsCstNode;
+  operationsStatements: OperationsStatementsCstNode;
+  iterationStatements: IterationStatementsCstNode;
+  doWhileStatement: DoWhileStatementCstNode;
+  whileDoStatement: WhileDoStatementCstNode;
+  forLoopStatement: ForLoopStatementCstNode;
+  conditionalStatements: ConditionalStatementsCstNode;
+  ifStatement: IfStatementCstNode;
+  elseStatement: ElseStatementCstNode;
+  switchStatement: SwitchStatementCstNode;
+  expression: ExpressionCstNode;
+  ternaryExpression: TernaryExpressionCstNode;
+  binaryExpression: BinaryExpressionCstNode;
+  unaryExpression: UnaryExpressionCstNode;
+  primaryExpression: PrimaryExpressionCstNode;
+  parenthesisExpression: ParenthesisExpressionCstNode;
+  assignmentExpression: AssignmentExpressionCstNode;
+  printExpression: PrintExpressionCstNode;
+  readExpression: ReadExpressionCstNode;
+  variableDeclarator: VariableDeclaratorCstNode;
+  variableAccess: VariableAccessCstNode;
+  arrayAccessSuffix: ArrayAccessSuffixCstNode;
+  block: BlockCstNode;
 };

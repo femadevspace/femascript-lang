@@ -1,6 +1,6 @@
 import { lexer } from "@/grammar/lexer";
-import { AlgoritmoLanguageParser } from "@/grammar/parser";
-import type { CstNodeTypes, ParserEntryPoint } from "@/types/cst";
+import { AlgoritmoLanguageParser, type EntryPoint } from "@/grammar/parser";
+import type { CstNodeTypes } from "@/types/cst";
 import { handleLexErrors, handleParserErrors } from "@/utils";
 
 const parser = new AlgoritmoLanguageParser();
@@ -8,9 +8,9 @@ const parser = new AlgoritmoLanguageParser();
 const visitor = parser.getBaseCstVisitorConstructor();
 const visitorWithDefaults = parser.getBaseCstVisitorConstructorWithDefaults();
 
-const parse = <EntryPoint extends ParserEntryPoint = "program">(
+const parse = <Entry extends EntryPoint = "program">(
   inputText: string,
-  entryPoint: EntryPoint = "program" as EntryPoint
+  entryPoint: Entry = "program" as Entry
 ) => {
   const { tokens, errors } = lexer.tokenize(inputText);
 
@@ -18,12 +18,11 @@ const parse = <EntryPoint extends ParserEntryPoint = "program">(
 
   parser.input = tokens;
 
-  const rule = parser[entryPoint as keyof typeof parser] as Function;
-  const cst = rule.bind(parser)();
+  const cst = parser[entryPoint]();
 
   handleParserErrors(parser.errors);
 
-  return cst as CstNodeTypes[EntryPoint];
+  return cst as CstNodeTypes[Entry];
 };
 
 export default {
