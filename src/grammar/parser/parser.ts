@@ -1,366 +1,344 @@
 import { getTokens } from "@/grammar/lexer";
-import * as tokens from "@/grammar/lexer/tokens";
+import * as lexer from "@/grammar/lexer/tokens";
 import { CstParser } from "chevrotain";
 
+export type EntryPoint = Exclude<
+  keyof AlgoritmoLanguageParser,
+  keyof CstParser
+>;
+
 export class AlgoritmoLanguageParser extends CstParser {
+  // ======================= ALGORITHM STRUCTURE RULES =======================
+  algorithm = this.RULE("algorithm", () => {
+    this.SUBRULE(this.header);
+
+    this.OPTION(() => {
+      this.SUBRULE(this.constantsDeclarators);
+    });
+
+    this.OPTION2(() => {
+      this.SUBRULE(this.variablesDeclarators);
+    });
+
+    this.SUBRULE(this.program);
+  });
+
+  header = this.RULE("header", () => {
+    this.CONSUME(lexer.AlgorithmKeyword);
+    this.CONSUME(lexer.Identifier);
+
+    this.OPTION(() => this.CONSUME(lexer.SemiColon));
+  });
+
+  constantsDeclarators = this.RULE("constantsDeclarators", () => {
+    this.CONSUME(lexer.ConstantKeyword);
+
+    this.AT_LEAST_ONE_SEP({
+      SEP: lexer.SemiColon,
+      DEF: () => {
+        this.CONSUME(lexer.Identifier);
+        this.CONSUME(lexer.AssignmentOperator);
+        this.SUBRULE(this.expression);
+      },
+    });
+
+    this.CONSUME(lexer.SemiColon);
+  });
+
+  variablesDeclarators = this.RULE("variablesDeclarators", () => {
+    this.CONSUME(lexer.VariableKeyword);
+
+    this.AT_LEAST_ONE_SEP({
+      DEF: () => this.SUBRULE(this.variableDeclarator),
+      SEP: lexer.SemiColon,
+    });
+
+    this.CONSUME(lexer.SemiColon);
+  });
+
+  program = this.RULE("program", () => {
+    this.CONSUME(lexer.StartKeyword);
+
+    this.AT_LEAST_ONE(() => this.SUBRULE(this.statement));
+
+    this.CONSUME(lexer.EndKeyword);
+  });
+
+  // ======================= STATEMENTS RULES =======================
+  statement = this.RULE("statement", () => {
+    this.OR([
+      { ALT: () => this.SUBRULE(this.assignmentStatement) },
+      { ALT: () => this.SUBRULE(this.controlStatements) },
+      { ALT: () => this.SUBRULE(this.operationsStatements) },
+    ]);
+  });
+
+  assignmentStatement = this.RULE("assignmentStatement", () => {
+    this.SUBRULE(this.assignmentExpression);
+    this.CONSUME(lexer.SemiColon);
+  });
+
+  controlStatements = this.RULE("controlStatements", () => {
+    this.OR([
+      { ALT: () => this.SUBRULE(this.iterationStatements) },
+      { ALT: () => this.SUBRULE(this.conditionalStatements) },
+    ]);
+  });
+
+  operationsStatements = this.RULE("operationsStatements", () => {
+    this.OR([
+      { ALT: () => this.SUBRULE(this.printExpression) },
+      { ALT: () => this.SUBRULE(this.readExpression) },
+    ]);
+  });
+
+  // === CONTROL FLOW RULES SUBSET ===
+  iterationStatements = this.RULE("iterationStatements", () => {
+    this.OR([
+      { ALT: () => this.SUBRULE(this.doWhileStatement) },
+      { ALT: () => this.SUBRULE(this.whileDoStatement) },
+      { ALT: () => this.SUBRULE(this.forLoopStatement) },
+    ]);
+  });
+
+  doWhileStatement = this.RULE("doWhileStatement", () => {
+    this.CONSUME(lexer.DoKeyword);
+    this.SUBRULE(this.block);
+    this.CONSUME(lexer.WhileKeyword);
+    this.CONSUME(lexer.LParen);
+    this.SUBRULE(this.expression);
+    this.CONSUME(lexer.RParen);
+    this.CONSUME(lexer.SemiColon);
+  });
+
+  whileDoStatement = this.RULE("whileDoStatement", () => {
+    this.CONSUME(lexer.WhileKeyword);
+    this.CONSUME(lexer.LParen);
+    this.SUBRULE(this.expression);
+    this.CONSUME(lexer.RParen);
+    this.CONSUME(lexer.DoKeyword);
+    this.SUBRULE(this.block);
+  });
+
+  forLoopStatement = this.RULE("forLoopStatement", () => {
+    this.CONSUME(lexer.ForKeyword);
+    this.CONSUME(lexer.LParen);
+    this.SUBRULE(this.assignmentExpression);
+    this.CONSUME(lexer.SemiColon);
+    this.SUBRULE(this.expression);
+    this.CONSUME2(lexer.SemiColon);
+    this.SUBRULE2(this.assignmentExpression);
+    this.CONSUME(lexer.RParen);
+    this.CONSUME(lexer.DoKeyword);
+    this.SUBRULE(this.block);
+  });
+
+  conditionalStatements = this.RULE("conditionalStatements", () => {
+    this.OR([
+      { ALT: () => this.SUBRULE(this.ifStatement) },
+      { ALT: () => this.SUBRULE(this.switchStatement) },
+    ]);
+  });
+
+  ifStatement = this.RULE("ifStatement", () => {
+    this.CONSUME(lexer.IfKeyword);
+    this.CONSUME(lexer.LParen);
+    this.SUBRULE(this.expression);
+    this.CONSUME(lexer.RParen);
+    this.CONSUME(lexer.ThenKeyword);
+    this.SUBRULE(this.block);
+
+    this.OPTION(() => this.SUBRULE(this.elseStatement));
+  });
+
+  elseStatement = this.RULE("elseStatement", () => {
+    this.CONSUME(lexer.ElseKeyword);
+
+    this.OR([
+      { ALT: () => this.SUBRULE(this.ifStatement) },
+      { ALT: () => this.SUBRULE(this.block) },
+    ]);
+  });
+
+  switchStatement = this.RULE("switchStatement", () => {
+    this.CONSUME(lexer.SwitchKeyword);
+
+    this.OR([
+      { ALT: () => this.SUBRULE(this.variableAccess) },
+      {
+        ALT: () => {
+          this.CONSUME(lexer.LParen);
+          this.SUBRULE2(this.variableAccess);
+          this.CONSUME(lexer.RParen);
+        },
+      },
+    ]);
+
+    this.CONSUME(lexer.LCurly);
+
+    this.AT_LEAST_ONE(() => {
+      this.CONSUME(lexer.CaseKeyword);
+      this.OR2([
+        { ALT: () => this.CONSUME(lexer.StringLiteral) },
+        { ALT: () => this.SUBRULE3(this.variableAccess) },
+      ]);
+      this.CONSUME(lexer.DoKeyword);
+
+      this.OR3([
+        { ALT: () => this.SUBRULE(this.block) },
+        {
+          ALT: () => {
+            this.CONSUME(lexer.Colon);
+            this.SUBRULE(this.statement);
+            this.CONSUME(lexer.SemiColon);
+          },
+        },
+      ]);
+    });
+
+    this.OPTION(() => {
+      this.CONSUME(lexer.DefaultKeyword);
+      this.CONSUME2(lexer.DoKeyword);
+      this.SUBRULE2(this.block);
+    });
+
+    this.CONSUME(lexer.RCurly);
+  });
+
+  // ======================= EXPRESSIONS RULES =======================
+
+  expression = this.RULE("expression", () => {
+    this.SUBRULE(this.ternaryExpression);
+  });
+
+  ternaryExpression = this.RULE("ternaryExpression", () => {
+    this.SUBRULE(this.binaryExpression);
+
+    this.OPTION(() => {
+      this.CONSUME(lexer.Question);
+      this.SUBRULE(this.expression);
+      this.CONSUME(lexer.Colon);
+      this.SUBRULE2(this.expression);
+    });
+  });
+
+  binaryExpression = this.RULE("binaryExpression", () => {
+    this.SUBRULE(this.unaryExpression);
+
+    this.OPTION(() => {
+      this.CONSUME(lexer.BinaryOperator);
+      this.SUBRULE2(this.unaryExpression);
+    });
+  });
+
+  unaryExpression = this.RULE("unaryExpression", () => {
+    this.SUBRULE(this.primaryExpression);
+  });
+
+  primaryExpression = this.RULE("primaryExpression", () => {
+    this.OR([
+      { ALT: () => this.SUBRULE(this.variableAccess) },
+      { ALT: () => this.SUBRULE(this.parenthesisExpression) },
+    ]);
+  });
+
+  parenthesisExpression = this.RULE("parenthesisExpression", () => {
+    this.OPTION(() => this.CONSUME(lexer.UnaryPrefixOperator));
+
+    this.CONSUME(lexer.LParen);
+    this.SUBRULE(this.expression);
+    this.CONSUME(lexer.RParen);
+  });
+
+  assignmentExpression = this.RULE("assignmentExpression", () => {
+    this.SUBRULE(this.variableAccess);
+
+    this.OR([
+      {
+        ALT: () => {
+          this.CONSUME(lexer.AssignmentOperator);
+          this.SUBRULE(this.expression);
+        },
+      },
+      { ALT: () => this.CONSUME(lexer.UnarySuffixOperator) },
+    ]);
+  });
+
+  printExpression = this.RULE("printExpression", () => {
+    this.CONSUME(lexer.PrintKeyword);
+
+    this.AT_LEAST_ONE_SEP({
+      DEF: () => this.SUBRULE(this.expression),
+      SEP: lexer.Comma,
+    });
+
+    this.CONSUME(lexer.SemiColon);
+  });
+
+  readExpression = this.RULE("readExpression", () => {
+    this.CONSUME(lexer.ReadKeyword);
+
+    this.AT_LEAST_ONE_SEP({
+      DEF: () => this.SUBRULE(this.variableAccess),
+      SEP: lexer.Comma,
+    });
+
+    this.CONSUME(lexer.SemiColon);
+  });
+
+  // ======================= MISCELLANEOUS =======================
+
+  variableDeclarator = this.RULE("variableDeclarator", () => {
+    this.AT_LEAST_ONE_SEP({
+      DEF: () => this.CONSUME(lexer.Identifier),
+      SEP: lexer.Comma,
+    });
+
+    this.CONSUME(lexer.Colon);
+
+    this.OR([
+      { ALT: () => this.CONSUME(lexer.PrimitiveTypes) },
+      {
+        ALT: () => {
+          this.CONSUME(lexer.ArrayType);
+          this.SUBRULE(this.arrayAccessSuffix);
+          this.CONSUME(lexer.OfType);
+          this.CONSUME2(lexer.PrimitiveTypes);
+        },
+      },
+    ]);
+  });
+
+  variableAccess = this.RULE("variableAccess", () => {
+    this.CONSUME(lexer.Identifier);
+    this.OPTION(() => this.SUBRULE(this.arrayAccessSuffix));
+  });
+
+  arrayAccessSuffix = this.RULE("arrayAccessSuffix", () => {
+    this.AT_LEAST_ONE(() => {
+      this.CONSUME(lexer.LSquare);
+
+      this.OR([
+        { ALT: () => this.CONSUME(lexer.Identifier) },
+        { ALT: () => this.CONSUME(lexer.NumberLiteral) },
+      ]);
+
+      this.CONSUME(lexer.RSquare);
+    });
+  });
+
+  block = this.RULE("block", () => {
+    this.CONSUME(lexer.LCurly);
+
+    this.AT_LEAST_ONE(() => this.SUBRULE(this.statement));
+
+    this.CONSUME(lexer.RCurly);
+  });
+
   constructor() {
     super(getTokens(), {
       recoveryEnabled: true,
       maxLookahead: 3,
-    });
-
-    const $ = this;
-
-    $.RULE("program", () => {
-      $.SUBRULE(header);
-
-      $.OPTION(() => {
-        $.SUBRULE(constDefinition);
-      });
-
-      $.OPTION2(() => {
-        $.SUBRULE(varDefinition);
-      });
-
-      $.SUBRULE(algorithm);
-    });
-
-    const header = $.RULE("header", () => {
-      $.CONSUME(tokens.AlgorithmKeyword);
-      $.OR([
-        { ALT: () => $.CONSUME(tokens.Identifier) },
-        { ALT: () => $.CONSUME(tokens.StringLiteral) },
-      ]);
-      $.OPTION(() => $.CONSUME(tokens.SemiColon));
-    });
-
-    const constDefinition = $.RULE("constDefinition", () => {
-      $.CONSUME(tokens.ConstantKeyword);
-      $.SUBRULE(StrictAssignmentExpression);
-      $.CONSUME(tokens.SemiColon);
-
-      $.MANY(() => {
-        $.SUBRULE2(StrictAssignmentExpression);
-        $.CONSUME2(tokens.SemiColon);
-      });
-    });
-
-    const varDefinition = $.RULE("varDefinition", () => {
-      $.CONSUME(tokens.VariableKeyword);
-
-      $.MANY(() => {
-        $.SUBRULE(VariableDeclaration);
-      });
-    });
-
-    const VariableId = $.RULE("VariableId", () => {
-      $.OR([
-        {
-          ALT: () => {
-            $.CONSUME(tokens.Identifier);
-            $.SUBRULE(ArrayAccessors);
-          },
-        },
-        { ALT: () => $.CONSUME2(tokens.Identifier) },
-      ]);
-    });
-
-    const VariableDeclaration = $.RULE("VariableDeclaration", () => {
-      $.CONSUME(tokens.Identifier);
-
-      $.MANY(() => {
-        $.CONSUME(tokens.Comma);
-        $.CONSUME2(tokens.Identifier);
-      });
-
-      $.CONSUME(tokens.Colon);
-
-      $.SUBRULE(TypeKeyword);
-
-      $.CONSUME(tokens.SemiColon);
-    });
-
-    const AssignmentExpression = $.RULE("AssignmentExpression", () => {
-      $.SUBRULE(VariableId);
-      $.CONSUME(tokens.AssignmentOperator);
-      $.SUBRULE(Expression);
-    });
-
-    const StrictAssignmentExpression = $.RULE(
-      "StrictAssignmentExpression",
-      () => {
-        $.CONSUME(tokens.Identifier);
-        $.CONSUME(tokens.AssignmentOperator);
-        $.SUBRULE(Expression);
-      }
-    );
-
-    const Value = $.RULE("Value", () => {
-      $.OR([
-        { ALT: () => $.CONSUME(tokens.Identifier) },
-        { ALT: () => $.CONSUME(tokens.NumberLiteral) },
-        { ALT: () => $.CONSUME(tokens.StringLiteral) },
-        { ALT: () => $.CONSUME(tokens.True) },
-        { ALT: () => $.CONSUME(tokens.False) },
-        { ALT: () => $.CONSUME(tokens.Null) },
-      ]);
-    });
-
-    const ArrayAccessor = $.RULE("ArrayAccessor", () => {
-      $.CONSUME(tokens.LSquare);
-      $.OR([
-        { ALT: () => $.CONSUME(tokens.Identifier) },
-        { ALT: () => $.CONSUME(tokens.NumberLiteral) },
-      ]);
-      $.CONSUME(tokens.RSquare);
-    });
-
-    const ArrayAccessors = $.RULE("ArrayAccessors", () => {
-      $.SUBRULE(ArrayAccessor);
-
-      $.MANY(() => {
-        $.SUBRULE2(ArrayAccessor);
-      });
-    });
-
-    const TypeKeyword = $.RULE("TypeKeyword", () => {
-      $.OR([
-        { ALT: () => $.CONSUME(tokens.RealType) },
-        { ALT: () => $.CONSUME(tokens.IntegerType) },
-        { ALT: () => $.CONSUME(tokens.CharType) },
-        { ALT: () => $.CONSUME(tokens.TextType) },
-        { ALT: () => $.CONSUME(tokens.BooleanType) },
-        {
-          ALT: () => {
-            $.CONSUME(tokens.ArrayType);
-            $.SUBRULE(ArrayAccessors);
-            $.CONSUME(tokens.OfType);
-            $.SUBRULE3(TypeKeyword);
-          },
-        },
-      ]);
-    });
-
-    const algorithm = $.RULE("algorithm", () => {
-      $.CONSUME(tokens.StartKeyword);
-
-      $.MANY(() => {
-        $.SUBRULE(Statement);
-      });
-
-      $.CONSUME(tokens.EndKeyword);
-    });
-
-    const Statement = $.RULE("Statement", () => {
-      $.OR([
-        {
-          ALT: () => {
-            $.SUBRULE(AssignmentExpression);
-            $.CONSUME(tokens.SemiColon);
-          },
-        },
-        { ALT: () => $.SUBRULE(Block) },
-        { ALT: () => $.SUBRULE(IfStatement) },
-        { ALT: () => $.SUBRULE(IterationStatement) },
-        { ALT: () => $.SUBRULE(UnaryExpression) },
-      ]);
-    });
-
-    const Block = $.RULE("Block", () => {
-      $.CONSUME(tokens.LCurly);
-
-      $.MANY(() => {
-        $.SUBRULE(Statement);
-      });
-
-      $.CONSUME(tokens.RCurly);
-    });
-
-    const Expression = $.RULE("Expression", () => {
-      $.SUBRULE(BinaryExpression);
-    });
-
-    const BinaryExpression = $.RULE("BinaryExpression", () => {
-      $.SUBRULE(BinaryExpressionDeclaration);
-
-      $.MANY(() => {
-        $.SUBRULE2(Operators);
-        $.SUBRULE3(BinaryExpressionDeclaration);
-      });
-    });
-
-    const BinaryExpressionDeclaration = $.RULE(
-      "BinaryExpressionDeclaration",
-      () => {
-        $.OR([
-          { ALT: () => $.SUBRULE(Value) },
-          {
-            ALT: () => {
-              $.OPTION(() => $.SUBRULE(NotOperator));
-
-              $.CONSUME(tokens.LParen);
-              $.SUBRULE(Expression);
-              $.CONSUME(tokens.RParen);
-            },
-          },
-        ]);
-      }
-    );
-
-    const Operators = $.RULE("Operators", () => {
-      $.OR([
-        { ALT: () => $.SUBRULE(RelationalOperator) },
-        { ALT: () => $.SUBRULE(MultiplicativeOperator) },
-        { ALT: () => $.SUBRULE(AdditiveOperator) },
-        { ALT: () => $.SUBRULE(LogicalOperator) },
-      ]);
-    });
-
-    const RelationalOperator = $.RULE("RelationalOperator", () => {
-      $.OR([
-        {
-          ALT: () => {
-            $.CONSUME2(tokens.Greater);
-            $.CONSUME3(tokens.Equals);
-          },
-        },
-        {
-          ALT: () => {
-            $.CONSUME4(tokens.Less);
-            $.CONSUME5(tokens.Equals);
-          },
-        },
-        {
-          ALT: () => {
-            $.SUBRULE(NotOperator);
-            $.CONSUME7(tokens.Equals);
-          },
-        },
-        { ALT: () => $.CONSUME(tokens.Greater) },
-        { ALT: () => $.CONSUME(tokens.Less) },
-        { ALT: () => $.CONSUME(tokens.Equals) },
-      ]);
-    });
-
-    const NotOperator = $.RULE("NotOperator", () => {
-      $.OR([
-        { ALT: () => $.CONSUME(tokens.Exclamation) },
-        { ALT: () => $.CONSUME(tokens.Tilde) },
-        { ALT: () => $.CONSUME(tokens.NotKeyword) },
-      ]);
-    });
-
-    const MultiplicativeOperator = $.RULE("MultiplicativeOperator", () => {
-      $.OR([
-        { ALT: () => $.CONSUME(tokens.Star) },
-        { ALT: () => $.CONSUME(tokens.Slash) },
-      ]);
-    });
-
-    const AdditiveOperator = $.RULE("AdditiveOperator", () => {
-      $.OR([
-        { ALT: () => $.CONSUME(tokens.Plus) },
-        { ALT: () => $.CONSUME(tokens.Minus) },
-      ]);
-    });
-
-    const LogicalOperator = $.RULE("LogicalOperator", () => {
-      $.OR([
-        { ALT: () => $.CONSUME(tokens.AndKeyword) },
-        { ALT: () => $.CONSUME(tokens.OrKeyword) },
-      ]);
-    });
-
-    const IfStatement = $.RULE("IfStatement", () => {
-      $.CONSUME(tokens.IfKeyword);
-      $.CONSUME2(tokens.LParen);
-      $.SUBRULE(Expression);
-      $.CONSUME3(tokens.RParen);
-      $.CONSUME4(tokens.ThenKeyword);
-      $.SUBRULE(Block);
-
-      $.OPTION(() => {
-        $.SUBRULE2(ElseStatement);
-      });
-    });
-
-    const ElseStatement = $.RULE("ElseStatement", () => {
-      $.CONSUME(tokens.ElseKeyword);
-      $.OR([
-        { ALT: () => $.SUBRULE(IfStatement) },
-        { ALT: () => $.SUBRULE(Block) },
-      ]);
-    });
-
-    const IterationStatement = $.RULE("IterationStatement", () => {
-      $.OR([
-        {
-          ALT: () => {
-            $.CONSUME(tokens.DoKeyword);
-            $.SUBRULE(Block);
-            $.CONSUME(tokens.WhileKeyword);
-            $.CONSUME(tokens.LParen);
-            $.SUBRULE(Expression);
-            $.CONSUME(tokens.RParen);
-            $.CONSUME(tokens.SemiColon);
-          },
-        },
-        {
-          ALT: () => {
-            $.CONSUME2(tokens.WhileKeyword);
-            $.CONSUME2(tokens.LParen);
-            $.SUBRULE2(Expression);
-            $.CONSUME2(tokens.RParen);
-            $.CONSUME2(tokens.DoKeyword);
-            $.SUBRULE2(Block);
-          },
-        },
-        {
-          ALT: () => {
-            $.CONSUME(tokens.ForKeyword);
-            $.CONSUME3(tokens.LParen);
-            $.SUBRULE(AssignmentExpression);
-            $.CONSUME2(tokens.SemiColon);
-            $.SUBRULE3(Expression);
-            $.CONSUME3(tokens.SemiColon);
-            $.SUBRULE2(AssignmentExpression);
-            $.CONSUME3(tokens.RParen);
-            $.CONSUME3(tokens.DoKeyword);
-            $.SUBRULE3(Block);
-          },
-        },
-      ]);
-    });
-
-    const UnaryExpression = $.RULE("UnaryExpression", () => {
-      $.OR([
-        { ALT: () => $.SUBRULE(PrintOperator) },
-        { ALT: () => $.SUBRULE(ReadOperator) },
-      ]);
-    });
-
-    const PrintOperator = $.RULE("PrintOperator", () => {
-      $.CONSUME(tokens.PrintKeyword);
-      $.SUBRULE(Expression);
-
-      $.MANY(() => {
-        $.CONSUME(tokens.Comma);
-        $.SUBRULE2(Expression);
-      });
-
-      $.CONSUME(tokens.SemiColon);
-    });
-
-    const ReadOperator = $.RULE("ReadOperator", () => {
-      $.CONSUME(tokens.ReadKeyword);
-      $.SUBRULE(VariableId);
-
-      $.MANY(() => {
-        $.CONSUME(tokens.Comma);
-        $.SUBRULE2(VariableId);
-      });
-
-      $.CONSUME(tokens.SemiColon);
     });
 
     this.performSelfAnalysis();
