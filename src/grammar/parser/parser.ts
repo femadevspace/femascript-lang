@@ -237,6 +237,7 @@ export class AlgoritmoLanguageParser extends CstParser {
 
   primaryExpression = this.RULE("primaryExpression", () => {
     this.OR([
+      { ALT: () => this.CONSUME(lexer.Literal) },
       { ALT: () => this.SUBRULE(this.variableAccess) },
       { ALT: () => this.SUBRULE(this.parenthesisExpression) },
     ]);
