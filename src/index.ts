@@ -8,9 +8,9 @@ const parser = new AlgoritmoLanguageParser();
 const visitor = parser.getBaseCstVisitorConstructor();
 const visitorWithDefaults = parser.getBaseCstVisitorConstructorWithDefaults();
 
-const parse = <Entry extends EntryPoint = "program">(
+const parse = <Entry extends EntryPoint = "algorithm">(
   inputText: string,
-  entryPoint: Entry = "program" as Entry
+  entryPoint: Entry = "algorithm" as Entry
 ) => {
   const { tokens, errors } = lexer.tokenize(inputText);
 
