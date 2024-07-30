@@ -9,7 +9,7 @@ export const Literal = TOKEN({
 });
 
 export const BooleanLiteral = TOKEN({
-  name: "BooleanValues",
+  name: "BooleanLiteral",
   pattern: Lexer.NA,
   categories: [Literal],
   skipTextmateScope: true,
