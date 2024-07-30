@@ -38,14 +38,14 @@ export const True = TOKEN({
 
 export const False = TOKEN({
   name: "False",
-  pattern: /\b(fals[e|o])/,
+  pattern: /\b(fals[eo])/,
   categories: [BooleanLiteral],
   textmateScope: "constant.language.boolean.false",
 });
 
 export const Null = TOKEN({
   name: "Null",
-  pattern: /\b(nul[l|o])/,
+  pattern: /\b(nul[lo])/,
   categories: [Literal],
   textmateScope: "constant.language.null",
 });
