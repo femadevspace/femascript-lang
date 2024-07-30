@@ -129,7 +129,7 @@ export const And = TOKEN({
 });
 
 export const OrOr = TOKEN({
-  name: "OrOr'",
+  name: "OrOr",
   pattern: /(\|\|)/,
   label: "'||'",
   categories: [op.LogicalOperator],
@@ -137,7 +137,7 @@ export const OrOr = TOKEN({
 });
 
 export const Or = TOKEN({
-  name: "Or'",
+  name: "Or",
   pattern: /(\|)/,
   label: "'|'",
   categories: [op.LogicalOperator],
