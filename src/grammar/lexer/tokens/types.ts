@@ -11,42 +11,42 @@ export const PrimitiveTypes = TOKEN({
 
 export const RealType = TOKEN({
   name: "RealType",
-  pattern: /\b(real|reais)\b/,
+  pattern: /\b(rea(l|is))\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });
 
 export const IntegerType = TOKEN({
   name: "IntegerType",
-  pattern: /\b(int|integer|integers|inteiro|inteiros)\b/,
+  pattern: /\b(int((eger[s]?)|(eiro[s]?))?)\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });
 
 export const CharType = TOKEN({
   name: "CharType",
-  pattern: /\b(char|character|caractere)\b/,
+  pattern: /\b((char(acter)?)|caractere)\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });
 
 export const TextType = TOKEN({
   name: "TextType",
-  pattern: /\b(string|text|texto)\b/,
+  pattern: /\b(string|text[o]?)\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });
 
 export const BooleanType = TOKEN({
   name: "BooleanType",
-  pattern: /\b(bool|boolean|booleano|logical|logic|lógico|logico)\b/,
+  pattern: /\b((bool(ean[o]?)?)|(logic(al|o)?)|lógico)\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });
 
 export const ArrayType = TOKEN({
   name: "ArrayType",
-  pattern: /\b(array|arranjo|list|lista|matrix|matriz)\b/,
+  pattern: /\b(arra(y|njo)|list[a]?|matri[x|z])\b/,
   textmateScope,
 });
 

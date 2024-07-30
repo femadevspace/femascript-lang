@@ -29,13 +29,13 @@ export const ConstantKeyword = TOKEN({
 
 export const VariableKeyword = TOKEN({
   name: "Variable",
-  pattern: /\b(VARIABLES|VARIAVEIS|VARIÁVEIS|VAR)/,
+  pattern: /\b(VARIABLES|VARI[AÁ]VEIS|VAR)/,
   textmateScope: "storage.type",
 });
 
 export const StartKeyword = TOKEN({
   name: "Start",
-  pattern: /\b(START|INICIO|INÍCIO)/,
+  pattern: /\b(START|INIC[IÍ]O)/,
   textmateScope: "keyword.scope.geral",
 });
 
@@ -47,7 +47,7 @@ export const EndKeyword = TOKEN({
 
 export const ElseKeyword = TOKEN({
   name: "Else",
-  pattern: /\b(ELSE|SENAO|SENÃO)/,
+  pattern: /\b(ELSE|SEN[AÃ]O)/,
   textmateScope: "keyword.control.conditional",
 });
 
@@ -59,13 +59,13 @@ export const IfKeyword = TOKEN({
 
 export const ThenKeyword = TOKEN({
   name: "Then",
-  pattern: /\b(THEN|ENTAO|ENTÃO)/,
+  pattern: /\b(THEN|ENT[AÃ]O)/,
   textmateScope: "keyword.conditional",
 });
 
 export const DoKeyword = TOKEN({
   name: "Do",
-  pattern: /\b(DO|FACA|FAÇA)/,
+  pattern: /\b(DO|FA[CÇ]A)/,
   textmateScope: "keyword.control.loop",
 });
 
@@ -101,7 +101,7 @@ export const DefaultKeyword = TOKEN({
 
 export const NotKeyword = TOKEN({
   name: "NotKeyword",
-  pattern: /\b(not|nao|não)/,
+  pattern: /\b(not|n[aã]o)/,
   label: "'not'",
   categories: [UnaryPrefixOperator],
   textmateScope: "keyword.operator.logical",
