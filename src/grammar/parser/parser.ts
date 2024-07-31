@@ -184,7 +184,6 @@ export class AlgoritmoLanguageParser extends CstParser {
           ALT: () => {
             this.CONSUME(lexer.Colon);
             this.SUBRULE(this.statement);
-            this.CONSUME(lexer.SemiColon);
           },
         },
       ]);
