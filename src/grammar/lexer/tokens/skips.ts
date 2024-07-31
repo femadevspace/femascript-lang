@@ -13,12 +13,20 @@ export const BlockComment = TOKEN({
   name: "BlockComment",
   pattern: makePattern("{{blockcomment}}"),
   group: Lexer.SKIPPED,
-  skipTextmateScope: true,
+  textmateScope: {
+    name: "comment.block",
+    begin: "/\\*",
+    end: "\\*/",
+  },
 });
 
 export const LineComment = TOKEN({
   name: "LineComment",
   pattern: /(\/\/).*(\n|\r|\f)*/,
   group: Lexer.SKIPPED,
-  skipTextmateScope: true,
+  textmateScope: {
+    name: "comment.line",
+    begin: "//|#",
+    end: "\n",
+  },
 });

@@ -26,7 +26,18 @@ export const StringLiteral = TOKEN({
   name: "StringLiteral",
   pattern: makePattern("{{string1}}|{{string2}}"),
   categories: [Literal],
-  textmateScope: "string",
+  textmateScope: {
+    repository: "strings",
+    name: "string.quoted.double",
+    begin: '"',
+    end: '"',
+    patterns: [
+      {
+        name: "constant.character.escape",
+        match: "\\\\.",
+      },
+    ],
+  },
 });
 
 export const True = TOKEN({
