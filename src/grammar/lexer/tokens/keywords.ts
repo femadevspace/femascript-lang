@@ -108,14 +108,14 @@ export const NotKeyword = TOKEN({
 });
 
 export const OrKeyword = TOKEN({
-  name: "Or",
+  name: "OrKeyword",
   pattern: /\b(OR|OU)\b/,
   categories: [LogicalOperator],
   textmateScope: "keyword.operator.logical",
 });
 
 export const AndKeyword = TOKEN({
-  name: "And",
+  name: "AndKeyword",
   pattern: /\b(AND|E)\b/,
   categories: [LogicalOperator],
   textmateScope: "keyword.operator.logical",
