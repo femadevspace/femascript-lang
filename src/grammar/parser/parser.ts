@@ -218,17 +218,15 @@ export class AlgoritmoLanguageParser extends CstParser {
   binaryExpression = this.RULE("binaryExpression", () => {
     this.SUBRULE(this.unaryExpression);
 
-    this.OPTION(() => {
-      this.CONSUME(lexer.BinaryOperator);
-      this.SUBRULE2(this.unaryExpression);
+    this.MANY({
+      DEF: () => {
+        this.CONSUME(lexer.BinaryOperator);
+        this.SUBRULE2(this.unaryExpression);
+      },
     });
   });
 
   unaryExpression = this.RULE("unaryExpression", () => {
-    this.SUBRULE(this.primaryExpression);
-  });
-
-  primaryExpression = this.RULE("primaryExpression", () => {
     this.OR([
       { ALT: () => this.CONSUME(lexer.Literal) },
       { ALT: () => this.SUBRULE(this.variableAccess) },
