@@ -56,14 +56,6 @@ export const NotEquals = TOKEN({
   textmateScope: "keyword.operator.comparison",
 });
 
-export const Greater = TOKEN({
-  name: "Greater",
-  pattern: /(>)/,
-  label: "'>'",
-  categories: [op.RelationalOperator],
-  textmateScope: "keyword.operator.relational",
-});
-
 export const GreaterEquals = TOKEN({
   name: "GreaterEquals",
   pattern: /(>=)/,
@@ -72,10 +64,10 @@ export const GreaterEquals = TOKEN({
   textmateScope: "keyword.operator.relational",
 });
 
-export const Less = TOKEN({
-  name: "Less",
-  pattern: /(<)/,
-  label: "'<'",
+export const Greater = TOKEN({
+  name: "Greater",
+  pattern: /(>)/,
+  label: "'>'",
   categories: [op.RelationalOperator],
   textmateScope: "keyword.operator.relational",
 });
@@ -84,6 +76,14 @@ export const LessEquals = TOKEN({
   name: "LessEquals",
   pattern: /(<=)/,
   label: "'<='",
+  categories: [op.RelationalOperator],
+  textmateScope: "keyword.operator.relational",
+});
+
+export const Less = TOKEN({
+  name: "Less",
+  pattern: /(<)/,
+  label: "'<'",
   categories: [op.RelationalOperator],
   textmateScope: "keyword.operator.relational",
 });
