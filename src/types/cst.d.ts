@@ -36,10 +36,10 @@ export interface ConstantsDeclaratorsCstNode extends CstNode {
 
 export type ConstantsDeclaratorsCstChildren = {
   Constant: IToken[];
-  Identifier: IToken[];
-  AssignmentOperator: IToken[];
-  expression: ExpressionCstNode[];
-  SemiColon: (IToken)[];
+  Identifier?: IToken[];
+  AssignmentOperator?: IToken[];
+  expression?: ExpressionCstNode[];
+  SemiColon?: IToken[];
 };
 
 export interface VariablesDeclaratorsCstNode extends CstNode {
@@ -49,8 +49,8 @@ export interface VariablesDeclaratorsCstNode extends CstNode {
 
 export type VariablesDeclaratorsCstChildren = {
   Variable: IToken[];
-  variableDeclarator: VariableDeclaratorCstNode[];
-  SemiColon: (IToken)[];
+  variableDeclarator?: VariableDeclaratorCstNode[];
+  SemiColon?: IToken[];
 };
 
 export interface ProgramCstNode extends CstNode {
@@ -214,7 +214,6 @@ export type SwitchStatementCstChildren = {
   block?: (BlockCstNode)[];
   Colon?: IToken[];
   statement?: StatementCstNode[];
-  SemiColon?: IToken[];
   Default?: IToken[];
   RCurly: IToken[];
 };
@@ -256,15 +255,7 @@ export interface UnaryExpressionCstNode extends CstNode {
 }
 
 export type UnaryExpressionCstChildren = {
-  primaryExpression: PrimaryExpressionCstNode[];
-};
-
-export interface PrimaryExpressionCstNode extends CstNode {
-  name: "primaryExpression";
-  children: PrimaryExpressionCstChildren;
-}
-
-export type PrimaryExpressionCstChildren = {
+  Literal?: IToken[];
   variableAccess?: VariableAccessCstNode[];
   parenthesisExpression?: ParenthesisExpressionCstNode[];
 };
@@ -387,7 +378,6 @@ export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
   ternaryExpression(children: TernaryExpressionCstChildren, param?: IN): OUT;
   binaryExpression(children: BinaryExpressionCstChildren, param?: IN): OUT;
   unaryExpression(children: UnaryExpressionCstChildren, param?: IN): OUT;
-  primaryExpression(children: PrimaryExpressionCstChildren, param?: IN): OUT;
   parenthesisExpression(children: ParenthesisExpressionCstChildren, param?: IN): OUT;
   assignmentExpression(children: AssignmentExpressionCstChildren, param?: IN): OUT;
   printExpression(children: PrintExpressionCstChildren, param?: IN): OUT;
@@ -420,7 +410,6 @@ export type CstNodeTypes = {
   ternaryExpression: TernaryExpressionCstNode;
   binaryExpression: BinaryExpressionCstNode;
   unaryExpression: UnaryExpressionCstNode;
-  primaryExpression: PrimaryExpressionCstNode;
   parenthesisExpression: ParenthesisExpressionCstNode;
   assignmentExpression: AssignmentExpressionCstNode;
   printExpression: PrintExpressionCstNode;
