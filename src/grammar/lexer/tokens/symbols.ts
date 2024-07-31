@@ -7,7 +7,7 @@ export const ArrowLeft = TOKEN({
   pattern: /(<-)/,
   label: "'<-'",
   categories: [op.AssignmentOperator],
-  textmateScope: "keyword.operator.relational",
+  textmateScope: "keyword.operator.assignment",
 });
 
 // =========== Misc Symbols ===========
