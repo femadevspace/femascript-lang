@@ -1,12 +1,13 @@
 import "@/grammar/lexer";
-import * as tokensDefinitionsVariableNames from "@/grammar/lexer/tokens";
+import { getTokens } from "@/grammar/lexer";
+import * as tokensWithVariableNames from "@/grammar/lexer/tokens";
 
 const PARSER_STARTS_ON = "class AlgoritmoLanguageParser extends CstParser {";
 
 const generatePlaygroundCode = async () => {
   const categoriesNames = Array.from(
     new Set(
-      Object.values(tokensDefinitionsVariableNames)
+      Object.values(tokensWithVariableNames)
         .map(({ CATEGORIES }) =>
           CATEGORIES && CATEGORIES.length > 0
             ? CATEGORIES.map(({ name }) => name)
@@ -17,26 +18,35 @@ const generatePlaygroundCode = async () => {
     )
   );
 
-  const tokensDefinitions = Object.entries(tokensDefinitionsVariableNames)
-    .sort(([a], [b]) => {
-      const aIsCategory = categoriesNames.includes(a);
-      const bIsCategory = categoriesNames.includes(b);
-      const isPriority = (_: string) => _ === "BinaryOperator";
+  const tokensSequence = new Set<string>();
+  categoriesNames.forEach((_) => tokensSequence.add(_));
 
-      if (isPriority(a)) return -1;
-      if (isPriority(b)) return 1;
+  getTokens().forEach(({ name, PATTERN }) => {
+    const variableName = Object.entries(tokensWithVariableNames).find(
+      ([_, comparisonToken]) =>
+        comparisonToken.name === name || comparisonToken.PATTERN === PATTERN
+    )?.[0];
 
-      if (aIsCategory && bIsCategory)
-        return categoriesNames.indexOf(a) - categoriesNames.indexOf(b);
-      if (aIsCategory) return -1;
-      if (bIsCategory) return 1;
-      return 0;
-    })
-    .map(([variableName, { name, PATTERN, LABEL, CATEGORIES, GROUP }]) => {
+    if (!variableName) throw new Error(`Token ${name} not found.`);
+
+    tokensSequence.add(variableName);
+  });
+
+  const tokensDefinitions = Array.from(tokensSequence)
+    .sort((a, b) =>
+      // Always put BinaryOperator at the beginning
+      a === "BinaryOperator" ? -1 : b === "BinaryOperator" ? 1 : 0
+    )
+    .map((_) => {
+      console.log(_);
+      const tokenVariableName = _ as keyof typeof tokensWithVariableNames;
+      const { name, PATTERN, LABEL, CATEGORIES, GROUP } =
+        tokensWithVariableNames[tokenVariableName];
+
       const solvedCategories = (
         CATEGORIES ? CATEGORIES.map(({ name }) => name) : ([] as string[])
       ).join(", ");
-      let result = `const ${variableName} = createToken({name: "${name}"`;
+      let result = `const ${tokenVariableName} = createToken({name: "${name}"`;
 
       if ((PATTERN as RegExp).source === /NOT_APPLICABLE/.source)
         result += ", pattern: Lexer.NA";
@@ -50,6 +60,22 @@ const generatePlaygroundCode = async () => {
 
       return result;
     });
+
+  Object.entries(tokensWithVariableNames).sort(([a], [b]) => {
+    const aIsCategory = categoriesNames.includes(a);
+    const bIsCategory = categoriesNames.includes(b);
+    const isPriority = (_: string) =>
+      _ === "BinaryOperator" || _ !== "Identifier";
+
+    if (isPriority(a)) return -1;
+    if (isPriority(b)) return 1;
+
+    if (aIsCategory && bIsCategory)
+      return categoriesNames.indexOf(a) - categoriesNames.indexOf(b);
+    if (aIsCategory) return -1;
+    if (bIsCategory) return 1;
+    return a.localeCompare(b);
+  });
 
   const rawParserText = await Bun.file("./src/grammar/parser/parser.ts").text();
   const parser = rawParserText
