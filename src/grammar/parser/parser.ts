@@ -33,27 +33,21 @@ export class AlgoritmoLanguageParser extends CstParser {
   constantsDeclarators = this.RULE("constantsDeclarators", () => {
     this.CONSUME(lexer.ConstantKeyword);
 
-    this.AT_LEAST_ONE_SEP({
-      SEP: lexer.SemiColon,
-      DEF: () => {
-        this.CONSUME(lexer.Identifier);
-        this.CONSUME(lexer.AssignmentOperator);
-        this.SUBRULE(this.expression);
-      },
+    this.MANY(() => {
+      this.CONSUME(lexer.Identifier);
+      this.CONSUME(lexer.AssignmentOperator);
+      this.SUBRULE(this.expression);
+      this.CONSUME(lexer.SemiColon);
     });
-
-    this.CONSUME(lexer.SemiColon);
   });
 
   variablesDeclarators = this.RULE("variablesDeclarators", () => {
     this.CONSUME(lexer.VariableKeyword);
 
-    this.AT_LEAST_ONE_SEP({
-      DEF: () => this.SUBRULE(this.variableDeclarator),
-      SEP: lexer.SemiColon,
+    this.MANY(() => {
+      this.SUBRULE(this.variableDeclarator);
+      this.CONSUME(lexer.SemiColon);
     });
-
-    this.CONSUME(lexer.SemiColon);
   });
 
   program = this.RULE("program", () => {
