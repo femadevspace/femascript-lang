@@ -38,7 +38,6 @@ const generatePlaygroundCode = async () => {
       a === "BinaryOperator" ? -1 : b === "BinaryOperator" ? 1 : 0
     )
     .map((_) => {
-      console.log(_);
       const tokenVariableName = _ as keyof typeof tokensWithVariableNames;
       const { name, PATTERN, LABEL, CATEGORIES, GROUP } =
         tokensWithVariableNames[tokenVariableName];
