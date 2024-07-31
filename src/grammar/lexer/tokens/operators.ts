@@ -4,7 +4,7 @@ import { createAndRegisterToken as TOKEN } from "../tokens-registry";
 export const AssignmentOperator = TOKEN({
   name: "AssignmentOperator",
   pattern: Lexer.NA,
-  textmateScope: "keyword.operator.assignment",
+  skipTextmateScope: true,
 });
 
 export const BinaryOperator = TOKEN({
