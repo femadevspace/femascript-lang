@@ -1,7 +1,7 @@
-import { AlgoritmoLanguageParser } from "@/grammar/parser";
+import { FemaScriptLanguageParser } from "@/grammar/parser";
 import { generateCstDts, type Rule } from "chevrotain";
 
-const parser = new AlgoritmoLanguageParser();
+const parser = new FemaScriptLanguageParser();
 
 const generateCstNodeTypes = () =>
   parser

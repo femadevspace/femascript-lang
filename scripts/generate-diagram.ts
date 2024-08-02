@@ -1,4 +1,4 @@
-import { AlgoritmoLanguageParser } from "@/grammar/parser";
+import { FemaScriptLanguageParser } from "@/grammar/parser";
 import { createSyntaxDiagramsCode, Rule } from "chevrotain";
 import { watch } from "fs/promises";
 
@@ -41,7 +41,7 @@ const appendHtml = (raw: string) => {
 };
 
 const generate = async () => {
-  const parser = () => new AlgoritmoLanguageParser();
+  const parser = () => new FemaScriptLanguageParser();
   const productions = parser().getSerializedGastProductions();
 
   productions.forEach((production) =>

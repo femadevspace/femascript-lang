@@ -2,7 +2,7 @@ import "@/grammar/lexer";
 import { getTokens } from "@/grammar/lexer";
 import * as tokensWithVariableNames from "@/grammar/lexer/tokens";
 
-const PARSER_STARTS_ON = "class AlgoritmoLanguageParser extends CstParser {";
+const PARSER_STARTS_ON = "class FemaScriptLanguageParser extends CstParser {";
 
 const generatePlaygroundCode = async () => {
   const categoriesNames = Array.from(
@@ -97,7 +97,7 @@ const generatePlaygroundCode = async () => {
 
   ${tokensDefinitions.join("\n  ")}
 
-  const AlgoritmoLexer = new Lexer(allTokens, {
+  const FemaScriptLexer = new Lexer(allTokens, {
     positionTracking: "onlyStart",
   });
 
@@ -108,8 +108,8 @@ const generatePlaygroundCode = async () => {
 
   // for the playground to work the returned object must contain these fields
   return {
-    lexer: AlgoritmoLexer,
-    parser: AlgoritmoLanguageParser,
+    lexer: FemaScriptLexer,
+    parser: FemaScriptLanguageParser,
     defaultRule: "algorithm",
   };
 })();`;
