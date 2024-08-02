@@ -3,11 +3,11 @@ import * as lexer from "@/grammar/lexer/tokens";
 import { CstParser } from "chevrotain";
 
 export type EntryPoint = Exclude<
-  keyof AlgoritmoLanguageParser,
+  keyof FemaScriptLanguageParser,
   keyof CstParser
 >;
 
-export class AlgoritmoLanguageParser extends CstParser {
+export class FemaScriptLanguageParser extends CstParser {
   // ======================= ALGORITHM STRUCTURE RULES =======================
   algorithm = this.RULE("algorithm", () => {
     this.SUBRULE(this.header);
