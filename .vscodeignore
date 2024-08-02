@@ -1,7 +1,22 @@
 .vscode/**
-typings/**
-out/test/**
+.vscode-test/**
+.vscode-test-web/**
 src/**
-**/*.map
+out/**
+node_modules/**
+build/**
 .gitignore
+**/tsconfig.json
+**/.eslintrc.json
+**/*.map
+**/*.ts
+.gitattributes
 tsconfig.json
+dist/web/test/**
+
+# project
+.github/
+!node_modules/prettier
+test-workspace/
+scripts/
+commitlint.config.js
