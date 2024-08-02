@@ -1,9 +1,9 @@
 import { lexer } from "@/grammar/lexer";
-import { AlgoritmoLanguageParser, type EntryPoint } from "@/grammar/parser";
+import { FemaScriptLanguageParser, type EntryPoint } from "@/grammar/parser";
 import type { CstNodeTypes } from "@/types/cst";
 import { handleLexErrors, handleParserErrors } from "@/utils";
 
-const parser = new AlgoritmoLanguageParser();
+const parser = new FemaScriptLanguageParser();
 
 const visitor = parser.getBaseCstVisitorConstructor();
 const visitorWithDefaults = parser.getBaseCstVisitorConstructorWithDefaults();
