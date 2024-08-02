@@ -60,7 +60,7 @@ export const IfKeyword = TOKEN({
 export const ThenKeyword = TOKEN({
   name: "Then",
   pattern: /\b(THEN|ENT[AÃ]O)\b/,
-  textmateScope: "keyword.conditional",
+  textmateScope: "keyword.control.conditional",
 });
 
 export const DoKeyword = TOKEN({
