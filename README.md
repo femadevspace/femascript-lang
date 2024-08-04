@@ -42,7 +42,7 @@ code --install-extension fema-devspace.femascript-lang
 
 Você já deve estar familiarizado com a estrutura básica de um algoritmo. Agora, vamos transferir esse conhecimento para o ambiente digital! Após instalar a extensão, crie um arquivo com o nome de sua escolha, mas certifique-se de que ele tenha uma das seguintes extensões: `.alg`, `.algoritmo`, `.fema` ou `.femascript`
 
-Se tudo estiver correto, você verá a logo da FEMA ![FemaScript Language Logo](https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/femascript-logo.png) no ícone do arquivo. Agora, vamos inserir a estrutura básica do seu algoritmo
+Se tudo estiver correto, você verá a logo da <img src="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/femascript-logo.png" alt="Logo da linguagem FemaScript" height="20"> FEMA no ícone do arquivo. Agora, vamos inserir a estrutura básica do seu algoritmo
 
 ![Exemplo de código em FemaScript](https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/screenshots/example-code.png)
 
