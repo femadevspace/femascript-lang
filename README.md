@@ -2,8 +2,10 @@
 
 FemaScript (de codenome 'Almiritmo') é uma linguagem de programação desenvolvida para a disciplina de Algoritmo e Estrutura de Dados na [FEMA](https://fema.edu.br). Inspirada no Portugol, a FemaScript vem com nossa própria "cara", ajustada para melhor atender às necessidades do currículo acadêmico e facilitar o aprendizado dos alunos em seus primeiros passos na programação.
 
-<img src="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/femascript-banner-dark.png#gh-dark-mode-only" alt="Banner da linguagem FemaScript para o tema escuro" width="100%">
-<img src="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/femascript-banner-light.png#gh-light-mode-only" alt="Banner da linguagem FemaScript para o tema claro" width="100%">
+<picture>
+  <source srcset="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/femascript-banner-dark.png#gh-dark-mode-only" media="(prefers-color-scheme: dark)">
+  <img src="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/femascript-banner-light.png#gh-light-mode-only" alt="Banner da linguagem FemaScript">
+</picture>
 
 <h2 align='center'>🔭 Visão Geral</h2>
 
