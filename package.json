@@ -1,10 +1,10 @@
 {
-  "name": "algoritmo-vscode-extension",
-  "displayName": "FEMA - Linguagem de Algoritmo",
-  "description": "Suporte a linguaguem Algoritmo (inspirado em Portugol) utilizado na Fundação Educacional Do Município De Assis (FEMA).",
+  "name": "femascript-lang",
+  "displayName": "FemaScript - Linguagem de Algoritmo",
+  "description": "Suporte a linguaguem FemaScript (inspirado em Portugol) utilizado na Fundação Educacional Do Município De Assis (FEMA).",
   "version": "0.1.0",
-  "icon": "assets/fema-logo.png",
-  "publisher": "fema",
+  "icon": "assets/femascript-logo.png",
+  "publisher": "fema-devspace",
   "pricing": "Free",
   "categories": [
     "Programming Languages",
@@ -12,9 +12,11 @@
     "Formatters"
   ],
   "keywords": [
+    "femascript",
     "portugol",
     "algoritmo",
     "algorithm",
+    "almiritmo",
     "fema",
     "ciência da computação",
     "computação",
@@ -30,29 +32,73 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/femadevspace/algoritmo-vscode-extension"
+    "url": "https://github.com/femadevspace/femascript-lang"
   },
   "bugs": {
-    "url": "https://github.com/femadevspace/algoritmo-vscode-extension/issues"
+    "url": "https://github.com/femadevspace/femascript-lang/issues"
   },
-
-  "module": "./src/index.ts",
-  "type": "module",
-
+  "main": "./extension/extension.js",
   "engines": {
-    "vscode": "^1.75.0"
+    "vscode": "^1.92.0"
   },
-  
+  "contributes": {
+    "languages": [
+      {
+        "id": "femascript",
+        "aliases": [
+          "FemaScript",
+          "Algoritmo",
+          "Algorithm",
+          "Almiritmo"
+        ],
+        "extensions": [
+          ".alg",
+          ".algoritmo",
+          ".fema",
+          ".femascript"
+        ],
+        "configuration": "./extension/language-settings.json",
+        "icon": {
+          "light": "./assets/femascript-icon-light.svg",
+          "dark": "./assets/femascript-icon-dark.svg"
+        },
+        "firstLine": "\\b(ALGORIT(HM|MO))\\b"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "femascript",
+        "scopeName": "source.femascript",
+        "path": "./extension/highlight/femascript-grammar.tmLanguage.json"
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "femascript-icon",
+        "label": "FemaScript Icon",
+        "path": "./extension/icons/femascript-icon.json"
+      }
+    ]
+  },
+  "configurationDefaults": {
+    "[femascript]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "femascript-lang"
+    }
+  },
+  "activationEvents": [
+    "onCommand:femascript-lang.format"
+  ],
   "scripts": {
-    "dev": "bun run ./src/scripts/generate-diagram.ts",
-    "prepublish": "bun run ./src/scripts/generate-dts.ts",
-    "debug:playground": "bun run ./src/scripts/debug/generate-playground.ts"
+    "dev": "bun run ./scripts/generate-diagram.ts",
+    "debug:playground": "bun run ./scripts/debug/generate-playground.ts",
+    "compile": "tsc -p ./",
+    "vscode:prepublish": "bun run compile && bun run ./scripts/prepublish/index.ts"
   },
-  
   "types": "./src/types/cst.d.ts",
-  
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/vscode": "^1.92.0",
     "vitest": "^2.0.4"
   },
   "peerDependencies": {
@@ -60,6 +106,7 @@
   },
   "dependencies": {
     "chevrotain": "^11.0.3",
+    "vite-tsconfig-paths": "^4.3.2",
     "xregexp": "^5.1.1"
   }
 }
