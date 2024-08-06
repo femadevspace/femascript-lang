@@ -1,6 +1,6 @@
-import { FemaScriptLanguageParser } from "@/grammar/parser";
 import { createSyntaxDiagramsCode, Rule } from "chevrotain";
 import { watch } from "fs/promises";
+import { FemaScriptLanguageParser } from "../../src/grammar/parser";
 
 /**
  * ! This script seams to be broken. !
