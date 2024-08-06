@@ -1,18 +1,20 @@
 {
   "compilerOptions": {
     // Enable latest features
-    "lib": ["ESNext", "DOM"],
+    "lib": ["ESNext"],
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleDetection": "force",
-    "jsx": "react-jsx",
     "allowJs": true,
 
+    // Output
+    "outDir": "extension",
+    "rootDir": "src",
+    "sourceMap": true,
+
     // Bundler mode
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "noEmit": true,
+    "allowImportingTsExtensions": false,
+    "noEmit": false,
 
     // Best practices
     "strict": true,
@@ -32,5 +34,13 @@
       "@/*": ["*"]
     }
   },
-  "exclude": ["node_modules", "src/**/*.spec.ts"]
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    ".vscode",
+    "src/**/*.spec.ts",
+    "scripts",
+    "dist",
+    "extension"
+  ]
 }
