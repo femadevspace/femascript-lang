@@ -2,8 +2,8 @@
 
 FemaScript (de codenome 'Almiritmo') é uma linguagem de programação desenvolvida para a disciplina de Algoritmo e Estrutura de Dados na [FEMA](https://fema.edu.br). Inspirada no Portugol, a FemaScript vem com nossa própria "cara", ajustada para melhor atender às necessidades do currículo acadêmico e facilitar o aprendizado dos alunos em seus primeiros passos na programação.
 
-![FemaScript Language Banner](https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/femascript-banner-dark.png#gh-dark-mode-only)
-![FemaScript Language Banner](https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/femascript-banner-light.png#gh-light-mode-only)
+<img src="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/femascript-banner-dark.png#gh-dark-mode-only" alt="Banner da linguagem FemaScript para o tema escuro" width="100%">
+<img src="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/femascript-banner-light.png#gh-light-mode-only" alt="Banner da linguagem FemaScript para o tema claro" width="100%">
 
 <h2 align='center'>🔭 Visão Geral</h2>
 
@@ -51,7 +51,7 @@ O algoritmo para 'calcular circunferência' apresentado acima inclui vários ele
 Enquanto a Wiki não é publicada, aqui está uma tabela de instruções que você utilizar.
 
 <h3 align='center'>Instruções, suas alternativas e sinônimos</h3>
-<table>
+<table align='center'>
   <thead>
     <tr>
       <th>Instrução</th>
@@ -98,7 +98,7 @@ Enquanto a Wiki não é publicada, aqui está uma tabela de instruções que voc
     <tr><td>Operadores Lógicos</td><td><code>~</code> | <code>!</code> | <code>?</code> | <code>&</code> | <code>&&</code> | <code>|</code> | <code>||</code></td></tr>
     <tr><td colspan=2 align='center'>🪄 Extras</td></tr>
     <tr>
-      <td>comentários</td>
+      <td>Comentários</td>
       <td>
         Em linha: <code>// comentário</code><br>
         Em bloco: <code>/* comentário */</code>
@@ -108,7 +108,7 @@ Enquanto a Wiki não é publicada, aqui está uma tabela de instruções que voc
 </table>
 
 <h3 align='center'>Estrutura de Declarações (statements)</h3>
-<table>
+<table align='center'>
   <thead>
     <tr>
       <th>Declaração</th>
@@ -144,6 +144,8 @@ Estamos abertos a contribuições de alunos e interessados. Para contribuir:
 2. Crie um branch para suas modificações (`git checkout -b minha-modificacao`).
 3. Envie suas modificações para o branch (`git push origin minha-modificacao`).
 4. Abra um [pull request](https://github.com/femadevspace/femascript-lang/pulls) detalhando suas alterações.
+
+> **Atenção:** Este projeto foi desenvolvido utilizando a ferramenta [Bun](https://bun.sh/). Para executá-lo corretamente, por favor, instale as dependências (`bun install`) e utilize os comandos específicos do Bun, como `bun run dev`, para rodar o projeto. _Run with bun!_
 
 <h2 align='center'>✨ Créditos</h2>
 
