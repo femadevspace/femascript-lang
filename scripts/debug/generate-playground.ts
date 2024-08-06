@@ -1,6 +1,6 @@
 import "@/grammar/lexer";
-import { getTokens } from "@/grammar/lexer";
-import * as tokensWithVariableNames from "@/grammar/lexer/tokens";
+import { getTokens } from "../../src/grammar/lexer";
+import * as tokensWithVariableNames from "../../src/grammar/lexer/tokens";
 
 const PARSER_STARTS_ON = "class FemaScriptLanguageParser extends CstParser {";
 
