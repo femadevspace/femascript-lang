@@ -21,6 +21,12 @@ export const AlgorithmKeyword = TOKEN({
   textmateScope: "keyword.scope.algorithm",
 });
 
+export const TypeKeyword = TOKEN({
+  name: "Type",
+  pattern: /\b(TIPO|TYPE)\b/,
+  textmateScope: "storage.type",
+});
+
 export const ConstantKeyword = TOKEN({
   name: "Constant",
   pattern: /\b(CONST(ANT(S|ES))?)\b/,
