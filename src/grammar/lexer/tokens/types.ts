@@ -55,3 +55,9 @@ export const OfType = TOKEN({
   pattern: /\b(of|de)\b/,
   textmateScope,
 });
+
+export const EnumType = TOKEN({
+  name: "Enum",
+  pattern: /\b(enum(era([çc][ãa]o|te))?)\b/,
+  textmateScope: "storage.type.enum",
+});
