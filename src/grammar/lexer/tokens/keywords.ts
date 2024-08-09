@@ -1,4 +1,4 @@
-import { resolveCategories } from "@/utils/tokens";
+import { resolveCategories } from "@/utils";
 import { Lexer } from "chevrotain";
 import { createAndRegisterToken, type TokenConfig } from "../tokens-registry";
 import { LogicalOperator, UnaryPrefixOperator } from "./operators";
