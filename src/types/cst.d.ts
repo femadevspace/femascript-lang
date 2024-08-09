@@ -13,6 +13,7 @@ export interface AlgorithmCstNode extends CstNode {
 
 export type AlgorithmCstChildren = {
   header: HeaderCstNode[];
+  typesDeclarators?: TypesDeclaratorsCstNode[];
   constantsDeclarators?: ConstantsDeclaratorsCstNode[];
   variablesDeclarators?: VariablesDeclaratorsCstNode[];
   program: ProgramCstNode[];
@@ -27,6 +28,16 @@ export type HeaderCstChildren = {
   Algorithm: IToken[];
   Identifier: IToken[];
   SemiColon?: IToken[];
+};
+
+export interface TypesDeclaratorsCstNode extends CstNode {
+  name: "typesDeclarators";
+  children: TypesDeclaratorsCstChildren;
+}
+
+export type TypesDeclaratorsCstChildren = {
+  Type: IToken[];
+  enumDeclarator?: EnumDeclaratorCstNode[];
 };
 
 export interface ConstantsDeclaratorsCstNode extends CstNode {
@@ -333,6 +344,23 @@ export type VariableAccessCstChildren = {
   arrayAccessSuffix?: ArrayAccessSuffixCstNode[];
 };
 
+export interface EnumDeclaratorCstNode extends CstNode {
+  name: "enumDeclarator";
+  children: EnumDeclaratorCstChildren;
+}
+
+export type EnumDeclaratorCstChildren = {
+  Identifier: (IToken)[];
+  Colon: IToken[];
+  Enum: IToken[];
+  LCurly: IToken[];
+  AssignmentOperator?: IToken[];
+  NumberLiteral?: IToken[];
+  Comma?: IToken[];
+  RCurly: IToken[];
+  SemiColon: IToken[];
+};
+
 export interface ArrayAccessSuffixCstNode extends CstNode {
   name: "arrayAccessSuffix";
   children: ArrayAccessSuffixCstChildren;
@@ -359,6 +387,7 @@ export type BlockCstChildren = {
 export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
   algorithm(children: AlgorithmCstChildren, param?: IN): OUT;
   header(children: HeaderCstChildren, param?: IN): OUT;
+  typesDeclarators(children: TypesDeclaratorsCstChildren, param?: IN): OUT;
   constantsDeclarators(children: ConstantsDeclaratorsCstChildren, param?: IN): OUT;
   variablesDeclarators(children: VariablesDeclaratorsCstChildren, param?: IN): OUT;
   program(children: ProgramCstChildren, param?: IN): OUT;
@@ -384,6 +413,7 @@ export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
   readExpression(children: ReadExpressionCstChildren, param?: IN): OUT;
   variableDeclarator(children: VariableDeclaratorCstChildren, param?: IN): OUT;
   variableAccess(children: VariableAccessCstChildren, param?: IN): OUT;
+  enumDeclarator(children: EnumDeclaratorCstChildren, param?: IN): OUT;
   arrayAccessSuffix(children: ArrayAccessSuffixCstChildren, param?: IN): OUT;
   block(children: BlockCstChildren, param?: IN): OUT;
 }
@@ -391,6 +421,7 @@ export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
 export type CstNodeTypes = {
   algorithm: AlgorithmCstNode;
   header: HeaderCstNode;
+  typesDeclarators: TypesDeclaratorsCstNode;
   constantsDeclarators: ConstantsDeclaratorsCstNode;
   variablesDeclarators: VariablesDeclaratorsCstNode;
   program: ProgramCstNode;
@@ -416,6 +447,7 @@ export type CstNodeTypes = {
   readExpression: ReadExpressionCstNode;
   variableDeclarator: VariableDeclaratorCstNode;
   variableAccess: VariableAccessCstNode;
+  enumDeclarator: EnumDeclaratorCstNode;
   arrayAccessSuffix: ArrayAccessSuffixCstNode;
   block: BlockCstNode;
 };
