@@ -71,13 +71,6 @@
         "scopeName": "source.femascript",
         "path": "./extension/highlight/femascript-grammar.tmLanguage.json"
       }
-    ],
-    "iconThemes": [
-      {
-        "id": "femascript-icon",
-        "label": "FemaScript Icon",
-        "path": "./extension/icons/femascript-icon.json"
-      }
     ]
   },
   "configurationDefaults": {
