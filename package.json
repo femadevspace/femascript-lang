@@ -85,7 +85,7 @@
   "scripts": {
     "dev": "bun run ./scripts/generate-diagram.ts",
     "debug:playground": "bun run ./scripts/debug/generate-playground.ts",
-    "compile": "tsc -p ./",
+    "compile": "tsc -b tsconfig.src.json",
     "vscode:prepublish": "bun run compile && bun run ./scripts/prepublish/index.ts"
   },
   "types": "./src/types/cst.d.ts",

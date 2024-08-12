@@ -3,27 +3,31 @@
     // Enable latest features
     "lib": ["ESNext"],
     "target": "ESNext",
-    "module": "CommonJS",
+    "module": "ESNext",
     "moduleDetection": "force",
     "allowJs": true,
 
     // Output
     "outDir": "extension",
-    "rootDir": "src",
+    "rootDir": ".",
     "sourceMap": true,
+    "moduleResolution": "Bundler",
+    "esModuleInterop": true,
 
     // Bundler mode
     "allowImportingTsExtensions": false,
-    "noEmit": false,
+    "noEmit": true,
 
     // Best practices
     "strict": true,
     "skipLibCheck": true,
     "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
 
     // Some stricter flags (disabled by default)
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": false,
 
     "typeRoots": ["./node_modules/@types", "./src/types"],
@@ -34,13 +38,6 @@
       "@/*": ["*"]
     }
   },
-  "include": ["src"],
-  "exclude": [
-    "node_modules",
-    ".vscode",
-    "src/**/*.spec.ts",
-    "scripts",
-    "dist",
-    "extension"
-  ]
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules", ".vscode", "scripts", "dist", "extension"]
 }
