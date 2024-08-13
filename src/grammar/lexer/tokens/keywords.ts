@@ -47,7 +47,7 @@ export const StartKeyword = TOKEN({
 
 export const EndKeyword = TOKEN({
   name: "End",
-  pattern: /\b(END|FIM)\b/,
+  pattern: /\b(END|FIM)\.?/,
   textmateScope: "keyword.scope.geral",
 });
 
