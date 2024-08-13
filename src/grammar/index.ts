@@ -5,8 +5,9 @@ import { handleLexErrors, handleParserErrors } from "@/utils";
 
 const parser = new FemaScriptLanguageParser();
 
-const visitor = parser.getBaseCstVisitorConstructor();
-const visitorWithDefaults = parser.getBaseCstVisitorConstructorWithDefaults();
+const BaseVisitor = parser.getBaseCstVisitorConstructor();
+const BaseVisitorWithDefaults =
+  parser.getBaseCstVisitorConstructorWithDefaults();
 
 const parse = <Entry extends EntryPoint = "algorithm">(
   inputText: string,
@@ -27,6 +28,6 @@ const parse = <Entry extends EntryPoint = "algorithm">(
 
 export default {
   parse,
-  visitor,
-  visitorWithDefaults,
+  BaseVisitor,
+  BaseVisitorWithDefaults,
 };
