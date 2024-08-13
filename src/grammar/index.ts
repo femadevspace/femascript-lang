@@ -12,17 +12,17 @@ const parse = <Entry extends EntryPoint = "algorithm">(
   inputText: string,
   entryPoint: Entry = "algorithm" as Entry
 ) => {
-  const { tokens, errors } = lexer.tokenize(inputText);
+  const { tokens, errors, groups } = lexer.tokenize(inputText);
 
   handleLexErrors(errors);
 
   parser.input = tokens;
 
-  const cst = parser[entryPoint]();
+  const cst = parser[entryPoint]() as CstNodeTypes[Entry];
 
   handleParserErrors(parser.errors);
 
-  return cst as CstNodeTypes[Entry];
+  return { cst, groups };
 };
 
 export default {
