@@ -91,7 +91,7 @@
     "dev": "bun run ./scripts/generate-diagram.ts",
     "debug:playground": "bun run ./scripts/debug/generate-playground.ts",
     "build": "tsc -b tsconfig.src.json && node esbuild.mjs",
-    "vscode:prepublish": "bun run build && bun run ./scripts/prepublish/index.ts"
+    "vscode:prepublish": "bun run ./scripts/prepublish/index.ts && bun run build"
   },
   "types": "./src/types/cst.d.ts",
   "devDependencies": {
