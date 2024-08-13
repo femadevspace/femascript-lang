@@ -244,20 +244,53 @@ export interface TernaryExpressionCstNode extends CstNode {
 }
 
 export type TernaryExpressionCstChildren = {
-  binaryExpression: BinaryExpressionCstNode[];
+  additionExpression: AdditionExpressionCstNode[];
   Question?: IToken[];
   expression?: (ExpressionCstNode)[];
   Colon?: IToken[];
 };
 
-export interface BinaryExpressionCstNode extends CstNode {
-  name: "binaryExpression";
-  children: BinaryExpressionCstChildren;
+export interface AdditionExpressionCstNode extends CstNode {
+  name: "additionExpression";
+  children: AdditionExpressionCstChildren;
 }
 
-export type BinaryExpressionCstChildren = {
+export type AdditionExpressionCstChildren = {
+  multiplicationExpression: (MultiplicationExpressionCstNode)[];
+  Plus?: IToken[];
+  Minus?: IToken[];
+};
+
+export interface MultiplicationExpressionCstNode extends CstNode {
+  name: "multiplicationExpression";
+  children: MultiplicationExpressionCstChildren;
+}
+
+export type MultiplicationExpressionCstChildren = {
+  logicalExpression: (LogicalExpressionCstNode)[];
+  Star?: IToken[];
+  Slash?: IToken[];
+  Modulo?: IToken[];
+};
+
+export interface LogicalExpressionCstNode extends CstNode {
+  name: "logicalExpression";
+  children: LogicalExpressionCstChildren;
+}
+
+export type LogicalExpressionCstChildren = {
+  relationalExpression: (RelationalExpressionCstNode)[];
+  LogicalOperator?: IToken[];
+};
+
+export interface RelationalExpressionCstNode extends CstNode {
+  name: "relationalExpression";
+  children: RelationalExpressionCstChildren;
+}
+
+export type RelationalExpressionCstChildren = {
   unaryExpression: (UnaryExpressionCstNode)[];
-  BinaryOperator?: IToken[];
+  RelationalOperator?: IToken[];
 };
 
 export interface UnaryExpressionCstNode extends CstNode {
@@ -266,6 +299,7 @@ export interface UnaryExpressionCstNode extends CstNode {
 }
 
 export type UnaryExpressionCstChildren = {
+  UnaryPrefixOperator?: IToken[];
   Literal?: IToken[];
   variableAccess?: VariableAccessCstNode[];
   parenthesisExpression?: ParenthesisExpressionCstNode[];
@@ -277,7 +311,6 @@ export interface ParenthesisExpressionCstNode extends CstNode {
 }
 
 export type ParenthesisExpressionCstChildren = {
-  UnaryPrefixOperator?: IToken[];
   LParen: IToken[];
   expression: ExpressionCstNode[];
   RParen: IToken[];
@@ -405,7 +438,10 @@ export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
   switchStatement(children: SwitchStatementCstChildren, param?: IN): OUT;
   expression(children: ExpressionCstChildren, param?: IN): OUT;
   ternaryExpression(children: TernaryExpressionCstChildren, param?: IN): OUT;
-  binaryExpression(children: BinaryExpressionCstChildren, param?: IN): OUT;
+  additionExpression(children: AdditionExpressionCstChildren, param?: IN): OUT;
+  multiplicationExpression(children: MultiplicationExpressionCstChildren, param?: IN): OUT;
+  logicalExpression(children: LogicalExpressionCstChildren, param?: IN): OUT;
+  relationalExpression(children: RelationalExpressionCstChildren, param?: IN): OUT;
   unaryExpression(children: UnaryExpressionCstChildren, param?: IN): OUT;
   parenthesisExpression(children: ParenthesisExpressionCstChildren, param?: IN): OUT;
   assignmentExpression(children: AssignmentExpressionCstChildren, param?: IN): OUT;
@@ -439,7 +475,10 @@ export type CstNodeTypes = {
   switchStatement: SwitchStatementCstNode;
   expression: ExpressionCstNode;
   ternaryExpression: TernaryExpressionCstNode;
-  binaryExpression: BinaryExpressionCstNode;
+  additionExpression: AdditionExpressionCstNode;
+  multiplicationExpression: MultiplicationExpressionCstNode;
+  logicalExpression: LogicalExpressionCstNode;
+  relationalExpression: RelationalExpressionCstNode;
   unaryExpression: UnaryExpressionCstNode;
   parenthesisExpression: ParenthesisExpressionCstNode;
   assignmentExpression: AssignmentExpressionCstNode;

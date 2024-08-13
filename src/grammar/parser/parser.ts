@@ -217,7 +217,7 @@ export class FemaScriptLanguageParser extends CstParser {
   });
 
   ternaryExpression = this.RULE("ternaryExpression", () => {
-    this.SUBRULE(this.binaryExpression);
+    this.SUBRULE(this.additionExpression);
 
     this.OPTION(() => {
       this.CONSUME(lexer.Question);
@@ -227,18 +227,60 @@ export class FemaScriptLanguageParser extends CstParser {
     });
   });
 
-  binaryExpression = this.RULE("binaryExpression", () => {
+  additionExpression = this.RULE("additionExpression", () => {
+    this.SUBRULE(this.multiplicationExpression);
+
+    this.MANY({
+      DEF: () => {
+        this.OR([
+          { ALT: () => this.CONSUME(lexer.Plus) },
+          { ALT: () => this.CONSUME(lexer.Minus) },
+        ]);
+        this.SUBRULE2(this.multiplicationExpression);
+      },
+    });
+  });
+
+  multiplicationExpression = this.RULE("multiplicationExpression", () => {
+    this.SUBRULE(this.logicalExpression);
+
+    this.MANY({
+      DEF: () => {
+        this.OR([
+          { ALT: () => this.CONSUME(lexer.Star) },
+          { ALT: () => this.CONSUME(lexer.Slash) },
+          { ALT: () => this.CONSUME(lexer.Modulo) },
+        ]);
+        this.SUBRULE2(this.logicalExpression);
+      },
+    });
+  });
+
+  logicalExpression = this.RULE("logicalExpression", () => {
+    this.SUBRULE(this.relationalExpression);
+
+    this.MANY({
+      DEF: () => {
+        this.CONSUME(lexer.LogicalOperator);
+        this.SUBRULE2(this.relationalExpression);
+      },
+    });
+  });
+
+  relationalExpression = this.RULE("relationalExpression", () => {
     this.SUBRULE(this.unaryExpression);
 
     this.MANY({
       DEF: () => {
-        this.CONSUME(lexer.BinaryOperator);
+        this.CONSUME(lexer.RelationalOperator);
         this.SUBRULE2(this.unaryExpression);
       },
     });
   });
 
   unaryExpression = this.RULE("unaryExpression", () => {
+    this.OPTION(() => this.CONSUME(lexer.UnaryPrefixOperator));
+
     this.OR([
       { ALT: () => this.CONSUME(lexer.Literal) },
       { ALT: () => this.SUBRULE(this.variableAccess) },
@@ -247,8 +289,6 @@ export class FemaScriptLanguageParser extends CstParser {
   });
 
   parenthesisExpression = this.RULE("parenthesisExpression", () => {
-    this.OPTION(() => this.CONSUME(lexer.UnaryPrefixOperator));
-
     this.CONSUME(lexer.LParen);
     this.SUBRULE(this.expression);
     this.CONSUME(lexer.RParen);
