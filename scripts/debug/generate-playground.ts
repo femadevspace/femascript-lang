@@ -1,4 +1,5 @@
 import "@/grammar/lexer";
+import { Lexer, TokenType } from "chevrotain";
 import { getTokens } from "../../src/grammar/lexer";
 import * as tokensWithVariableNames from "../../src/grammar/lexer/tokens";
 
@@ -40,7 +41,7 @@ const generatePlaygroundCode = async () => {
     .map((_) => {
       const tokenVariableName = _ as keyof typeof tokensWithVariableNames;
       const { name, PATTERN, LABEL, CATEGORIES, GROUP } =
-        tokensWithVariableNames[tokenVariableName];
+        tokensWithVariableNames[tokenVariableName] as TokenType;
 
       const solvedCategories = (
         CATEGORIES ? CATEGORIES.map(({ name }) => name) : ([] as string[])
@@ -53,7 +54,11 @@ const generatePlaygroundCode = async () => {
       if (LABEL) result += `, label: "${LABEL}"`;
       if (solvedCategories.length > 0)
         result += `, categories: [${solvedCategories}]`;
-      if (GROUP) result += `, group: Lexer.SKIPPED`;
+
+      if (GROUP)
+        result += `, group: ${
+          GROUP.includes(Lexer.SKIPPED) ? `Lexer.SKIPPED` : `'${String(GROUP)}'`
+        }`;
 
       result += "});";
 
