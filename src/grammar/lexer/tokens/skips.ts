@@ -12,7 +12,7 @@ export const Whitespace = TOKEN({
 export const BlockComment = TOKEN({
   name: "BlockComment",
   pattern: makePattern("{{blockcomment}}"),
-  group: Lexer.SKIPPED,
+  group: "comments",
   textmateScope: {
     name: "comment.block",
     begin: "/\\*",
@@ -23,7 +23,7 @@ export const BlockComment = TOKEN({
 export const LineComment = TOKEN({
   name: "LineComment",
   pattern: /(\/\/).*(\n|\r|\f)*/,
-  group: Lexer.SKIPPED,
+  group: "comments",
   textmateScope: {
     name: "comment.line",
     begin: "//|#",
