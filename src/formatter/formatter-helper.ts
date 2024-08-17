@@ -4,7 +4,7 @@ import { FemaScriptFormatterVisitor } from "./formatter";
 import { defaultSettings, Settings } from "./settings";
 import { createIndentationState } from "./utils/indentations";
 
-export const format = (input: string, settings: DeepPartial<Settings>) => {
+export const format = (input: string, settings: DeepPartial<Settings> = {}) => {
   const options = mergeDeep(defaultSettings, settings);
   const indentState = createIndentationState();
 
