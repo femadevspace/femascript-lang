@@ -1,4 +1,4 @@
-export type NestedArray<T> = Array<T | NestedArray<T>>;
+export type NestedArray<T> = T | NestedArray<T>[];
 
 export type DeepPartial<T> = {
   [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K];
