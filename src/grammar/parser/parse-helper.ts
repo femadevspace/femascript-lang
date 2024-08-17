@@ -1,11 +1,11 @@
 import { lexer } from "@/grammar";
 import type { CstNodeTypes } from "@/types/cst";
 import { handleLexErrors, handleParserErrors } from "@/utils";
-import { FemaScriptLanguageParser, type EntryPoint } from "./parser";
+import { FemaScriptLanguageParser, type Production } from "./parser";
 
 const parser = new FemaScriptLanguageParser();
 
-export const parse = <Entry extends EntryPoint = "algorithm">(
+export const parse = <Entry extends Production = "algorithm">(
   inputText: string,
   entryPoint: Entry = "algorithm" as Entry
 ) => {

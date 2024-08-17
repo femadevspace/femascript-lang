@@ -2,7 +2,7 @@ import { getTokens } from "@/grammar";
 import * as lexer from "@/grammar/lexer/tokens";
 import { CstParser } from "chevrotain";
 
-export type EntryPoint = Exclude<
+export type Production = Exclude<
   keyof FemaScriptLanguageParser,
   keyof CstParser
 >;
