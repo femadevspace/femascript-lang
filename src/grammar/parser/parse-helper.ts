@@ -5,7 +5,11 @@ import { FemaScriptLanguageParser, type Production } from "./parser";
 
 const parser = new FemaScriptLanguageParser();
 
-export const parse = <Entry extends Production = "algorithm">(
+const BaseVisitor = parser.getBaseCstVisitorConstructor();
+const BaseVisitorWithDefaults =
+  parser.getBaseCstVisitorConstructorWithDefaults();
+
+const parse = <Entry extends Production = "algorithm">(
   inputText: string,
   entryPoint: Entry = "algorithm" as Entry
 ) => {
@@ -21,3 +25,5 @@ export const parse = <Entry extends Production = "algorithm">(
 
   return { cst, groups };
 };
+
+export { BaseVisitor, BaseVisitorWithDefaults, parse };
