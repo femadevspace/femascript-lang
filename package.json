@@ -4,6 +4,10 @@
   "description": "Suporte a linguaguem FemaScript (inspirado em Portugol) utilizado na Fundação Educacional Do Município De Assis (FEMA).",
   "version": "0.2.0",
   "icon": "assets/femascript-logo.png",
+  "galleryBanner": {
+    "color": "#1A2B34",
+    "theme": "dark"
+  },
   "publisher": "fema-devspace",
   "pricing": "Free",
   "categories": [
