@@ -400,6 +400,15 @@ export interface ArrayAccessSuffixCstNode extends CstNode {
 }
 
 export type ArrayAccessSuffixCstChildren = {
+  arrayAccess: ArrayAccessCstNode[];
+};
+
+export interface ArrayAccessCstNode extends CstNode {
+  name: "arrayAccess";
+  children: ArrayAccessCstChildren;
+}
+
+export type ArrayAccessCstChildren = {
   LSquare: IToken[];
   Identifier?: IToken[];
   NumberLiteral?: IToken[];
@@ -451,6 +460,7 @@ export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
   variableAccess(children: VariableAccessCstChildren, param?: IN): OUT;
   enumDeclarator(children: EnumDeclaratorCstChildren, param?: IN): OUT;
   arrayAccessSuffix(children: ArrayAccessSuffixCstChildren, param?: IN): OUT;
+  arrayAccess(children: ArrayAccessCstChildren, param?: IN): OUT;
   block(children: BlockCstChildren, param?: IN): OUT;
 }
 
@@ -488,5 +498,6 @@ export type CstNodeTypes = {
   variableAccess: VariableAccessCstNode;
   enumDeclarator: EnumDeclaratorCstNode;
   arrayAccessSuffix: ArrayAccessSuffixCstNode;
+  arrayAccess: ArrayAccessCstNode;
   block: BlockCstNode;
 };

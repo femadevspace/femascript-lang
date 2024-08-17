@@ -381,15 +381,19 @@ export class FemaScriptLanguageParser extends CstParser {
 
   arrayAccessSuffix = this.RULE("arrayAccessSuffix", () => {
     this.AT_LEAST_ONE(() => {
-      this.CONSUME(lexer.LSquare);
-
-      this.OR([
-        { ALT: () => this.CONSUME(lexer.Identifier) },
-        { ALT: () => this.CONSUME(lexer.NumberLiteral) },
-      ]);
-
-      this.CONSUME(lexer.RSquare);
+      this.SUBRULE(this.arrayAccess);
     });
+  });
+
+  arrayAccess = this.RULE("arrayAccess", () => {
+    this.CONSUME(lexer.LSquare);
+
+    this.OR([
+      { ALT: () => this.CONSUME(lexer.Identifier) },
+      { ALT: () => this.CONSUME(lexer.NumberLiteral) },
+    ]);
+
+    this.CONSUME(lexer.RSquare);
   });
 
   block = this.RULE("block", () => {
