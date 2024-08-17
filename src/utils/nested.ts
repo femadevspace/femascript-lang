@@ -20,3 +20,10 @@ export const mergeDeep = <T>(target: T, source: DeepPartial<T>): T => {
 
   return output;
 };
+
+export const flatten = <T>(array: NestedArray<T>[]): T[] =>
+  array.reduce<T[]>((acc, item) => {
+    if (Array.isArray(item)) return acc.concat(...flatten(item));
+    else acc.push(item);
+    return acc;
+  }, []);
