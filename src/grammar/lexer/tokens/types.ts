@@ -11,7 +11,7 @@ export const PrimitiveTypes = TOKEN({
 
 export const RealType = TOKEN({
   name: "RealType",
-  pattern: /\b(rea(l|is))\b/,
+  pattern: /\b(rea((l[s]?)|is))\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });
@@ -25,21 +25,21 @@ export const IntegerType = TOKEN({
 
 export const CharType = TOKEN({
   name: "CharType",
-  pattern: /\b((char(acter)?)|caractere)\b/,
+  pattern: /\b(((char(acter)?)|caractere)[s]?)\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });
 
 export const TextType = TOKEN({
   name: "TextType",
-  pattern: /\b(string|text[o]?)\b/,
+  pattern: /\b((string|text[o]?)[s]?)\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });
 
 export const BooleanType = TOKEN({
   name: "BooleanType",
-  pattern: /\b((bool(ean[o]?)?)|(logic(al|o)?)|lógico)\b/,
+  pattern: /\b((bool(ean[o]?)?[s]?)|(logic((al|o)[s]?)?)|lógico[s]?)\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });
