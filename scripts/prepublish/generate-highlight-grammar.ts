@@ -1,4 +1,4 @@
-import { getTokens } from "../../src/grammar/lexer";
+import { getTokens } from "../../src/grammar";
 import type { TextmatePattern, WithTextmateScope } from "../../src/utils";
 
 type Repository = {

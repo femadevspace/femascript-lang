@@ -1,4 +1,4 @@
-import { getTokens } from "@/grammar/lexer";
+import { getTokens } from "@/grammar";
 import { Lexer } from "chevrotain";
 
 const lexer = new Lexer(getTokens(), {

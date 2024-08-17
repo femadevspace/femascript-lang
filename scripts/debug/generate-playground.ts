@@ -1,6 +1,5 @@
-import "@/grammar/lexer";
 import { Lexer, TokenType } from "chevrotain";
-import { getTokens } from "../../src/grammar/lexer";
+import { getTokens } from "../../src/grammar";
 import * as tokensWithVariableNames from "../../src/grammar/lexer/tokens";
 
 const PARSER_STARTS_ON = "class FemaScriptLanguageParser extends CstParser {";

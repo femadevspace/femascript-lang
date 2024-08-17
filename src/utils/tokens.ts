@@ -1,4 +1,4 @@
-import type { TokenConfig } from "@/grammar/lexer";
+import type { TokenConfig } from "@/grammar";
 import type { TokenType } from "chevrotain";
 
 export const resolveCategories = (

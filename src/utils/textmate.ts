@@ -1,4 +1,4 @@
-import type { TokenConfig } from "@/grammar/lexer";
+import type { TokenConfig } from "@/grammar";
 
 /**
  * This follows the schema of Textmate's grammar JSON.
