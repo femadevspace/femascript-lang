@@ -85,8 +85,8 @@ Enquanto a Wiki não é publicada, aqui está uma tabela de instruções que voc
     <tr><td><code>real</code></td><td><code>reais</code> | <code>reals</code></td></tr>
     <tr><td><code>inteiro</code></td><td><code>int</code> | <code>integer</code> | <code>integers</code> | <code>inteiros</code></td></tr>
     <tr><td><code>caractere</code></td><td><code>char</code> | <code>character</code></td></tr>
-    <tr><td><code>texto</code></td><td><code>text</code> | <code>string</code></td></tr>
-    <tr><td><code>lógico</code></td><td><code>bool</code> | <code>boolean</code> | <code>booleano</code> | <code>logic</code> | <code>logical</code></td></tr>
+    <tr><td><code>texto</code></td><td><code>textos</code> | <code>text</code> | <code>texts</code> | <code>string</code> | <code>strings</code></td></tr>
+    <tr><td><code>lógico</code></td><td><code>lógicos</code> | <code>bool</code> | <code>bools</code> | <code>boolean</code> | <code>booleans</code> | <code>booleano</code> | <code>booleanos</code> | <code>logic</code> | <code>logical</code> | <code>logicals</code></td></tr>
     <tr><td><code>arranjo</code></td><td><code>array</code> | <code>lista</code> | <code>list</code> | <code>matrix</code> | <code>matriz</code></td></tr>
     <tr><td><code>de</code></td><td><code>of</code></td></tr>
     <tr><td colspan=2 align='center'>🔠 Literais</td></tr>
