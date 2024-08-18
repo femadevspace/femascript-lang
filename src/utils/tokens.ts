@@ -1,5 +1,5 @@
 import type { TokenConfig } from "@/grammar";
-import type { TokenType } from "chevrotain";
+import type { IToken, TokenType } from "chevrotain";
 
 export const resolveCategories = (
   tokenCategories: TokenConfig["categories"],
@@ -13,3 +13,9 @@ export const resolveCategories = (
 
   return categories.concat(additionalCategories);
 };
+
+export const imageFrom = (tokens: IToken[] | undefined) =>
+  tokens ? tokens[0].image : null;
+
+export const imagesFrom = (tokens: IToken[] | undefined) =>
+  tokens ? tokens.map(({ image }) => image) : null;
