@@ -9,10 +9,20 @@ export class StatementsVisitors
     cst.ControlStatementsVisitor
 {
   statement(ctx: cst.StatementCstContext) {
+    const {
+      assignmentStatement,
+      controlStatements,
+      operationsStatements,
+      ...res
+    } = ctx;
+
+    if (Object.keys(res).length > 0)
+      throw new Error("Unimplemented statement: " + JSON.stringify(res));
+
     return [
-      this.visit(ctx.assignmentStatement),
-      this.visit(ctx.controlStatements),
-      this.visit(ctx.operationsStatements),
+      this.visit(assignmentStatement),
+      this.visit(controlStatements),
+      this.visit(operationsStatements),
     ];
   }
 
@@ -21,9 +31,11 @@ export class StatementsVisitors
   }
 
   controlStatements(ctx: cst.ControlStatementsCstContext) {
-    return [
-      this.visit(ctx.conditionalStatements),
-      this.visit(ctx.iterationStatements),
-    ];
+    const { conditionalStatements, iterationStatements, ...res } = ctx;
+
+    if (Object.keys(res).length > 0)
+      throw new Error("Unimplemented statement: " + JSON.stringify(res));
+
+    return [this.visit(conditionalStatements), this.visit(iterationStatements)];
   }
 }
