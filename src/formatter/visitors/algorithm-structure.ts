@@ -29,6 +29,7 @@ export class AlgorithmStructureVisitors
 
   header(ctx: cst.HeaderCstContext) {
     const { Algorithm, Identifier, SemiColon } = ctx;
+
     return [
       imageFrom(Algorithm),
       WS,
