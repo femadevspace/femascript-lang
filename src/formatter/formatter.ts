@@ -1,10 +1,12 @@
 import { BaseVisitor } from "@/grammar";
+import type { ICstNodeVisitor } from "@/types/cst";
 import type { NestedArray } from "@/utils/nested";
 import type { CstNode } from "chevrotain";
 import { Settings } from "./settings";
 import type { Rule } from "./utils/rules";
 
 export type VisitedNode = NestedArray<string | Rule>[];
+export type Visitor = ICstNodeVisitor<Settings, VisitedNode>;
 
 export class FemaScriptFormatterVisitor extends BaseVisitor {
   constructor(private settings: Settings) {
@@ -19,6 +21,9 @@ export class FemaScriptFormatterVisitor extends BaseVisitor {
     const nodeName = node.name as keyof FemaScriptFormatterVisitor;
     const nodeChildren = node.children as any;
 
-    return this[nodeName](nodeChildren) as VisitedNode;
+    return (this[nodeName] as Visitor[typeof nodeName])(
+      nodeChildren,
+      this.settings
+    ) as VisitedNode;
   }
 }
