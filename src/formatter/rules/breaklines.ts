@@ -19,6 +19,6 @@ const SKIP_WHEN_KR = RULE((opts) => whenKR(SKIP_LINE_CHAR, opts));
 const SKIP_WHEN_ALLMAN = RULE((opts) => whenAllman(SKIP_LINE_CHAR, opts));
 const SKIP_WHEN_COMPACT = RULE((opts) => whenCompact(SKIP_LINE_CHAR, opts));
 
-export const SKIP_KR = [SKIP_WHEN_KR, BRK_KR];
-export const SKIP_ALLMAN = [SKIP_WHEN_ALLMAN, BRK_ALLMAN];
-export const SKIP_COMPACT = [SKIP_WHEN_COMPACT, BRK_COMPACT];
+export const SKIP_KR = [SKIP_WHEN_KR, INDT_KR];
+export const SKIP_ALLMAN = [SKIP_WHEN_ALLMAN, INDT_ALLMAN];
+export const SKIP_COMPACT = [SKIP_WHEN_COMPACT, INDT_COMPACT];
