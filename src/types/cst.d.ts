@@ -464,6 +464,45 @@ export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
   block(ctx: BlockCstContext, param?: IN): OUT;
 }
 
+/**
+ * Individual Visitors interfaces
+ */
+export interface AlgorithmVisitor<OUT = void> { algorithm(ctx: AlgorithmCstContext): OUT }
+export interface HeaderVisitor<OUT = void> { header(ctx: HeaderCstContext): OUT }
+export interface TypesDeclaratorsVisitor<OUT = void> { typesDeclarators(ctx: TypesDeclaratorsCstContext): OUT }
+export interface ConstantsDeclaratorsVisitor<OUT = void> { constantsDeclarators(ctx: ConstantsDeclaratorsCstContext): OUT }
+export interface VariablesDeclaratorsVisitor<OUT = void> { variablesDeclarators(ctx: VariablesDeclaratorsCstContext): OUT }
+export interface ProgramVisitor<OUT = void> { program(ctx: ProgramCstContext): OUT }
+export interface StatementVisitor<OUT = void> { statement(ctx: StatementCstContext): OUT }
+export interface AssignmentStatementVisitor<OUT = void> { assignmentStatement(ctx: AssignmentStatementCstContext): OUT }
+export interface ControlStatementsVisitor<OUT = void> { controlStatements(ctx: ControlStatementsCstContext): OUT }
+export interface OperationsStatementsVisitor<OUT = void> { operationsStatements(ctx: OperationsStatementsCstContext): OUT }
+export interface IterationStatementsVisitor<OUT = void> { iterationStatements(ctx: IterationStatementsCstContext): OUT }
+export interface DoWhileStatementVisitor<OUT = void> { doWhileStatement(ctx: DoWhileStatementCstContext): OUT }
+export interface WhileDoStatementVisitor<OUT = void> { whileDoStatement(ctx: WhileDoStatementCstContext): OUT }
+export interface ForLoopStatementVisitor<OUT = void> { forLoopStatement(ctx: ForLoopStatementCstContext): OUT }
+export interface ConditionalStatementsVisitor<OUT = void> { conditionalStatements(ctx: ConditionalStatementsCstContext): OUT }
+export interface IfStatementVisitor<OUT = void> { ifStatement(ctx: IfStatementCstContext): OUT }
+export interface ElseStatementVisitor<OUT = void> { elseStatement(ctx: ElseStatementCstContext): OUT }
+export interface SwitchStatementVisitor<OUT = void> { switchStatement(ctx: SwitchStatementCstContext): OUT }
+export interface ExpressionVisitor<OUT = void> { expression(ctx: ExpressionCstContext): OUT }
+export interface TernaryExpressionVisitor<OUT = void> { ternaryExpression(ctx: TernaryExpressionCstContext): OUT }
+export interface AdditionExpressionVisitor<OUT = void> { additionExpression(ctx: AdditionExpressionCstContext): OUT }
+export interface MultiplicationExpressionVisitor<OUT = void> { multiplicationExpression(ctx: MultiplicationExpressionCstContext): OUT }
+export interface LogicalExpressionVisitor<OUT = void> { logicalExpression(ctx: LogicalExpressionCstContext): OUT }
+export interface RelationalExpressionVisitor<OUT = void> { relationalExpression(ctx: RelationalExpressionCstContext): OUT }
+export interface UnaryExpressionVisitor<OUT = void> { unaryExpression(ctx: UnaryExpressionCstContext): OUT }
+export interface ParenthesisExpressionVisitor<OUT = void> { parenthesisExpression(ctx: ParenthesisExpressionCstContext): OUT }
+export interface AssignmentExpressionVisitor<OUT = void> { assignmentExpression(ctx: AssignmentExpressionCstContext): OUT }
+export interface PrintExpressionVisitor<OUT = void> { printExpression(ctx: PrintExpressionCstContext): OUT }
+export interface ReadExpressionVisitor<OUT = void> { readExpression(ctx: ReadExpressionCstContext): OUT }
+export interface VariableDeclaratorVisitor<OUT = void> { variableDeclarator(ctx: VariableDeclaratorCstContext): OUT }
+export interface VariableAccessVisitor<OUT = void> { variableAccess(ctx: VariableAccessCstContext): OUT }
+export interface EnumDeclaratorVisitor<OUT = void> { enumDeclarator(ctx: EnumDeclaratorCstContext): OUT }
+export interface ArrayAccessSuffixVisitor<OUT = void> { arrayAccessSuffix(ctx: ArrayAccessSuffixCstContext): OUT }
+export interface ArrayAccessVisitor<OUT = void> { arrayAccess(ctx: ArrayAccessCstContext): OUT }
+export interface BlockVisitor<OUT = void> { block(ctx: BlockCstContext): OUT }
+
 export type CstNodeTypes = {
   algorithm: AlgorithmCstNode;
   header: HeaderCstNode;
