@@ -1,3 +1,4 @@
+import { VisitedNode } from "../formatter";
 import { Settings } from "../settings";
 import { IndentationState } from "./indentations";
 
@@ -23,3 +24,11 @@ export const whenAllman = (apply: RuleResult, opts: Settings) =>
   when(isAllman(opts), apply);
 export const whenCompact = (apply: RuleResult, opts: Settings) =>
   when(isCompact(opts), apply);
+
+export const separateWith = (
+  separator: VisitedNode[number],
+  rules: VisitedNode
+) =>
+  rules
+    .flatMap((node) => (node === null ? [] : [node, separator]))
+    .slice(0, -1);
