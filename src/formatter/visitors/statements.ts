@@ -3,7 +3,7 @@ import { FemaScriptFormatterVisitor } from "../formatter";
 
 export class StatementsVisitors
   extends FemaScriptFormatterVisitor
-  implements cst.StatementVisitor
+  implements cst.StatementVisitor, cst.AssignmentStatementVisitor
 {
   statement(ctx: cst.StatementCstContext) {
     return [
@@ -11,5 +11,9 @@ export class StatementsVisitors
       this.visit(ctx.controlStatements),
       this.visit(ctx.operationsStatements),
     ];
+  }
+
+  assignmentStatement(ctx: cst.AssignmentStatementCstContext) {
+    return [this.visit(ctx.assignmentExpression), ";"];
   }
 }
