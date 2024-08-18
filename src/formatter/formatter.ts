@@ -1,12 +1,13 @@
 import { BaseVisitor } from "@/grammar";
 import type { NestedArray } from "@/utils/nested";
 import type { CstNode } from "chevrotain";
+import { Settings } from "./settings";
 import type { Rule } from "./utils/rules";
 
 export type VisitedNode = NestedArray<string | Rule>[];
 
 export class FemaScriptFormatterVisitor extends BaseVisitor {
-  constructor() {
+  constructor(private settings: Settings) {
     super();
     this.validateVisitor();
   }

@@ -11,7 +11,7 @@ export const format = (input: string, settings: DeepPartial<Settings> = {}) => {
   const { cst } = parse(input);
   if (!cst) return "";
 
-  const result = new FemaScriptFormatterVisitor().visit(cst);
+  const result = new FemaScriptFormatterVisitor(options).visit(cst);
 
   return flatten(result)
     .map((node) =>
