@@ -8,10 +8,10 @@ import type { CstNode, ICstVisitor, IToken } from "chevrotain";
 
 export interface AlgorithmCstNode extends CstNode {
   name: "algorithm";
-  children: AlgorithmCstChildren;
+  children: AlgorithmCstContext;
 }
 
-export type AlgorithmCstChildren = {
+export type AlgorithmCstContext = {
   header: HeaderCstNode[];
   typesDeclarators?: TypesDeclaratorsCstNode[];
   constantsDeclarators?: ConstantsDeclaratorsCstNode[];
@@ -21,10 +21,10 @@ export type AlgorithmCstChildren = {
 
 export interface HeaderCstNode extends CstNode {
   name: "header";
-  children: HeaderCstChildren;
+  children: HeaderCstContext;
 }
 
-export type HeaderCstChildren = {
+export type HeaderCstContext = {
   Algorithm: IToken[];
   Identifier: IToken[];
   SemiColon?: IToken[];
@@ -32,20 +32,20 @@ export type HeaderCstChildren = {
 
 export interface TypesDeclaratorsCstNode extends CstNode {
   name: "typesDeclarators";
-  children: TypesDeclaratorsCstChildren;
+  children: TypesDeclaratorsCstContext;
 }
 
-export type TypesDeclaratorsCstChildren = {
+export type TypesDeclaratorsCstContext = {
   Type: IToken[];
   enumDeclarator?: EnumDeclaratorCstNode[];
 };
 
 export interface ConstantsDeclaratorsCstNode extends CstNode {
   name: "constantsDeclarators";
-  children: ConstantsDeclaratorsCstChildren;
+  children: ConstantsDeclaratorsCstContext;
 }
 
-export type ConstantsDeclaratorsCstChildren = {
+export type ConstantsDeclaratorsCstContext = {
   Constant: IToken[];
   Identifier?: IToken[];
   AssignmentOperator?: IToken[];
@@ -55,10 +55,10 @@ export type ConstantsDeclaratorsCstChildren = {
 
 export interface VariablesDeclaratorsCstNode extends CstNode {
   name: "variablesDeclarators";
-  children: VariablesDeclaratorsCstChildren;
+  children: VariablesDeclaratorsCstContext;
 }
 
-export type VariablesDeclaratorsCstChildren = {
+export type VariablesDeclaratorsCstContext = {
   Variable: IToken[];
   variableDeclarator?: VariableDeclaratorCstNode[];
   SemiColon?: IToken[];
@@ -66,10 +66,10 @@ export type VariablesDeclaratorsCstChildren = {
 
 export interface ProgramCstNode extends CstNode {
   name: "program";
-  children: ProgramCstChildren;
+  children: ProgramCstContext;
 }
 
-export type ProgramCstChildren = {
+export type ProgramCstContext = {
   Start: IToken[];
   statement: StatementCstNode[];
   End: IToken[];
@@ -77,10 +77,10 @@ export type ProgramCstChildren = {
 
 export interface StatementCstNode extends CstNode {
   name: "statement";
-  children: StatementCstChildren;
+  children: StatementCstContext;
 }
 
-export type StatementCstChildren = {
+export type StatementCstContext = {
   assignmentStatement?: AssignmentStatementCstNode[];
   controlStatements?: ControlStatementsCstNode[];
   operationsStatements?: OperationsStatementsCstNode[];
@@ -88,40 +88,40 @@ export type StatementCstChildren = {
 
 export interface AssignmentStatementCstNode extends CstNode {
   name: "assignmentStatement";
-  children: AssignmentStatementCstChildren;
+  children: AssignmentStatementCstContext;
 }
 
-export type AssignmentStatementCstChildren = {
+export type AssignmentStatementCstContext = {
   assignmentExpression: AssignmentExpressionCstNode[];
   SemiColon: IToken[];
 };
 
 export interface ControlStatementsCstNode extends CstNode {
   name: "controlStatements";
-  children: ControlStatementsCstChildren;
+  children: ControlStatementsCstContext;
 }
 
-export type ControlStatementsCstChildren = {
+export type ControlStatementsCstContext = {
   iterationStatements?: IterationStatementsCstNode[];
   conditionalStatements?: ConditionalStatementsCstNode[];
 };
 
 export interface OperationsStatementsCstNode extends CstNode {
   name: "operationsStatements";
-  children: OperationsStatementsCstChildren;
+  children: OperationsStatementsCstContext;
 }
 
-export type OperationsStatementsCstChildren = {
+export type OperationsStatementsCstContext = {
   printExpression?: PrintExpressionCstNode[];
   readExpression?: ReadExpressionCstNode[];
 };
 
 export interface IterationStatementsCstNode extends CstNode {
   name: "iterationStatements";
-  children: IterationStatementsCstChildren;
+  children: IterationStatementsCstContext;
 }
 
-export type IterationStatementsCstChildren = {
+export type IterationStatementsCstContext = {
   doWhileStatement?: DoWhileStatementCstNode[];
   whileDoStatement?: WhileDoStatementCstNode[];
   forLoopStatement?: ForLoopStatementCstNode[];
@@ -129,10 +129,10 @@ export type IterationStatementsCstChildren = {
 
 export interface DoWhileStatementCstNode extends CstNode {
   name: "doWhileStatement";
-  children: DoWhileStatementCstChildren;
+  children: DoWhileStatementCstContext;
 }
 
-export type DoWhileStatementCstChildren = {
+export type DoWhileStatementCstContext = {
   Do: IToken[];
   block: BlockCstNode[];
   While: IToken[];
@@ -144,10 +144,10 @@ export type DoWhileStatementCstChildren = {
 
 export interface WhileDoStatementCstNode extends CstNode {
   name: "whileDoStatement";
-  children: WhileDoStatementCstChildren;
+  children: WhileDoStatementCstContext;
 }
 
-export type WhileDoStatementCstChildren = {
+export type WhileDoStatementCstContext = {
   While: IToken[];
   LParen: IToken[];
   expression: ExpressionCstNode[];
@@ -158,10 +158,10 @@ export type WhileDoStatementCstChildren = {
 
 export interface ForLoopStatementCstNode extends CstNode {
   name: "forLoopStatement";
-  children: ForLoopStatementCstChildren;
+  children: ForLoopStatementCstContext;
 }
 
-export type ForLoopStatementCstChildren = {
+export type ForLoopStatementCstContext = {
   For: IToken[];
   LParen: IToken[];
   assignmentExpression: (AssignmentExpressionCstNode)[];
@@ -174,20 +174,20 @@ export type ForLoopStatementCstChildren = {
 
 export interface ConditionalStatementsCstNode extends CstNode {
   name: "conditionalStatements";
-  children: ConditionalStatementsCstChildren;
+  children: ConditionalStatementsCstContext;
 }
 
-export type ConditionalStatementsCstChildren = {
+export type ConditionalStatementsCstContext = {
   ifStatement?: IfStatementCstNode[];
   switchStatement?: SwitchStatementCstNode[];
 };
 
 export interface IfStatementCstNode extends CstNode {
   name: "ifStatement";
-  children: IfStatementCstChildren;
+  children: IfStatementCstContext;
 }
 
-export type IfStatementCstChildren = {
+export type IfStatementCstContext = {
   If: IToken[];
   LParen: IToken[];
   expression: ExpressionCstNode[];
@@ -199,10 +199,10 @@ export type IfStatementCstChildren = {
 
 export interface ElseStatementCstNode extends CstNode {
   name: "elseStatement";
-  children: ElseStatementCstChildren;
+  children: ElseStatementCstContext;
 }
 
-export type ElseStatementCstChildren = {
+export type ElseStatementCstContext = {
   Else: IToken[];
   ifStatement?: IfStatementCstNode[];
   block?: BlockCstNode[];
@@ -210,10 +210,10 @@ export type ElseStatementCstChildren = {
 
 export interface SwitchStatementCstNode extends CstNode {
   name: "switchStatement";
-  children: SwitchStatementCstChildren;
+  children: SwitchStatementCstContext;
 }
 
-export type SwitchStatementCstChildren = {
+export type SwitchStatementCstContext = {
   Switch: IToken[];
   variableAccess?: (VariableAccessCstNode)[];
   LParen?: IToken[];
@@ -231,19 +231,19 @@ export type SwitchStatementCstChildren = {
 
 export interface ExpressionCstNode extends CstNode {
   name: "expression";
-  children: ExpressionCstChildren;
+  children: ExpressionCstContext;
 }
 
-export type ExpressionCstChildren = {
+export type ExpressionCstContext = {
   ternaryExpression: TernaryExpressionCstNode[];
 };
 
 export interface TernaryExpressionCstNode extends CstNode {
   name: "ternaryExpression";
-  children: TernaryExpressionCstChildren;
+  children: TernaryExpressionCstContext;
 }
 
-export type TernaryExpressionCstChildren = {
+export type TernaryExpressionCstContext = {
   additionExpression: AdditionExpressionCstNode[];
   Question?: IToken[];
   expression?: (ExpressionCstNode)[];
@@ -252,10 +252,10 @@ export type TernaryExpressionCstChildren = {
 
 export interface AdditionExpressionCstNode extends CstNode {
   name: "additionExpression";
-  children: AdditionExpressionCstChildren;
+  children: AdditionExpressionCstContext;
 }
 
-export type AdditionExpressionCstChildren = {
+export type AdditionExpressionCstContext = {
   multiplicationExpression: (MultiplicationExpressionCstNode)[];
   Plus?: IToken[];
   Minus?: IToken[];
@@ -263,10 +263,10 @@ export type AdditionExpressionCstChildren = {
 
 export interface MultiplicationExpressionCstNode extends CstNode {
   name: "multiplicationExpression";
-  children: MultiplicationExpressionCstChildren;
+  children: MultiplicationExpressionCstContext;
 }
 
-export type MultiplicationExpressionCstChildren = {
+export type MultiplicationExpressionCstContext = {
   logicalExpression: (LogicalExpressionCstNode)[];
   Star?: IToken[];
   Slash?: IToken[];
@@ -275,30 +275,30 @@ export type MultiplicationExpressionCstChildren = {
 
 export interface LogicalExpressionCstNode extends CstNode {
   name: "logicalExpression";
-  children: LogicalExpressionCstChildren;
+  children: LogicalExpressionCstContext;
 }
 
-export type LogicalExpressionCstChildren = {
+export type LogicalExpressionCstContext = {
   relationalExpression: (RelationalExpressionCstNode)[];
   LogicalOperator?: IToken[];
 };
 
 export interface RelationalExpressionCstNode extends CstNode {
   name: "relationalExpression";
-  children: RelationalExpressionCstChildren;
+  children: RelationalExpressionCstContext;
 }
 
-export type RelationalExpressionCstChildren = {
+export type RelationalExpressionCstContext = {
   unaryExpression: (UnaryExpressionCstNode)[];
   RelationalOperator?: IToken[];
 };
 
 export interface UnaryExpressionCstNode extends CstNode {
   name: "unaryExpression";
-  children: UnaryExpressionCstChildren;
+  children: UnaryExpressionCstContext;
 }
 
-export type UnaryExpressionCstChildren = {
+export type UnaryExpressionCstContext = {
   UnaryPrefixOperator?: IToken[];
   Literal?: IToken[];
   variableAccess?: VariableAccessCstNode[];
@@ -307,10 +307,10 @@ export type UnaryExpressionCstChildren = {
 
 export interface ParenthesisExpressionCstNode extends CstNode {
   name: "parenthesisExpression";
-  children: ParenthesisExpressionCstChildren;
+  children: ParenthesisExpressionCstContext;
 }
 
-export type ParenthesisExpressionCstChildren = {
+export type ParenthesisExpressionCstContext = {
   LParen: IToken[];
   expression: ExpressionCstNode[];
   RParen: IToken[];
@@ -318,10 +318,10 @@ export type ParenthesisExpressionCstChildren = {
 
 export interface AssignmentExpressionCstNode extends CstNode {
   name: "assignmentExpression";
-  children: AssignmentExpressionCstChildren;
+  children: AssignmentExpressionCstContext;
 }
 
-export type AssignmentExpressionCstChildren = {
+export type AssignmentExpressionCstContext = {
   variableAccess: VariableAccessCstNode[];
   AssignmentOperator?: IToken[];
   expression?: ExpressionCstNode[];
@@ -330,10 +330,10 @@ export type AssignmentExpressionCstChildren = {
 
 export interface PrintExpressionCstNode extends CstNode {
   name: "printExpression";
-  children: PrintExpressionCstChildren;
+  children: PrintExpressionCstContext;
 }
 
-export type PrintExpressionCstChildren = {
+export type PrintExpressionCstContext = {
   Print: IToken[];
   expression: ExpressionCstNode[];
   Comma?: IToken[];
@@ -342,10 +342,10 @@ export type PrintExpressionCstChildren = {
 
 export interface ReadExpressionCstNode extends CstNode {
   name: "readExpression";
-  children: ReadExpressionCstChildren;
+  children: ReadExpressionCstContext;
 }
 
-export type ReadExpressionCstChildren = {
+export type ReadExpressionCstContext = {
   Read: IToken[];
   variableAccess: VariableAccessCstNode[];
   Comma?: IToken[];
@@ -354,10 +354,10 @@ export type ReadExpressionCstChildren = {
 
 export interface VariableDeclaratorCstNode extends CstNode {
   name: "variableDeclarator";
-  children: VariableDeclaratorCstChildren;
+  children: VariableDeclaratorCstContext;
 }
 
-export type VariableDeclaratorCstChildren = {
+export type VariableDeclaratorCstContext = {
   Identifier: IToken[];
   Comma?: IToken[];
   Colon: IToken[];
@@ -369,20 +369,20 @@ export type VariableDeclaratorCstChildren = {
 
 export interface VariableAccessCstNode extends CstNode {
   name: "variableAccess";
-  children: VariableAccessCstChildren;
+  children: VariableAccessCstContext;
 }
 
-export type VariableAccessCstChildren = {
+export type VariableAccessCstContext = {
   Identifier: IToken[];
   arrayAccessSuffix?: ArrayAccessSuffixCstNode[];
 };
 
 export interface EnumDeclaratorCstNode extends CstNode {
   name: "enumDeclarator";
-  children: EnumDeclaratorCstChildren;
+  children: EnumDeclaratorCstContext;
 }
 
-export type EnumDeclaratorCstChildren = {
+export type EnumDeclaratorCstContext = {
   Identifier: (IToken)[];
   Colon: IToken[];
   Enum: IToken[];
@@ -396,19 +396,19 @@ export type EnumDeclaratorCstChildren = {
 
 export interface ArrayAccessSuffixCstNode extends CstNode {
   name: "arrayAccessSuffix";
-  children: ArrayAccessSuffixCstChildren;
+  children: ArrayAccessSuffixCstContext;
 }
 
-export type ArrayAccessSuffixCstChildren = {
+export type ArrayAccessSuffixCstContext = {
   arrayAccess: ArrayAccessCstNode[];
 };
 
 export interface ArrayAccessCstNode extends CstNode {
   name: "arrayAccess";
-  children: ArrayAccessCstChildren;
+  children: ArrayAccessCstContext;
 }
 
-export type ArrayAccessCstChildren = {
+export type ArrayAccessCstContext = {
   LSquare: IToken[];
   Identifier?: IToken[];
   NumberLiteral?: IToken[];
@@ -417,51 +417,51 @@ export type ArrayAccessCstChildren = {
 
 export interface BlockCstNode extends CstNode {
   name: "block";
-  children: BlockCstChildren;
+  children: BlockCstContext;
 }
 
-export type BlockCstChildren = {
+export type BlockCstContext = {
   LCurly: IToken[];
   statement: StatementCstNode[];
   RCurly: IToken[];
 };
 
 export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
-  algorithm(children: AlgorithmCstChildren, param?: IN): OUT;
-  header(children: HeaderCstChildren, param?: IN): OUT;
-  typesDeclarators(children: TypesDeclaratorsCstChildren, param?: IN): OUT;
-  constantsDeclarators(children: ConstantsDeclaratorsCstChildren, param?: IN): OUT;
-  variablesDeclarators(children: VariablesDeclaratorsCstChildren, param?: IN): OUT;
-  program(children: ProgramCstChildren, param?: IN): OUT;
-  statement(children: StatementCstChildren, param?: IN): OUT;
-  assignmentStatement(children: AssignmentStatementCstChildren, param?: IN): OUT;
-  controlStatements(children: ControlStatementsCstChildren, param?: IN): OUT;
-  operationsStatements(children: OperationsStatementsCstChildren, param?: IN): OUT;
-  iterationStatements(children: IterationStatementsCstChildren, param?: IN): OUT;
-  doWhileStatement(children: DoWhileStatementCstChildren, param?: IN): OUT;
-  whileDoStatement(children: WhileDoStatementCstChildren, param?: IN): OUT;
-  forLoopStatement(children: ForLoopStatementCstChildren, param?: IN): OUT;
-  conditionalStatements(children: ConditionalStatementsCstChildren, param?: IN): OUT;
-  ifStatement(children: IfStatementCstChildren, param?: IN): OUT;
-  elseStatement(children: ElseStatementCstChildren, param?: IN): OUT;
-  switchStatement(children: SwitchStatementCstChildren, param?: IN): OUT;
-  expression(children: ExpressionCstChildren, param?: IN): OUT;
-  ternaryExpression(children: TernaryExpressionCstChildren, param?: IN): OUT;
-  additionExpression(children: AdditionExpressionCstChildren, param?: IN): OUT;
-  multiplicationExpression(children: MultiplicationExpressionCstChildren, param?: IN): OUT;
-  logicalExpression(children: LogicalExpressionCstChildren, param?: IN): OUT;
-  relationalExpression(children: RelationalExpressionCstChildren, param?: IN): OUT;
-  unaryExpression(children: UnaryExpressionCstChildren, param?: IN): OUT;
-  parenthesisExpression(children: ParenthesisExpressionCstChildren, param?: IN): OUT;
-  assignmentExpression(children: AssignmentExpressionCstChildren, param?: IN): OUT;
-  printExpression(children: PrintExpressionCstChildren, param?: IN): OUT;
-  readExpression(children: ReadExpressionCstChildren, param?: IN): OUT;
-  variableDeclarator(children: VariableDeclaratorCstChildren, param?: IN): OUT;
-  variableAccess(children: VariableAccessCstChildren, param?: IN): OUT;
-  enumDeclarator(children: EnumDeclaratorCstChildren, param?: IN): OUT;
-  arrayAccessSuffix(children: ArrayAccessSuffixCstChildren, param?: IN): OUT;
-  arrayAccess(children: ArrayAccessCstChildren, param?: IN): OUT;
-  block(children: BlockCstChildren, param?: IN): OUT;
+  algorithm(ctx: AlgorithmCstContext, param?: IN): OUT;
+  header(ctx: HeaderCstContext, param?: IN): OUT;
+  typesDeclarators(ctx: TypesDeclaratorsCstContext, param?: IN): OUT;
+  constantsDeclarators(ctx: ConstantsDeclaratorsCstContext, param?: IN): OUT;
+  variablesDeclarators(ctx: VariablesDeclaratorsCstContext, param?: IN): OUT;
+  program(ctx: ProgramCstContext, param?: IN): OUT;
+  statement(ctx: StatementCstContext, param?: IN): OUT;
+  assignmentStatement(ctx: AssignmentStatementCstContext, param?: IN): OUT;
+  controlStatements(ctx: ControlStatementsCstContext, param?: IN): OUT;
+  operationsStatements(ctx: OperationsStatementsCstContext, param?: IN): OUT;
+  iterationStatements(ctx: IterationStatementsCstContext, param?: IN): OUT;
+  doWhileStatement(ctx: DoWhileStatementCstContext, param?: IN): OUT;
+  whileDoStatement(ctx: WhileDoStatementCstContext, param?: IN): OUT;
+  forLoopStatement(ctx: ForLoopStatementCstContext, param?: IN): OUT;
+  conditionalStatements(ctx: ConditionalStatementsCstContext, param?: IN): OUT;
+  ifStatement(ctx: IfStatementCstContext, param?: IN): OUT;
+  elseStatement(ctx: ElseStatementCstContext, param?: IN): OUT;
+  switchStatement(ctx: SwitchStatementCstContext, param?: IN): OUT;
+  expression(ctx: ExpressionCstContext, param?: IN): OUT;
+  ternaryExpression(ctx: TernaryExpressionCstContext, param?: IN): OUT;
+  additionExpression(ctx: AdditionExpressionCstContext, param?: IN): OUT;
+  multiplicationExpression(ctx: MultiplicationExpressionCstContext, param?: IN): OUT;
+  logicalExpression(ctx: LogicalExpressionCstContext, param?: IN): OUT;
+  relationalExpression(ctx: RelationalExpressionCstContext, param?: IN): OUT;
+  unaryExpression(ctx: UnaryExpressionCstContext, param?: IN): OUT;
+  parenthesisExpression(ctx: ParenthesisExpressionCstContext, param?: IN): OUT;
+  assignmentExpression(ctx: AssignmentExpressionCstContext, param?: IN): OUT;
+  printExpression(ctx: PrintExpressionCstContext, param?: IN): OUT;
+  readExpression(ctx: ReadExpressionCstContext, param?: IN): OUT;
+  variableDeclarator(ctx: VariableDeclaratorCstContext, param?: IN): OUT;
+  variableAccess(ctx: VariableAccessCstContext, param?: IN): OUT;
+  enumDeclarator(ctx: EnumDeclaratorCstContext, param?: IN): OUT;
+  arrayAccessSuffix(ctx: ArrayAccessSuffixCstContext, param?: IN): OUT;
+  arrayAccess(ctx: ArrayAccessCstContext, param?: IN): OUT;
+  block(ctx: BlockCstContext, param?: IN): OUT;
 }
 
 export type CstNodeTypes = {
