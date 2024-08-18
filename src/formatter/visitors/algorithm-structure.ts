@@ -62,7 +62,7 @@ export class AlgorithmStructureVisitors
     ]);
 
     return [
-      imageFrom(Constant),
+      constKeyword,
       [BRK_LN, I_INDT],
       separateWith(BRK_LN, beforeEach(declarators, INDT)),
       [D_INDT],
