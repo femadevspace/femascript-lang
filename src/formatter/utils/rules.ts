@@ -12,9 +12,14 @@ export const RULE = (rule: Rule) => rule;
 
 export const when = (condition: boolean, apply: RuleResult) =>
   condition ? apply : null;
-export const whenKR = (apply: RuleResult, { style }: Settings) =>
-  when(style === "k&n", apply);
-export const whenAllman = (apply: RuleResult, { style }: Settings) =>
-  when(style === "allman", apply);
-export const whenCompact = (apply: RuleResult, { style }: Settings) =>
-  when(style === "compact", apply);
+
+export const isKR = ({ style }: Settings) => style === "k&n";
+export const isAllman = ({ style }: Settings) => style === "allman";
+export const isCompact = ({ style }: Settings) => style === "compact";
+
+export const whenKR = (apply: RuleResult, opts: Settings) =>
+  when(isKR(opts), apply);
+export const whenAllman = (apply: RuleResult, opts: Settings) =>
+  when(isAllman(opts), apply);
+export const whenCompact = (apply: RuleResult, opts: Settings) =>
+  when(isCompact(opts), apply);
