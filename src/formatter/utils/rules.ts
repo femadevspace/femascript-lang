@@ -32,3 +32,6 @@ export const separateWith = (
   rules
     .flatMap((node) => (node === null ? [] : [node, separator]))
     .slice(0, -1);
+
+export const beforeEach = (rules: VisitedNode, apply: VisitedNode[number]) =>
+  rules.flatMap((node) => (node === null ? [] : [[apply, node]]));
