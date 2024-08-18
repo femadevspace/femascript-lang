@@ -1,6 +1,6 @@
 import * as cst from "@/types/cst";
 import { imageFrom, imagesFrom } from "@/utils";
-import { FemaScriptFormatterVisitor } from "../formatter";
+import { FemaScriptFormatterVisitor, VisitedNode } from "../formatter";
 import { BRK_LN, SKIP_LN } from "../rules/breaklines";
 import { D_INDT, I_INDT, INDT } from "../rules/indentation";
 import { WS } from "../rules/whitespaces";
@@ -12,7 +12,9 @@ export class AlgorithmStructureVisitors
     cst.AlgorithmVisitor,
     cst.HeaderVisitor,
     cst.TypesDeclaratorsVisitor,
-    cst.ConstantsDeclaratorsVisitor
+    cst.ConstantsDeclaratorsVisitor,
+    cst.VariablesDeclaratorsVisitor,
+    cst.VariableDeclaratorVisitor
 {
   algorithm(ctx: cst.AlgorithmCstContext) {
     return separateWith(SKIP_LN, [
@@ -67,5 +69,42 @@ export class AlgorithmStructureVisitors
       separateWith(BRK_LN, beforeEach(declarators, INDT)),
       [D_INDT],
     ];
+  }
+
+  variablesDeclarators(ctx: cst.VariablesDeclaratorsCstContext) {
+    const { Variable, variableDeclarator, SemiColon } = ctx;
+
+    const varKeyword = imageFrom(Variable);
+
+    if (!variableDeclarator) return [varKeyword];
+
+    const declarators = variableDeclarator.map((declarator) => [
+      this.visit(declarator),
+      imageFrom(SemiColon)!,
+    ]);
+
+    return [
+      varKeyword,
+      [BRK_LN, I_INDT],
+      separateWith(BRK_LN, beforeEach(declarators, INDT)),
+      [D_INDT],
+    ];
+  }
+
+  variableDeclarator(ctx: cst.VariableDeclaratorCstContext) {
+    const { Identifier, ArrayType, arrayAccessSuffix, Of, PrimitiveTypes } =
+      ctx;
+
+    const names = separateWith([",", WS], [...imagesFrom(Identifier)!]);
+    let type: VisitedNode = [imageFrom(PrimitiveTypes)!];
+
+    if (ArrayType)
+      type = separateWith(WS, [
+        [imageFrom(ArrayType)!, this.visit(arrayAccessSuffix)],
+        imageFrom(Of)!,
+        type,
+      ]);
+
+    return [names, [":", WS], type];
   }
 }
