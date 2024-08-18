@@ -14,7 +14,8 @@ export class AlgorithmStructureVisitors
     cst.TypesDeclaratorsVisitor,
     cst.ConstantsDeclaratorsVisitor,
     cst.VariablesDeclaratorsVisitor,
-    cst.VariableDeclaratorVisitor
+    cst.VariableDeclaratorVisitor,
+    cst.ProgramVisitor
 {
   algorithm(ctx: cst.AlgorithmCstContext) {
     return separateWith(SKIP_LN, [
@@ -106,5 +107,17 @@ export class AlgorithmStructureVisitors
       ]);
 
     return [names, [":", WS], type];
+  }
+
+  program(ctx: cst.ProgramCstContext) {
+    const { Start, statement, End } = ctx;
+
+    return [
+      imageFrom(Start)!,
+      [BRK_LN, I_INDT],
+      separateWith(BRK_LN, beforeEach(this.visit(statement), INDT)),
+      [BRK_LN, D_INDT],
+      imageFrom(End)!,
+    ];
   }
 }
