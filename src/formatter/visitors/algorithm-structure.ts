@@ -116,7 +116,7 @@ export class AlgorithmStructureVisitors
     return [
       imageFrom(Start)!,
       [I_INDT, BRK_LN],
-      separateWith(BRK_LN, this.visit(statement)),
+      separateWith(SKIP_LN, this.visit(statement)),
       [D_INDT, BRK_LN],
       imageFrom(End)!,
     ];
