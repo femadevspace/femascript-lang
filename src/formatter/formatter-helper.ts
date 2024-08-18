@@ -1,6 +1,7 @@
 import { parse } from "@/grammar";
 import { DeepPartial, flatten, mergeDeep } from "@/utils/nested";
 import { FemaScriptFormatterVisitor } from "./formatter";
+import { NONE } from "./rules/whitespaces";
 import { defaultSettings, Settings } from "./settings";
 import { createIndentationState } from "./utils/indentations";
 import * as visitors from "./visitors";
@@ -34,8 +35,10 @@ export const format = (input: string, settings: DeepPartial<Settings> = {}) => {
   const result = new FemaScriptFormatterVisitor(options).visit(cst);
 
   return flatten(result)
-    .map((node) =>
-      typeof node === "string" ? node : node(options, indentState)
-    )
+    .map((node) => {
+      if (node === null) return NONE;
+      if (typeof node === "string") return node;
+      return node(options, indentState);
+    })
     .join("");
 };
