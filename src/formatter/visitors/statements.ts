@@ -6,7 +6,8 @@ export class StatementsVisitors
   implements
     cst.StatementVisitor,
     cst.AssignmentStatementVisitor,
-    cst.ControlStatementsVisitor
+    cst.ControlStatementsVisitor,
+    cst.OperationsStatementsVisitor
 {
   statement(ctx: cst.StatementCstContext) {
     const {
@@ -37,5 +38,14 @@ export class StatementsVisitors
       throw new Error("Unimplemented statement: " + JSON.stringify(res));
 
     return [this.visit(conditionalStatements), this.visit(iterationStatements)];
+  }
+
+  operationsStatements(ctx: cst.OperationsStatementsCstContext) {
+    const { printExpression, readExpression, ...res } = ctx;
+
+    if (Object.keys(res).length > 0)
+      throw new Error("Unimplemented statement: " + JSON.stringify(res));
+
+    return [this.visit(printExpression), this.visit(readExpression)];
   }
 }
