@@ -13,7 +13,7 @@ export const RULE = (rule: Rule) => rule;
 export const when = (condition: boolean, apply: RuleResult) =>
   condition ? apply : null;
 
-export const isKR = ({ style }: Settings) => style === "k&n";
+export const isKR = ({ style }: Settings) => style === "k&r";
 export const isAllman = ({ style }: Settings) => style === "allman";
 export const isCompact = ({ style }: Settings) => style === "compact";
 
