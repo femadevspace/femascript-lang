@@ -2,9 +2,9 @@ import * as cst from "@/types/cst";
 import { imageFrom, imagesFrom } from "@/utils";
 import { FemaScriptFormatterVisitor, VisitedNode } from "../formatter";
 import { BRK_LN, SKIP_LN } from "../rules/breaklines";
-import { D_INDT, I_INDT, INDT } from "../rules/indentation";
+import { D_INDT, I_INDT } from "../rules/indentation";
 import { WS } from "../rules/whitespaces";
-import { beforeEach, separateWith } from "../utils/rules";
+import { separateWith } from "../utils/rules";
 
 export class AlgorithmStructureVisitors
   extends FemaScriptFormatterVisitor
@@ -43,8 +43,8 @@ export class AlgorithmStructureVisitors
 
     return [
       imageFrom(Type),
-      [BRK_LN, I_INDT],
-      separateWith(BRK_LN, beforeEach(this.visit(enumDeclarator), INDT)),
+      [I_INDT, BRK_LN],
+      separateWith(BRK_LN, this.visit(enumDeclarator)),
       [D_INDT],
     ];
   }
@@ -67,8 +67,8 @@ export class AlgorithmStructureVisitors
 
     return [
       constKeyword,
-      [BRK_LN, I_INDT],
-      separateWith(BRK_LN, beforeEach(declarators, INDT)),
+      [I_INDT, BRK_LN],
+      separateWith(BRK_LN, declarators),
       [D_INDT],
     ];
   }
@@ -87,8 +87,8 @@ export class AlgorithmStructureVisitors
 
     return [
       varKeyword,
-      [BRK_LN, I_INDT],
-      separateWith(BRK_LN, beforeEach(declarators, INDT)),
+      [I_INDT, BRK_LN],
+      separateWith(BRK_LN, declarators),
       [D_INDT],
     ];
   }
@@ -115,9 +115,9 @@ export class AlgorithmStructureVisitors
 
     return [
       imageFrom(Start)!,
-      [BRK_LN, I_INDT],
-      separateWith(BRK_LN, beforeEach(this.visit(statement), INDT)),
-      [BRK_LN, D_INDT],
+      [I_INDT, BRK_LN],
+      separateWith(BRK_LN, this.visit(statement)),
+      [D_INDT, BRK_LN],
       imageFrom(End)!,
     ];
   }
