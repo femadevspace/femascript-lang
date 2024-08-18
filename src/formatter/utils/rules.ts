@@ -11,13 +11,12 @@ export type Rule = (
 
 export const RULE = (rule: Rule) => rule;
 
-export const when = (condition: boolean, apply: RuleResult) =>
-  condition ? apply : null;
-
 export const isKR = ({ style }: Settings) => style === "k&r";
 export const isAllman = ({ style }: Settings) => style === "allman";
 export const isCompact = ({ style }: Settings) => style === "compact";
 
+export const when = (condition: boolean, apply: RuleResult) =>
+  condition ? apply : null;
 export const whenKR = (apply: RuleResult, opts: Settings) =>
   when(isKR(opts), apply);
 export const whenAllman = (apply: RuleResult, opts: Settings) =>
