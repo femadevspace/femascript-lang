@@ -149,7 +149,7 @@ export const Star = TOKEN({
   name: "Star",
   pattern: /(\*)/,
   label: "'*'",
-  categories: [op.ArithmeticOperator],
+  categories: [op.MultiplicativeOperator],
   textmateScope: "keyword.operator.arithmetic",
 });
 
@@ -165,7 +165,7 @@ export const Plus = TOKEN({
   name: "Plus",
   pattern: /(\+)/,
   label: "'+'",
-  categories: [op.ArithmeticOperator],
+  categories: [op.AdditiveOperator],
   textmateScope: "keyword.operator.arithmetic",
 });
 
@@ -181,7 +181,7 @@ export const Minus = TOKEN({
   name: "Minus",
   pattern: /(\-)/,
   label: "'-'",
-  categories: [op.ArithmeticOperator],
+  categories: [op.AdditiveOperator],
   textmateScope: "keyword.operator.arithmetic",
 });
 
@@ -189,7 +189,7 @@ export const Slash = TOKEN({
   name: "Slash",
   pattern: /(\/)/,
   label: "'/'",
-  categories: [op.ArithmeticOperator],
+  categories: [op.MultiplicativeOperator],
   textmateScope: "keyword.operator.arithmetic",
 });
 
@@ -197,7 +197,7 @@ export const Modulo = TOKEN({
   name: "Modulo",
   pattern: /(%)/,
   label: "'%'",
-  categories: [op.ArithmeticOperator],
+  categories: [op.MultiplicativeOperator],
   textmateScope: "keyword.operator.arithmetic",
 });
 

@@ -32,6 +32,20 @@ export const ArithmeticOperator = TOKEN({
   categories: [BinaryOperator],
 });
 
+export const MultiplicativeOperator = TOKEN({
+  name: "MultiplicativeOperator",
+  pattern: Lexer.NA,
+  skipTextmateScope: true,
+  categories: [ArithmeticOperator],
+});
+
+export const AdditiveOperator = TOKEN({
+  name: "AdditiveOperator",
+  pattern: Lexer.NA,
+  skipTextmateScope: true,
+  categories: [ArithmeticOperator],
+});
+
 export const RelationalOperator = TOKEN({
   name: "RelationalOperator",
   pattern: Lexer.NA,

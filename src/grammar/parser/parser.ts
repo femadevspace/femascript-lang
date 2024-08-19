@@ -251,10 +251,7 @@ export class FemaScriptLanguageParser extends CstParser {
 
     this.MANY({
       DEF: () => {
-        this.OR([
-          { ALT: () => this.CONSUME(lexer.Plus) },
-          { ALT: () => this.CONSUME(lexer.Minus) },
-        ]);
+        this.CONSUME(lexer.AdditiveOperator);
         this.SUBRULE2(this.multiplicationExpression);
       },
     });
@@ -265,11 +262,7 @@ export class FemaScriptLanguageParser extends CstParser {
 
     this.MANY({
       DEF: () => {
-        this.OR([
-          { ALT: () => this.CONSUME(lexer.Star) },
-          { ALT: () => this.CONSUME(lexer.Slash) },
-          { ALT: () => this.CONSUME(lexer.Modulo) },
-        ]);
+        this.CONSUME(lexer.MultiplicativeOperator);
         this.SUBRULE2(this.logicalExpression);
       },
     });

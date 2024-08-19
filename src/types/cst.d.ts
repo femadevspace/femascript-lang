@@ -280,8 +280,7 @@ export interface AdditionExpressionCstNode extends CstNode {
 
 export type AdditionExpressionCstContext = {
   multiplicationExpression: (MultiplicationExpressionCstNode)[];
-  Plus?: IToken[];
-  Minus?: IToken[];
+  AdditiveOperator?: IToken[];
 };
 
 export interface MultiplicationExpressionCstNode extends CstNode {
@@ -291,9 +290,7 @@ export interface MultiplicationExpressionCstNode extends CstNode {
 
 export type MultiplicationExpressionCstContext = {
   logicalExpression: (LogicalExpressionCstNode)[];
-  Star?: IToken[];
-  Slash?: IToken[];
-  Modulo?: IToken[];
+  MultiplicativeOperator?: IToken[];
 };
 
 export interface LogicalExpressionCstNode extends CstNode {
