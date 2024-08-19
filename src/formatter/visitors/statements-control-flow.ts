@@ -76,7 +76,10 @@ export class IterationStatementsVisitors
 
 export class ConditionalStatementsVisitors
   extends FemaScriptFormatterVisitor
-  implements cst.ConditionalStatementsVisitor
+  implements
+    cst.ConditionalStatementsVisitor,
+    cst.IfStatementVisitor,
+    cst.ElseStatementVisitor
 {
   conditionalStatements(ctx: cst.ConditionalStatementsCstContext) {
     const { ifStatement, switchStatement, ...res } = ctx;
@@ -85,5 +88,29 @@ export class ConditionalStatementsVisitors
       throw new Error("Unimplemented statement: " + JSON.stringify(res));
 
     return [this.visit(ifStatement), this.visit(switchStatement)];
+  }
+
+  ifStatement(ctx: cst.IfStatementCstContext) {
+    const { If, expression, Then, block, elseStatement } = ctx;
+
+    return [
+      [imageFrom(If), WS],
+      ["(", this.visit(expression), ")", [WS_KR, WS_ALLMAN]],
+      [I_INDT_COMPACT, BRK_COMPACT],
+      [imageFrom(Then), [WS_KR, WS_COMPACT]],
+      this.visit(block),
+      this.visit(elseStatement),
+      [D_INDT_COMPACT],
+    ];
+  }
+
+  elseStatement(ctx: cst.ElseStatementCstContext) {
+    const { Else, block, ifStatement } = ctx;
+
+    return [
+      [WS_KR, [BRK_ALLMAN, BRK_COMPACT]],
+      [imageFrom(Else), [WS_KR, WS_COMPACT]],
+      [this.visit(block), this.visit(ifStatement)],
+    ];
   }
 }
