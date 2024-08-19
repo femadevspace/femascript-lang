@@ -59,16 +59,10 @@ const getStatementType = ({ children }: StatementCstNode) => {
 };
 
 const shoudGroup = (lastType: string | null, currentType: string) => {
-  /**
-   * Certain rules for statements involve grouping similar types of statements together.
-   * For instance, the 'operationsStatement' rule groups both 'print' and 'read' operations.
-   * Although 'print' and 'read' are grouped, they are distinct from each other.
-   * Consequently, when comparing 'lastType' with 'currentType', they should be treated as different.
-   *
-   * TODO: Implement checking for nested statements.
-   */
-
-  const isGroupableType = [currentType === "assignmentStatement"].some(Boolean);
+  const isGroupableType = [
+    currentType === "assignmentStatement",
+    currentType === "operationsStatements",
+  ].some(Boolean);
 
   if (lastType === null) return isGroupableType;
   if (lastType !== currentType) return false;
