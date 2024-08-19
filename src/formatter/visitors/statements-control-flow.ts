@@ -10,7 +10,8 @@ export class IterationStatementsVisitors
   implements
     cst.IterationStatementsVisitor,
     cst.DoWhileStatementVisitor,
-    cst.WhileDoStatementVisitor
+    cst.WhileDoStatementVisitor,
+    cst.ForLoopStatementVisitor
 {
   iterationStatements(ctx: cst.IterationStatementsCstContext) {
     const { doWhileStatement, forLoopStatement, whileDoStatement, ...res } =
@@ -43,6 +44,27 @@ export class IterationStatementsVisitors
     return [
       [imageFrom(While), WS],
       ["(", this.visit(expression), ")", [WS_KR, WS_ALLMAN]],
+      [I_INDT_COMPACT, BRK_COMPACT],
+      [imageFrom(Do), [WS_KR, WS_COMPACT]],
+      this.visit(block),
+      [D_INDT_COMPACT],
+    ];
+  }
+
+  forLoopStatement(ctx: cst.ForLoopStatementCstContext) {
+    const { For, assignmentExpression, expression, Do, block } = ctx;
+
+    return [
+      [imageFrom(For), WS],
+      [
+        "(",
+        this.visit(assignmentExpression[0]),
+        [";", WS],
+        this.visit(expression),
+        [";", WS],
+        this.visit(assignmentExpression[1]),
+        ")",
+      ],
       [I_INDT_COMPACT, BRK_COMPACT],
       [imageFrom(Do), [WS_KR, WS_COMPACT]],
       this.visit(block),
