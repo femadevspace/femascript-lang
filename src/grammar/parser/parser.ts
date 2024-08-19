@@ -38,7 +38,7 @@ export class FemaScriptLanguageParser extends CstParser {
     this.CONSUME(lexer.TypeKeyword);
 
     this.MANY(() => {
-      this.SUBRULE(this.enumDeclarator);
+      this.SUBRULE(this.enumeratorDeclarator);
     });
   });
 
@@ -370,7 +370,7 @@ export class FemaScriptLanguageParser extends CstParser {
     this.OPTION(() => this.SUBRULE(this.arrayAccessSuffix));
   });
 
-  enumDeclarator = this.RULE("enumDeclarator", () => {
+  enumeratorDeclarator = this.RULE("enumeratorDeclarator", () => {
     this.CONSUME(lexer.Identifier);
     this.CONSUME(lexer.Colon);
     this.CONSUME(lexer.EnumType);
@@ -378,17 +378,25 @@ export class FemaScriptLanguageParser extends CstParser {
 
     this.AT_LEAST_ONE_SEP({
       DEF: () => {
-        this.CONSUME2(lexer.Identifier);
-        this.OPTION(() => {
-          this.CONSUME(lexer.AssignmentOperator);
-          this.CONSUME(lexer.NumberLiteral);
-        });
+        this.SUBRULE(this.enumaratorEntry);
       },
       SEP: lexer.Comma,
     });
 
     this.CONSUME(lexer.RCurly);
     this.CONSUME(lexer.SemiColon);
+  });
+
+  enumaratorEntry = this.RULE("enumaratorEntry", () => {
+    this.CONSUME(lexer.Identifier);
+    this.OPTION(() => {
+      this.CONSUME(lexer.AssignmentOperator);
+
+      this.OR([
+        { ALT: () => this.CONSUME(lexer.NumberLiteral) },
+        { ALT: () => this.CONSUME(lexer.StringLiteral) },
+      ]);
+    });
   });
 
   arrayAccessSuffix = this.RULE("arrayAccessSuffix", () => {

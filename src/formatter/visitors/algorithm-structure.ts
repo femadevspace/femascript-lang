@@ -40,12 +40,12 @@ export class AlgorithmStructureVisitors
   }
 
   typesDeclarators(ctx: cst.TypesDeclaratorsCstContext) {
-    const { Type, enumDeclarator } = ctx;
+    const { Type, enumeratorDeclarator } = ctx;
 
     return [
       imageFrom(Type),
       [I_INDT, BRK_LN],
-      separateWith(BRK_LN, this.visit(enumDeclarator)),
+      separateWith(BRK_LN, this.visit(enumeratorDeclarator)),
       [D_INDT],
     ];
   }
