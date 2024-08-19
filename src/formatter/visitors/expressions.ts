@@ -5,7 +5,10 @@ import { WS } from "../rules/whitespaces";
 
 export class ExpressionsVisitors
   extends FemaScriptFormatterVisitor
-  implements cst.AssignmentExpressionVisitor, cst.ExpressionVisitor
+  implements
+    cst.AssignmentExpressionVisitor,
+    cst.ExpressionVisitor,
+    cst.TernaryExpressionVisitor
 {
   assignmentExpression(ctx: cst.AssignmentExpressionCstContext) {
     const {
@@ -29,5 +32,24 @@ export class ExpressionsVisitors
       throw new Error("Unimplemented statement: " + JSON.stringify(res));
 
     return [this.visit(ternaryExpression)];
+  }
+
+  ternaryExpression(ctx: cst.TernaryExpressionCstContext) {
+    const { additionExpression, expression } = ctx;
+
+    const ternary = expression
+      ? [
+          WS,
+          "?",
+          WS,
+          this.visit(expression[0]),
+          WS,
+          ":",
+          WS,
+          this.visit(expression[1]),
+        ]
+      : [];
+
+    return [this.visit(additionExpression), ternary];
   }
 }
