@@ -219,14 +219,35 @@ export type SwitchStatementCstContext = {
   LParen?: IToken[];
   RParen?: IToken[];
   LCurly: IToken[];
+  caseStatement: CaseStatementCstNode[];
+  defaultStatement?: DefaultStatementCstNode[];
+  RCurly: IToken[];
+};
+
+export interface CaseStatementCstNode extends CstNode {
+  name: "caseStatement";
+  children: CaseStatementCstContext;
+}
+
+export type CaseStatementCstContext = {
   Case: IToken[];
   StringLiteral?: IToken[];
-  Do: (IToken)[];
-  block?: (BlockCstNode)[];
+  variableAccess?: VariableAccessCstNode[];
+  Do: IToken[];
+  block?: BlockCstNode[];
   Colon?: IToken[];
   statement?: StatementCstNode[];
-  Default?: IToken[];
-  RCurly: IToken[];
+};
+
+export interface DefaultStatementCstNode extends CstNode {
+  name: "defaultStatement";
+  children: DefaultStatementCstContext;
+}
+
+export type DefaultStatementCstContext = {
+  Default: IToken[];
+  Do: IToken[];
+  block: BlockCstNode[];
 };
 
 export interface ExpressionCstNode extends CstNode {
@@ -445,6 +466,8 @@ export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
   ifStatement(ctx: IfStatementCstContext, param?: IN): OUT;
   elseStatement(ctx: ElseStatementCstContext, param?: IN): OUT;
   switchStatement(ctx: SwitchStatementCstContext, param?: IN): OUT;
+  caseStatement(ctx: CaseStatementCstContext, param?: IN): OUT;
+  defaultStatement(ctx: DefaultStatementCstContext, param?: IN): OUT;
   expression(ctx: ExpressionCstContext, param?: IN): OUT;
   ternaryExpression(ctx: TernaryExpressionCstContext, param?: IN): OUT;
   additionExpression(ctx: AdditionExpressionCstContext, param?: IN): OUT;
@@ -485,6 +508,8 @@ export interface ConditionalStatementsVisitor<OUT = void> { conditionalStatement
 export interface IfStatementVisitor<OUT = void> { ifStatement(ctx: IfStatementCstContext): OUT }
 export interface ElseStatementVisitor<OUT = void> { elseStatement(ctx: ElseStatementCstContext): OUT }
 export interface SwitchStatementVisitor<OUT = void> { switchStatement(ctx: SwitchStatementCstContext): OUT }
+export interface CaseStatementVisitor<OUT = void> { caseStatement(ctx: CaseStatementCstContext): OUT }
+export interface DefaultStatementVisitor<OUT = void> { defaultStatement(ctx: DefaultStatementCstContext): OUT }
 export interface ExpressionVisitor<OUT = void> { expression(ctx: ExpressionCstContext): OUT }
 export interface TernaryExpressionVisitor<OUT = void> { ternaryExpression(ctx: TernaryExpressionCstContext): OUT }
 export interface AdditionExpressionVisitor<OUT = void> { additionExpression(ctx: AdditionExpressionCstContext): OUT }
@@ -522,6 +547,8 @@ export type CstNodeTypes = {
   ifStatement: IfStatementCstNode;
   elseStatement: ElseStatementCstNode;
   switchStatement: SwitchStatementCstNode;
+  caseStatement: CaseStatementCstNode;
+  defaultStatement: DefaultStatementCstNode;
   expression: ExpressionCstNode;
   ternaryExpression: TernaryExpressionCstNode;
   additionExpression: AdditionExpressionCstNode;

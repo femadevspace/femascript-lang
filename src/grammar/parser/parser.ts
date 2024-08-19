@@ -183,31 +183,41 @@ export class FemaScriptLanguageParser extends CstParser {
     this.CONSUME(lexer.LCurly);
 
     this.AT_LEAST_ONE(() => {
-      this.CONSUME(lexer.CaseKeyword);
-      this.OR2([
-        { ALT: () => this.CONSUME(lexer.StringLiteral) },
-        { ALT: () => this.SUBRULE3(this.variableAccess) },
-      ]);
-      this.CONSUME(lexer.DoKeyword);
-
-      this.OR3([
-        { ALT: () => this.SUBRULE(this.block) },
-        {
-          ALT: () => {
-            this.CONSUME(lexer.Colon);
-            this.SUBRULE(this.statement);
-          },
-        },
-      ]);
+      this.SUBRULE(this.caseStatement);
     });
 
     this.OPTION(() => {
-      this.CONSUME(lexer.DefaultKeyword);
-      this.CONSUME2(lexer.DoKeyword);
-      this.SUBRULE2(this.block);
+      this.SUBRULE(this.defaultStatement);
     });
 
     this.CONSUME(lexer.RCurly);
+  });
+
+  caseStatement = this.RULE("caseStatement", () => {
+    this.CONSUME(lexer.CaseKeyword);
+
+    this.OR([
+      { ALT: () => this.CONSUME(lexer.StringLiteral) },
+      { ALT: () => this.SUBRULE(this.variableAccess) },
+    ]);
+
+    this.CONSUME(lexer.DoKeyword);
+
+    this.OR2([
+      { ALT: () => this.SUBRULE(this.block) },
+      {
+        ALT: () => {
+          this.CONSUME(lexer.Colon);
+          this.SUBRULE(this.statement);
+        },
+      },
+    ]);
+  });
+
+  defaultStatement = this.RULE("defaultStatement", () => {
+    this.CONSUME(lexer.DefaultKeyword);
+    this.CONSUME2(lexer.DoKeyword);
+    this.SUBRULE2(this.block);
   });
 
   // ======================= EXPRESSIONS RULES =======================
