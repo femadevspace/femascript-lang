@@ -3,6 +3,7 @@ import { imageFrom } from "@/utils";
 import { FemaScriptFormatterVisitor } from "../formatter";
 import { WS } from "../rules/whitespaces";
 import { binaryExpression } from "../utils/expressions";
+import { separateWith } from "../utils/rules";
 
 export class ExpressionsVisitors
   extends FemaScriptFormatterVisitor
@@ -108,5 +109,28 @@ export class ExpressionsVisitors
 
   parenthesisExpression(ctx: cst.ParenthesisExpressionCstContext) {
     return ["(", WS, this.visit(ctx.expression), WS, ")"];
+  }
+}
+
+export class OperationsExpressionVisitors
+  extends FemaScriptFormatterVisitor
+  implements cst.PrintExpressionVisitor, cst.ReadExpressionVisitor
+{
+  printExpression(ctx: cst.PrintExpressionCstContext) {
+    return [
+      imageFrom(ctx.Print),
+      WS,
+      separateWith([",", WS], this.visit(ctx.expression)),
+      ";",
+    ];
+  }
+
+  readExpression(ctx: cst.ReadExpressionCstContext) {
+    return [
+      imageFrom(ctx.Read),
+      WS,
+      separateWith([",", WS], this.visit(ctx.variableAccess)),
+      ";",
+    ];
   }
 }
