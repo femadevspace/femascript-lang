@@ -64,6 +64,7 @@ export class IterationStatementsVisitors
         [";", WS],
         this.visit(assignmentExpression[1]),
         ")",
+        [WS_KR, WS_ALLMAN],
       ],
       [I_INDT_COMPACT, BRK_COMPACT],
       [imageFrom(Do), [WS_KR, WS_COMPACT]],
