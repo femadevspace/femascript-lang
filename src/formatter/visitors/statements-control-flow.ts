@@ -73,3 +73,17 @@ export class IterationStatementsVisitors
     ];
   }
 }
+
+export class ConditionalStatementsVisitors
+  extends FemaScriptFormatterVisitor
+  implements cst.ConditionalStatementsVisitor
+{
+  conditionalStatements(ctx: cst.ConditionalStatementsCstContext) {
+    const { ifStatement, switchStatement, ...res } = ctx;
+
+    if (Object.keys(res).length > 0)
+      throw new Error("Unimplemented statement: " + JSON.stringify(res));
+
+    return [this.visit(ifStatement), this.visit(switchStatement)];
+  }
+}
