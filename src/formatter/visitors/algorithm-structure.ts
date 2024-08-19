@@ -4,6 +4,7 @@ import { FemaScriptFormatterVisitor, VisitedNode } from "../formatter";
 import { BRK_LN, SKIP_LN } from "../rules/breaklines";
 import { D_INDT, I_INDT } from "../rules/indentation";
 import { WS } from "../rules/whitespaces";
+import { groupStatements } from "../utils/group-statements";
 import { separateWith } from "../utils/rules";
 
 export class AlgorithmStructureVisitors
@@ -116,7 +117,7 @@ export class AlgorithmStructureVisitors
     return [
       imageFrom(Start)!,
       [I_INDT, BRK_LN],
-      separateWith(SKIP_LN, this.visit(statement)),
+      groupStatements(statement, this),
       [D_INDT, BRK_LN],
       imageFrom(End)!,
     ];
