@@ -247,7 +247,9 @@ export interface DefaultStatementCstNode extends CstNode {
 export type DefaultStatementCstContext = {
   Default: IToken[];
   Do: IToken[];
-  block: BlockCstNode[];
+  block?: BlockCstNode[];
+  Colon?: IToken[];
+  statement?: StatementCstNode[];
 };
 
 export interface ExpressionCstNode extends CstNode {

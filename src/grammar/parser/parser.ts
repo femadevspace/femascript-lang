@@ -217,7 +217,16 @@ export class FemaScriptLanguageParser extends CstParser {
   defaultStatement = this.RULE("defaultStatement", () => {
     this.CONSUME(lexer.DefaultKeyword);
     this.CONSUME2(lexer.DoKeyword);
-    this.SUBRULE2(this.block);
+
+    this.OR([
+      { ALT: () => this.SUBRULE(this.block) },
+      {
+        ALT: () => {
+          this.CONSUME(lexer.Colon);
+          this.SUBRULE(this.statement);
+        },
+      },
+    ]);
   });
 
   // ======================= EXPRESSIONS RULES =======================
