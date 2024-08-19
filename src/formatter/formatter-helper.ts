@@ -40,5 +40,6 @@ export const format = (input: string, settings: DeepPartial<Settings> = {}) => {
       if (typeof node === "string") return node;
       return node(options, indentState);
     })
-    .join("");
+    .join("")
+    .concat("\n");
 };
