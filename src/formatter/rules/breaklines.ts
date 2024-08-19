@@ -12,12 +12,21 @@ export const BRK_KR = [BRK_WHEN_KR, INDT_KR];
 export const BRK_ALLMAN = [BRK_WHEN_ALLMAN, INDT_ALLMAN];
 export const BRK_COMPACT = [BRK_WHEN_COMPACT, INDT_COMPACT];
 
-const SKIP_LINE_CHAR = "\n\n";
-export const SKIP_LN = [SKIP_LINE_CHAR, INDT];
+const SKIP_RULE = RULE((opts, state) =>
+  opts.indentation.keepBetweenLines ? `\n${INDT(opts, state)}\n` : "\n\n"
+);
 
-const SKIP_WHEN_KR = RULE((opts) => whenKR(SKIP_LINE_CHAR, opts));
-const SKIP_WHEN_ALLMAN = RULE((opts) => whenAllman(SKIP_LINE_CHAR, opts));
-const SKIP_WHEN_COMPACT = RULE((opts) => whenCompact(SKIP_LINE_CHAR, opts));
+export const SKIP_LN = [SKIP_RULE, INDT];
+
+const SKIP_WHEN_KR = RULE((opts, state) =>
+  whenKR(SKIP_RULE(opts, state), opts)
+);
+const SKIP_WHEN_ALLMAN = RULE((opts, state) =>
+  whenAllman(SKIP_RULE(opts, state), opts)
+);
+const SKIP_WHEN_COMPACT = RULE((opts, state) =>
+  whenCompact(SKIP_RULE(opts, state), opts)
+);
 
 export const SKIP_KR = [SKIP_WHEN_KR, INDT_KR];
 export const SKIP_ALLMAN = [SKIP_WHEN_ALLMAN, INDT_ALLMAN];

@@ -7,5 +7,6 @@ export const defaultSettings = {
   indentation: {
     spaceSize: 4,
     useTabs: false,
+    keepBetweenLines: true,
   },
 };
