@@ -28,12 +28,19 @@ export const groupStatements = (
     }
   }
 
-  return grouped.flatMap((value, i, origin) => {
-    if (Array.isArray(value))
-      return [separateWith(BRK_LN, visitor.visit(value)), SKIP_LN];
+  if (currentGroup.length > 0) {
+    grouped.push(currentGroup);
+    currentGroup = [];
+  }
 
+  return grouped.flatMap((value, i, origin) => {
     const isLast = origin.length - i === 1;
-    return [visitor.visit(value), isLast ? NONE : SKIP_LN];
+    const skipExceptLast = isLast ? NONE : SKIP_LN;
+
+    if (Array.isArray(value))
+      return [separateWith(BRK_LN, visitor.visit(value)), skipExceptLast];
+
+    return [visitor.visit(value), skipExceptLast];
   });
 };
 
