@@ -38,6 +38,6 @@
       "@/*": ["*"]
     }
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts"],
-  "exclude": ["node_modules", ".vscode", "scripts", "dist", "extension"]
+  "include": ["src/**/*.ts", "tests/**/*.ts", "scripts/**/*.ts"],
+  "exclude": ["node_modules", ".vscode", "dist", "extension"]
 }
