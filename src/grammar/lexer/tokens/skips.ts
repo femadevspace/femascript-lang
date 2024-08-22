@@ -22,7 +22,7 @@ export const BlockComment = TOKEN({
 
 export const LineComment = TOKEN({
   name: "LineComment",
-  pattern: /(\/\/).*(\n|\r|\f)*/,
+  pattern: /(\/\/).*\s*/,
   group: "comments",
   textmateScope: {
     name: "comment.line",
