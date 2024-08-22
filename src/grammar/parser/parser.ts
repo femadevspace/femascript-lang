@@ -1,10 +1,14 @@
 import { getTokens } from "@/grammar";
 import * as lexer from "@/grammar/lexer/tokens";
-import { CstParser } from "chevrotain";
+import type { EnclosiveNodes } from "@/utils/comments";
+import { type CstNode, CstParser } from "chevrotain";
 
 export type Production = Exclude<
   keyof FemaScriptLanguageParser,
-  keyof CstParser
+  | keyof CstParser
+  | "mostEnclosiveCstNodeByStartOffset"
+  | "mostEnclosiveCstNodeByEndOffset"
+  | "cstPostNonTerminal"
 >;
 
 export class FemaScriptLanguageParser extends CstParser {
@@ -424,12 +428,45 @@ export class FemaScriptLanguageParser extends CstParser {
     this.CONSUME(lexer.RCurly);
   });
 
+  mostEnclosiveCstNodeByStartOffset: EnclosiveNodes = {};
+  mostEnclosiveCstNodeByEndOffset: EnclosiveNodes = {};
+
   constructor() {
     super(getTokens(), {
       recoveryEnabled: true,
       maxLookahead: 3,
+      nodeLocationTracking: "full",
     });
 
+    this.mostEnclosiveCstNodeByStartOffset = {};
+    this.mostEnclosiveCstNodeByEndOffset = {};
+
     this.performSelfAnalysis();
+  }
+
+  /**
+   * This method has been mixed into the class,
+   * but it is not declared in the TypeScript type.
+   * The call to `super.cstPostNonTerminal()` works correctly at runtime,
+   * though it will raise a TypeScript error.
+   * To ignore this, we need to use the '@ts-ignore' directive.
+   *
+   * @linkcode chevrotain/src/parse/parser/traits/tree_builder.ts
+   */
+  cstPostNonTerminal(ruleCstResult: CstNode, ruleName: string) {
+    // @ts-ignore
+    if (this.isBackTracking()) {
+      return;
+    }
+
+    // @ts-ignore
+    super.cstPostNonTerminal(ruleCstResult, ruleName);
+
+    if (!ruleCstResult.location || !ruleCstResult.location.endOffset) return;
+
+    this.mostEnclosiveCstNodeByStartOffset[ruleCstResult.location.startOffset] =
+      ruleCstResult;
+    this.mostEnclosiveCstNodeByEndOffset[ruleCstResult.location.endOffset] =
+      ruleCstResult;
   }
 }
