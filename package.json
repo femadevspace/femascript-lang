@@ -63,6 +63,7 @@
         "extensions": [
           ".alg",
           ".algoritmo",
+          ".algorithm",
           ".fema",
           ".femascript"
         ],
