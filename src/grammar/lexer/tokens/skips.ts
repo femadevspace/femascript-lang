@@ -11,7 +11,7 @@ export const Whitespace = TOKEN({
 
 export const BlockComment = TOKEN({
   name: "BlockComment",
-  pattern: makePattern("{{blockcomment}}"),
+  pattern: /\/\*[^*]*\*+([^/*][^*]*\*+)*\/\s*/,
   group: "comments",
   textmateScope: {
     name: "comment.block",

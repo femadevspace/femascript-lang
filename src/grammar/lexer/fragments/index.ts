@@ -21,8 +21,6 @@ import "./nmchar";
 
 import "./strings";
 
-import "./comments";
-
 import "./name";
 
 import "./url";
