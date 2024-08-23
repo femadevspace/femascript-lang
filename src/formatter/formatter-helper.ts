@@ -45,5 +45,6 @@ export const format = (
       return node(options, indentState);
     })
     .join(NONE)
+    .replace(/(\r?\n)+$/, NONE)
     .concat("\n");
 };
