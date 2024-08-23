@@ -1,4 +1,4 @@
-import { parse } from "@/grammar";
+import { parse, Production } from "@/grammar";
 import { DeepPartial, flatten, mergeDeep } from "@/utils/nested";
 import { FemaScriptFormatterVisitor } from "./formatter";
 import { NONE } from "./rules/whitespaces";
@@ -25,11 +25,15 @@ const mixInMethods = () => {
 };
 mixInMethods();
 
-export const format = (input: string, settings: DeepPartial<Settings> = {}) => {
+export const format = (
+  input: string,
+  settings: DeepPartial<Settings> = {},
+  entryPoint: Production = "algorithm"
+) => {
   const options = mergeDeep(defaultSettings, settings);
   const indentState = createIndentationState();
 
-  const { cst } = parse(input);
+  const { cst } = parse(input, entryPoint);
   if (!cst) return "";
 
   const result = new FemaScriptFormatterVisitor(options).visit(cst);
