@@ -1,6 +1,7 @@
 import * as cst from "@/types/cst";
 import { imageFrom } from "@/utils";
 import { FemaScriptFormatterVisitor } from "../formatter";
+import { PARENS } from "../rules/parentheses";
 import { WS } from "../rules/whitespaces";
 import { binaryExpression } from "../utils/expressions";
 import { separateWith } from "../utils/rules";
@@ -43,16 +44,16 @@ export class ExpressionsVisitors
   }
 
   ternaryExpression(ctx: cst.TernaryExpressionCstContext) {
-    const { additionExpression, expression } = ctx;
+    const { additionExpression, expression, Question, Colon } = ctx;
 
     const ternary = expression
       ? [
           WS,
-          "?",
+          imageFrom(Question),
           WS,
           this.visit(expression[0]),
           WS,
-          ":",
+          imageFrom(Colon),
           WS,
           this.visit(expression[1]),
         ]
@@ -108,7 +109,12 @@ export class ExpressionsVisitors
   }
 
   parenthesisExpression(ctx: cst.ParenthesisExpressionCstContext) {
-    return ["(", WS, this.visit(ctx.expression), WS, ")"];
+    return PARENS(
+      ctx.LParen,
+      [WS, this.visit(ctx.expression), WS],
+      ctx.RParen,
+      false
+    );
   }
 }
 
@@ -121,7 +127,7 @@ export class OperationsExpressionVisitors
       imageFrom(ctx.Print),
       WS,
       separateWith([",", WS], this.visit(ctx.expression)),
-      ";",
+      imageFrom(ctx.SemiColon),
     ];
   }
 
@@ -130,7 +136,7 @@ export class OperationsExpressionVisitors
       imageFrom(ctx.Read),
       WS,
       separateWith([",", WS], this.visit(ctx.variableAccess)),
-      ";",
+      imageFrom(ctx.SemiColon),
     ];
   }
 }

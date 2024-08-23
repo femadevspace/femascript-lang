@@ -1,5 +1,5 @@
 import * as cst from "@/types/cst";
-import { imageFrom } from "@/utils";
+import { imageFrom, imagesFrom } from "@/utils";
 import { FemaScriptFormatterVisitor } from "../formatter";
 import { BLOCK } from "../rules/block";
 import { BRK_ALLMAN, BRK_COMPACT, BRK_KR, BRK_LN } from "../rules/breaklines";
@@ -9,6 +9,7 @@ import {
   I_INDT,
   I_INDT_COMPACT,
 } from "../rules/indentation";
+import { PARENS } from "../rules/parentheses";
 import { WS, WS_ALLMAN, WS_COMPACT, WS_KR } from "../rules/whitespaces";
 import { separateWith } from "../utils/rules";
 
@@ -35,22 +36,26 @@ export class IterationStatementsVisitors
   }
 
   doWhileStatement(ctx: cst.DoWhileStatementCstContext) {
-    const { Do, block, While, expression } = ctx;
+    const { Do, block, While, LParen, expression, RParen, SemiColon } = ctx;
 
     return [
       [imageFrom(Do), [WS_KR, WS_COMPACT]],
       this.visit(block),
       [[WS_KR], [BRK_ALLMAN, BRK_COMPACT], imageFrom(While)],
-      [WS, ["(", this.visit(expression), ")", ";"]],
+      [
+        WS,
+        PARENS(LParen, this.visit(expression), RParen, false),
+        imageFrom(SemiColon),
+      ],
     ];
   }
 
   whileDoStatement(ctx: cst.WhileDoStatementCstContext) {
-    const { While, expression, Do, block } = ctx;
+    const { While, LParen, expression, RParen, Do, block } = ctx;
 
     return [
       [imageFrom(While), WS],
-      ["(", this.visit(expression), ")", [WS_KR, WS_ALLMAN]],
+      PARENS(LParen, this.visit(expression), RParen),
       [I_INDT_COMPACT, BRK_COMPACT],
       [imageFrom(Do), [WS_KR, WS_COMPACT]],
       this.visit(block),
@@ -59,20 +64,32 @@ export class IterationStatementsVisitors
   }
 
   forLoopStatement(ctx: cst.ForLoopStatementCstContext) {
-    const { For, assignmentExpression, expression, Do, block } = ctx;
+    const {
+      For,
+      LParen,
+      assignmentExpression,
+      SemiColon,
+      expression,
+      RParen,
+      Do,
+      block,
+    } = ctx;
+
+    const semiColonsImages = imagesFrom(SemiColon);
 
     return [
       [imageFrom(For), WS],
-      [
-        "(",
-        this.visit(assignmentExpression[0]),
-        [";", WS],
-        this.visit(expression),
-        [";", WS],
-        this.visit(assignmentExpression[1]),
-        ")",
-        [WS_KR, WS_ALLMAN],
-      ],
+      PARENS(
+        LParen,
+        [
+          this.visit(assignmentExpression[0]),
+          [semiColonsImages[0], WS],
+          this.visit(expression),
+          [semiColonsImages[1], WS],
+          this.visit(assignmentExpression[1]),
+        ],
+        RParen
+      ),
       [I_INDT_COMPACT, BRK_COMPACT],
       [imageFrom(Do), [WS_KR, WS_COMPACT]],
       this.visit(block),
@@ -101,11 +118,11 @@ export class ConditionalStatementsVisitors
   }
 
   ifStatement(ctx: cst.IfStatementCstContext) {
-    const { If, expression, Then, block, elseStatement } = ctx;
+    const { If, LParen, expression, RParen, Then, block, elseStatement } = ctx;
 
     return [
       [imageFrom(If), WS],
-      ["(", this.visit(expression), ")", [WS_KR, WS_ALLMAN]],
+      PARENS(LParen, this.visit(expression), RParen),
       [I_INDT_COMPACT, BRK_COMPACT],
       [imageFrom(Then), [WS_KR, WS_COMPACT]],
       this.visit(block),
@@ -129,6 +146,7 @@ export class ConditionalStatementsVisitors
       Switch,
       LParen,
       variableAccess,
+      RParen,
       caseStatement,
       defaultStatement,
       LCurly,
@@ -136,7 +154,9 @@ export class ConditionalStatementsVisitors
     } = ctx;
 
     const variable = this.visit(variableAccess);
-    const parenthesizedVariable = !!LParen ? ["(", variable, ")"] : variable;
+    const parenthesizedVariable = !!LParen
+      ? PARENS(LParen, variable, RParen!, false)
+      : variable;
 
     return [
       [
@@ -158,7 +178,8 @@ export class ConditionalStatementsVisitors
   }
 
   caseStatement(ctx: cst.CaseStatementCstContext) {
-    const { Case, StringLiteral, variableAccess, Do, block, statement } = ctx;
+    const { Case, StringLiteral, variableAccess, Colon, Do, block, statement } =
+      ctx;
 
     const caseValue = !!StringLiteral
       ? imageFrom(StringLiteral)
@@ -172,7 +193,13 @@ export class ConditionalStatementsVisitors
       : [[], []];
 
     const content = !!statement
-      ? [":", WS, shouldBreakLine[0], this.visit(statement), shouldBreakLine[1]]
+      ? [
+          imageFrom(Colon),
+          WS,
+          shouldBreakLine[0],
+          this.visit(statement),
+          shouldBreakLine[1],
+        ]
       : [WS_KR, WS_COMPACT, this.visit(block)];
 
     return [
@@ -190,7 +217,7 @@ export class ConditionalStatementsVisitors
   }
 
   defaultStatement(ctx: cst.DefaultStatementCstContext) {
-    const { Default, Do, block, statement } = ctx;
+    const { Default, Do, Colon, block, statement } = ctx;
 
     const isAssignmentStatement =
       !!statement?.at(0)?.children.assignmentStatement;
@@ -198,7 +225,7 @@ export class ConditionalStatementsVisitors
     const shouldBreakLine = !isAssignmentStatement ? ["🚨", BRK_LN] : [];
 
     const content = !!statement
-      ? [":", WS, shouldBreakLine, this.visit(statement)]
+      ? [imageFrom(Colon), WS, shouldBreakLine, this.visit(statement)]
       : [WS_KR, WS_COMPACT, this.visit(block)];
 
     return [

@@ -21,21 +21,30 @@ export class MiscellaneousVisitors
   }
 
   enumeratorDeclarator(ctx: cst.EnumeratorDeclaratorCstContext) {
-    const { Identifier, Enum, enumaratorEntry } = ctx;
+    const {
+      Identifier,
+      Colon,
+      Enum,
+      LCurly,
+      enumaratorEntry,
+      RCurly,
+      SemiColon,
+    } = ctx;
 
     return [
       imageFrom(Identifier),
-      ":",
+      imageFrom(Colon),
       WS,
       imageFrom(Enum),
+      // This may change to `BLOCK`
       [
         WS,
-        "{",
+        imageFrom(LCurly),
         WS,
         separateWith([",", WS], this.visit(enumaratorEntry)),
         WS,
-        "}",
-        ";",
+        imageFrom(RCurly),
+        imageFrom(SemiColon),
       ],
     ];
   }
@@ -67,8 +76,12 @@ export class MiscellaneousVisitors
   }
 
   arrayAccess(ctx: cst.ArrayAccessCstContext) {
-    const { Identifier, NumberLiteral } = ctx;
+    const { LSquare, Identifier, NumberLiteral, RSquare } = ctx;
 
-    return ["[", [imageFrom(Identifier), imageFrom(NumberLiteral)], "]"];
+    return [
+      imageFrom(LSquare),
+      [imageFrom(Identifier), imageFrom(NumberLiteral)],
+      imageFrom(RSquare),
+    ];
   }
 }

@@ -1,4 +1,5 @@
 import * as cst from "@/types/cst";
+import { imageFrom } from "@/utils";
 import { FemaScriptFormatterVisitor } from "../formatter";
 
 export class StatementsVisitors
@@ -28,7 +29,7 @@ export class StatementsVisitors
   }
 
   assignmentStatement(ctx: cst.AssignmentStatementCstContext) {
-    return [this.visit(ctx.assignmentExpression), ";"];
+    return [this.visit(ctx.assignmentExpression), imageFrom(ctx.SemiColon)];
   }
 
   controlStatements(ctx: cst.ControlStatementsCstContext) {

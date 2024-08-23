@@ -95,8 +95,14 @@ export class AlgorithmStructureVisitors
   }
 
   variableDeclarator(ctx: cst.VariableDeclaratorCstContext) {
-    const { Identifier, ArrayType, arrayAccessSuffix, Of, PrimitiveTypes } =
-      ctx;
+    const {
+      Identifier,
+      ArrayType,
+      arrayAccessSuffix,
+      Of,
+      PrimitiveTypes,
+      Colon,
+    } = ctx;
 
     const names = separateWith([",", WS], [...imagesFrom(Identifier)!]);
     let type: VisitedNode = [imageFrom(PrimitiveTypes)!];
@@ -108,7 +114,7 @@ export class AlgorithmStructureVisitors
         type,
       ]);
 
-    return [names, [":", WS], type];
+    return [names, [imageFrom(Colon), WS], type];
   }
 
   program(ctx: cst.ProgramCstContext) {
