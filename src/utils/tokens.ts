@@ -1,3 +1,5 @@
+import { VisitedNode } from "@/formatter/formatter";
+import { printTokenWithComments } from "@/formatter/rules/comments";
 import type { TokenConfig } from "@/grammar";
 import type { IToken, TokenType } from "chevrotain";
 
@@ -14,8 +16,8 @@ export const resolveCategories = (
   return categories.concat(additionalCategories);
 };
 
-export const imageFrom = (tokens: IToken[] | undefined) =>
-  tokens ? tokens[0].image : null;
+export const imageFrom = (tokens: IToken[] | undefined): VisitedNode =>
+  tokens ? printTokenWithComments(tokens[0]) : [];
 
-export const imagesFrom = (tokens: IToken[] | undefined) =>
-  tokens ? tokens.map(({ image }) => image) : null;
+export const imagesFrom = (tokens: IToken[] | undefined): VisitedNode =>
+  tokens ? tokens.map((token) => imageFrom([token])) : [];
