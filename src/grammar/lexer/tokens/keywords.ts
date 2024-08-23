@@ -23,7 +23,7 @@ export const AlgorithmKeyword = TOKEN({
 
 export const TypeKeyword = TOKEN({
   name: "Type",
-  pattern: /\b(TIPO|TYPE)\b/,
+  pattern: /\b(TIPO|TYPE)[S]?\b/,
   textmateScope: "storage.type",
 });
 
