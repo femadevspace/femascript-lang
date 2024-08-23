@@ -125,8 +125,15 @@ export class ConditionalStatementsVisitors
   }
 
   switchStatement(ctx: cst.SwitchStatementCstContext) {
-    const { Switch, LParen, variableAccess, caseStatement, defaultStatement } =
-      ctx;
+    const {
+      Switch,
+      LParen,
+      variableAccess,
+      caseStatement,
+      defaultStatement,
+      LCurly,
+      RCurly,
+    } = ctx;
 
     const variable = this.visit(variableAccess);
     const parenthesizedVariable = !!LParen ? ["(", variable, ")"] : variable;
@@ -139,10 +146,12 @@ export class ConditionalStatementsVisitors
         [WS_KR, I_INDT_COMPACT, BRK_COMPACT],
       ],
       BLOCK(
+        LCurly,
         separateWith(BRK_LN, [
           separateWith(BRK_LN, this.visit(caseStatement)),
           this.visit(defaultStatement),
-        ])
+        ]),
+        RCurly
       ),
       [D_INDT_COMPACT],
     ];

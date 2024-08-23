@@ -17,7 +17,7 @@ export class MiscellaneousVisitors
     cst.ArrayAccessVisitor
 {
   block(ctx: cst.BlockCstContext) {
-    return BLOCK(groupStatements(ctx.statement, this));
+    return BLOCK(ctx.LCurly, groupStatements(ctx.statement, this), ctx.RCurly);
   }
 
   enumeratorDeclarator(ctx: cst.EnumeratorDeclaratorCstContext) {
