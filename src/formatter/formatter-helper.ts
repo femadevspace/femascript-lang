@@ -33,7 +33,7 @@ export const format = (
   const options = mergeDeep(defaultSettings, settings);
   const indentState = createIndentationState();
 
-  const { cst } = parse(input, entryPoint);
+  const cst = parse(input, entryPoint);
   if (!cst) return "";
 
   const result = new FemaScriptFormatterVisitor(options).visit(cst);

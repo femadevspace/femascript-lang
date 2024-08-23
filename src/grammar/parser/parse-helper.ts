@@ -33,7 +33,7 @@ const parse = <Entry extends Production = "algorithm">(
     parser.mostEnclosiveCstNodeByEndOffset
   );
 
-  return { cst, groups };
+  return cst;
 };
 
 export { BaseVisitor, BaseVisitorWithDefaults, parse };
