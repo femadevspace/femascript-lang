@@ -39,8 +39,8 @@ export const format = (
   const result = new FemaScriptFormatterVisitor(options).visit(cst);
 
   return flatten(result)
+    .filter((node) => node !== null)
     .map((node) => {
-      if (node === null) return NONE;
       if (typeof node === "string") return node;
       return node(options, indentState);
     })
