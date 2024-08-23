@@ -3,6 +3,7 @@ import { getTokens } from "../../src/grammar";
 import * as tokensWithVariableNames from "../../src/grammar/lexer/tokens";
 
 const PARSER_STARTS_ON = "class FemaScriptLanguageParser extends CstParser {";
+const PARSER_ENDS_ON = "this.performSelfAnalysis();";
 
 const generatePlaygroundCode = async () => {
   const categoriesNames = Array.from(
@@ -82,9 +83,14 @@ const generatePlaygroundCode = async () => {
 
   const rawParserText = await Bun.file("./src/grammar/parser/parser.ts").text();
   const parser = rawParserText
-    .substring(rawParserText.indexOf(PARSER_STARTS_ON))
+    .substring(
+      rawParserText.indexOf(PARSER_STARTS_ON),
+      rawParserText.indexOf(PARSER_ENDS_ON) + PARSER_ENDS_ON.length
+    )
+    .concat("\n\t}\n}")
     .replaceAll("lexer.", "")
-    .replaceAll("getTokens()", "allTokens");
+    .replaceAll("getTokens()", "allTokens")
+    .replace(/\s[ \t]*(this.)?most.*;/g, "");
 
   return `
 (function example() {
