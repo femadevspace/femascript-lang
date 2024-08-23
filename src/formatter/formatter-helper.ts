@@ -44,6 +44,6 @@ export const format = (
       if (typeof node === "string") return node;
       return node(options, indentState);
     })
-    .join("")
+    .join(NONE)
     .concat("\n");
 };
