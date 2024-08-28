@@ -1,3 +1,5 @@
+import { type DeepPartial, mergeDeep } from "@/utils/nested";
+
 export type FormattingStyle = "k&r" | "allman" | "compact";
 export type Settings = typeof defaultSettings;
 
@@ -10,3 +12,6 @@ export const defaultSettings = {
     keepBetweenLines: true,
   },
 };
+
+export const withDefaults = (settings: DeepPartial<Settings>): Settings =>
+  mergeDeep(defaultSettings, settings);
