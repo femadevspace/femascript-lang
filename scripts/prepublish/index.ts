@@ -7,6 +7,6 @@ await Promise.all([
   Bun.write("./extension/language-settings.json", generateLanguageSettings()),
   Bun.write(
     "./extension/highlight/femascript-grammar.tmLanguage.json",
-    await generateHighlightCode()
+    generateHighlightCode()
   ),
 ]);

@@ -5,7 +5,7 @@ type Repository = {
   patterns: TextmatePattern[];
 };
 
-export const generateHighlightCode = async () => {
+export const generateHighlightCode = () => {
   let repository: Record<string, Repository> = {};
   const extractRepository = (scope: WithTextmateScope["textmateScope"]) =>
     typeof scope === "string"
