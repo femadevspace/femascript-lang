@@ -1,5 +1,7 @@
 import { parse, Production } from "@/grammar";
+import { PositionableMessage } from "@/utils";
 import { DeepPartial, flatten } from "@/utils/nested";
+import { hasError, Safe } from "@/utils/safe";
 import { FemaScriptFormatterVisitor } from "./formatter";
 import { NONE } from "./rules/whitespaces";
 import { Settings, withDefaults } from "./settings";
@@ -29,16 +31,15 @@ export const format = (
   input: string,
   settings: DeepPartial<Settings> = {},
   entryPoint: Production = "algorithm"
-) => {
+): Safe<string, PositionableMessage[]> => {
   const options = withDefaults(settings);
   const indentState = createIndentationState();
 
   const cst = parse(input, entryPoint);
-  if (!cst) return "";
+  if (hasError(cst)) return cst;
 
-  const result = new FemaScriptFormatterVisitor(options).visit(cst);
-
-  return flatten(result)
+  const visitResult = new FemaScriptFormatterVisitor(options).visit(cst);
+  const result = flatten(visitResult)
     .filter((node) => node !== null)
     .map((node) => {
       if (typeof node === "string") return node;
@@ -47,4 +48,6 @@ export const format = (
     .join(NONE)
     .replace(/(\r?\n)+$/, NONE)
     .concat("\n");
+
+  return result;
 };

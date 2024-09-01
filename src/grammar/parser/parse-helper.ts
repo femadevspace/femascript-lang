@@ -1,7 +1,12 @@
 import { lexer } from "@/grammar";
 import type { CstNodeTypes } from "@/types/cst";
-import { handleLexErrors, handleParserErrors } from "@/utils";
+import {
+  handleLexErrors,
+  handleParserErrors,
+  type PositionableMessage,
+} from "@/utils";
 import { attachComments } from "@/utils/comments";
+import type { Safe } from "@/utils/safe";
 import { FemaScriptLanguageParser, type Production } from "./parser";
 
 const parser = new FemaScriptLanguageParser();
@@ -13,27 +18,31 @@ const BaseVisitorWithDefaults =
 const parse = <Entry extends Production = "algorithm">(
   inputText: string,
   entryPoint: Entry = "algorithm" as Entry
-) => {
-  const { tokens, errors, groups } = lexer.tokenize(inputText);
+): Safe<CstNodeTypes[Entry], PositionableMessage[]> => {
+  try {
+    const { tokens, errors, groups } = lexer.tokenize(inputText);
 
-  handleLexErrors(errors);
+    handleLexErrors(errors);
 
-  parser.input = tokens;
-  parser.mostEnclosiveCstNodeByStartOffset = {};
-  parser.mostEnclosiveCstNodeByEndOffset = {};
+    parser.input = tokens;
+    parser.mostEnclosiveCstNodeByStartOffset = {};
+    parser.mostEnclosiveCstNodeByEndOffset = {};
 
-  const cst = parser[entryPoint]() as CstNodeTypes[Entry];
+    const cst = parser[entryPoint]() as CstNodeTypes[Entry];
 
-  handleParserErrors(parser.errors);
+    handleParserErrors(parser.errors);
 
-  attachComments(
-    tokens,
-    groups.comments,
-    parser.mostEnclosiveCstNodeByStartOffset,
-    parser.mostEnclosiveCstNodeByEndOffset
-  );
+    attachComments(
+      tokens,
+      groups.comments,
+      parser.mostEnclosiveCstNodeByStartOffset,
+      parser.mostEnclosiveCstNodeByEndOffset
+    );
 
-  return cst;
+    return cst;
+  } catch (error) {
+    return { error: error as PositionableMessage[] };
+  }
 };
 
 export { BaseVisitor, BaseVisitorWithDefaults, parse };

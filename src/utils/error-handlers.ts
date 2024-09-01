@@ -1,35 +1,60 @@
 import type { ILexingError, IRecognitionException } from "chevrotain";
 
-const printErrors = (context: string, messages: string[]) => {
-  const errorLiteral = messages.length > 1 ? "errors" : "error";
-  let message = `${context} ${errorLiteral}: \n`;
-
-  for (const error of messages) message += `${error}\n`;
-
-  throw new Error(message);
-};
+export class PositionableMessage extends Error {
+  constructor(
+    public override message: string,
+    public startLine: number,
+    public startChar: number,
+    public endLine: number,
+    public endChar: number
+  ) {
+    super();
+  }
+}
 
 export const handleLexErrors = (errors: ILexingError[]) => {
   if (errors.length > 0) {
-    const messages = errors.map(
-      ({ line, column, message }) => `(${line}:${column}) ${message}`
-    );
+    const capturedErrors: PositionableMessage[] = [];
 
-    printErrors("Lexer", messages);
+    for (const error of errors) {
+      let { line, column, message } = error;
+
+      line ??= 0;
+      column ??= 0;
+
+      capturedErrors.push(
+        new PositionableMessage(message, line, column, line, column + 1)
+      );
+    }
+
+    throw capturedErrors;
   }
 };
 
 export const handleParserErrors = (errors: IRecognitionException[]) => {
   if (errors.length > 0) {
-    const {
-      token: { startLine, startColumn },
-      name,
-      message,
-    } = errors[0];
+    const capturedErrors: PositionableMessage[] = [];
 
-    const position =
-      startLine && startColumn ? `[${startLine}:${startColumn}]` : "";
+    for (const error of errors) {
+      let { image, startLine, startColumn } = error.token;
+      startLine ??= 0;
+      startColumn ??= 0;
 
-    printErrors("Parser", [`(${name}) ${message} ${position}`]);
+      const message = error.message;
+      const endLine = startLine;
+      const endColumn = startColumn + image.length;
+
+      capturedErrors.push(
+        new PositionableMessage(
+          message,
+          startLine,
+          startColumn,
+          endLine,
+          endColumn
+        )
+      );
+    }
+
+    throw capturedErrors;
   }
 };
