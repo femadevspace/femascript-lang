@@ -86,7 +86,7 @@
   "configurationDefaults": {
     "[femascript]": {
       "editor.formatOnSave": true,
-      "editor.defaultFormatter": "femascript-lang"
+      "editor.defaultFormatter": "fema-devspace.femascript-lang"
     }
   },
   "activationEvents": [
