@@ -81,7 +81,33 @@
         "scopeName": "source.femascript",
         "path": "./extension/highlight/femascript-grammar.tmLanguage.json"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "FemaScript",
+      "properties": {
+        "femascript.formatter.style": {
+          "markdownDescription": "[Estilo de formatação/indentação](https://en.wikipedia.org/wiki/Indentation_style) do código.",
+          "type": "string",
+          "default": "k&r",
+          "enum": [
+            "k&r",
+            "allman",
+            "compact"
+          ],
+          "enumItemLabels": [
+            "Kernighan & Ritchie (K&R)",
+            "Allman",
+            "Compato"
+          ],
+          "markdownEnumDescriptions": [
+            "O [K&R](https://en.wikipedia.org/wiki/Indentation_style#K&R) é um estilo de indentação mais usado em\nC, C++, Java, JavaScript, Go, Swift, Objective-C, PHP, Perl, Ruby, entre outras linguagens.\n\n```femascript\nIF (expression) THEN {\n    x <- 0;\n}\n```",
+            "O [Allman](https://en.wikipedia.org/wiki/Indentation_style#Allman_style) é o estilo de indentação usado em C# (C Sharp).\n\n```femascript\nIF (expression) THEN\n{\n    x <- 0;\n}\n```",
+            "O `Compacto` é um estilo de indentação customizado para o `FemaScript`.\nCriado para facilitar a leitura e escrita de códigos.\n\n```femascript\nIF (expression) \n    THEN { x <- 0;\n         }\n```\n\n**🚨 Atenção:** ainda está em processo de desenvolvimento, apresentando algumas incosistências.\nUse-o sabendo que não está no resultado final ainda."
+          ]
+        }
+      }
+    }
   },
   "configurationDefaults": {
     "[femascript]": {
