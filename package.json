@@ -67,7 +67,7 @@
           ".fema",
           ".femascript"
         ],
-        "configuration": "./extension/language-settings.json",
+        "configuration": "./fixtures/package/language-settings.json",
         "icon": {
           "light": "./assets/femascript-icon-light.svg",
           "dark": "./assets/femascript-icon-dark.svg"

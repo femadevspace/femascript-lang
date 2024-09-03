@@ -1,5 +1,4 @@
-export const generateLanguageSettings = () => {
-  const result = `{
+{
   "comments": {
     "lineComment": "//",
     "blockComment": ["/*", "*/"]
@@ -13,15 +12,12 @@ export const generateLanguageSettings = () => {
     ["{", "}"],
     ["[", "]"],
     ["(", ")"],
-    ["\\"", "\\""]
+    ["\"", "\""]
   ],
   "surroundingPairs": [
     ["{", "}"],
     ["[", "]"],
     ["(", ")"],
-    ["\\"", "\\""]
+    ["\"", "\""]
   ]
-}`;
-
-  return result;
-};
+}
