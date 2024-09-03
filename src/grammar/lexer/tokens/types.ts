@@ -11,35 +11,35 @@ export const PrimitiveTypes = TOKEN({
 
 export const RealType = TOKEN({
   name: "RealType",
-  pattern: /\b(rea((l[s]?)|is))\b/,
+  pattern: /\b(rea((ls?)|is))\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });
 
 export const IntegerType = TOKEN({
   name: "IntegerType",
-  pattern: /\b(int((eger[s]?)|(eiro[s]?))?)\b/,
+  pattern: /\b(int((egers?)|(eiros?))?)\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });
 
 export const CharType = TOKEN({
   name: "CharType",
-  pattern: /\b(((char(acter)?)|caractere)[s]?)\b/,
+  pattern: /\b(((char(acter)?)|caractere)s?)\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });
 
 export const TextType = TOKEN({
   name: "TextType",
-  pattern: /\b((string|text[o]?)[s]?)\b/,
+  pattern: /\b((string|texto?)s?)\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });
 
 export const BooleanType = TOKEN({
   name: "BooleanType",
-  pattern: /\b((bool(ean[o]?)?[s]?)|(logic((al|o)[s]?)?)|lógico[s]?)\b/,
+  pattern: /\b((bool(eano?)?s?)|(logic((al|o)s?)?)|lógicos?)\b/,
   categories: [PrimitiveTypes],
   textmateScope,
 });

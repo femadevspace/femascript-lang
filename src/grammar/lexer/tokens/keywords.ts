@@ -23,7 +23,7 @@ export const AlgorithmKeyword = TOKEN({
 
 export const TypeKeyword = TOKEN({
   name: "Type",
-  pattern: /\b(TIPO|TYPE)[S]?\b/,
+  pattern: /\b(TIPO|TYPE)S?\b/,
   textmateScope: "storage.type",
 });
 
@@ -89,7 +89,7 @@ export const ForKeyword = TOKEN({
 
 export const SwitchKeyword = TOKEN({
   name: "Switch",
-  pattern: /\b(CHECK|TEST[E]?|AVALIE|ANALISE)\b/,
+  pattern: /\b(CHECK|TESTE?|AVALIE|ANALISE)\b/,
   textmateScope: "keyword.control.switch",
 });
 
