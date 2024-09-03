@@ -46,7 +46,7 @@ export const BooleanType = TOKEN({
 
 export const ArrayType = TOKEN({
   name: "ArrayType",
-  pattern: /\b(arra(y|njo)|list[a]?|matri[x|z])\b/,
+  pattern: /\b(arra(y|njo)|lista?|matri[x|z]|vec?tor)\b/,
   textmateScope,
 });
 
