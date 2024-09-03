@@ -21,6 +21,7 @@ Neste repositório você encontrará o código-fonte da extensão para o [Visual
   - **Windows:** Shift + Alt + F
   - **MacOS:** Shift + Option + F
   - **Linux:** Ctrl + Shift + I
+- **Snippets:** Blocos de código predefinidos para acelerar a escrita de estruturas comuns da linguagem..
 - **🎯 Futuramente... Compilador Multilíngue:** Planejamos adicionar suporte para compilar FemaScript em outras linguagens, permitindo que os alunos executem seus algoritmos em diferentes ambientes.
 
 <h2 align='center'>🚀 Instalação</h2>
