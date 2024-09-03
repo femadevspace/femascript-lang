@@ -10,5 +10,21 @@
       "${0}",
       "FIM."
     ]
+  },
+  "Declarações de Constantes": {
+    "description": "Inicia um bloco de delcarações de constantes",
+    "scope": "femascript",
+    "prefix": "consts",
+    "body": [
+      "CONST",
+      "\t${1:nome_da_constante} <- ${2:valor_da_constante};",
+      "${0}"
+    ]
+  },
+  "Declaração de Constante": {
+    "description": "Inicia uma declaração de constante",
+    "scope": "femascript",
+    "prefix": "const",
+    "body": ["${1:nome_da_constante} <- ${2:valor_da_constante};", "${0}"]
   }
 }
