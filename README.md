@@ -15,8 +15,7 @@ Neste repositório você encontrará o código-fonte da extensão para o [Visual
 
 <h2 align='center'>🌟 Recursos</h2>
 
-- **Sintaxe Simples:** Facilita a compreensão e o aprendizado dos conceitos básicos de programação.
-- **Syntax Highlighting:** A extensão para VSCode destaca a sintaxe, tornando o código mais legível.
+- **Realce de Sintaxe:** A extensão para o VSCode oferece _syntax highlighting_ para tornar o código mais legível.
 - **Formatador de Código:** Ajusta automaticamente o estilo do código para manter a consistência.
   - **Windows:** Shift + Alt + F
   - **MacOS:** Shift + Option + F
