@@ -1,17 +1,20 @@
-import { type DeepPartial, mergeDeep } from "@/utils/nested";
+import { type DeepPartial } from "@/utils/nested";
+import { z } from "zod";
 
-export type FormattingStyle = "k&r" | "allman" | "compact";
-export type Settings = typeof defaultSettings;
+export type Settings = z.infer<typeof settingsSchema>;
+export type FormattingStyle = Settings["style"];
 
-export const defaultSettings = {
-  style: "k&r" as FormattingStyle,
+export const settingsSchema = z.object({
+  style: z.enum(["k&r", "allman", "compact"]).catch("k&r"),
 
-  indentation: {
-    spaceSize: 4,
-    useTabs: false,
-    keepBetweenLines: true,
-  },
-};
+  indentation: z
+    .object({
+      spaceSize: z.number().min(1).catch(4),
+      useTabs: z.boolean().catch(true),
+      keepBetweenLines: z.boolean().catch(true),
+    })
+    .default({}),
+});
 
 export const withDefaults = (settings: DeepPartial<Settings>): Settings =>
-  mergeDeep(defaultSettings, settings);
+  settingsSchema.parse(settings);
