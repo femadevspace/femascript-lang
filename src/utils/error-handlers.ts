@@ -40,7 +40,7 @@ export const handleParserErrors = (errors: IRecognitionException[]) => {
       startLine ??= 0;
       startColumn ??= 0;
 
-      const message = formatErrorMessage(error.message);
+      const message = error.message;
       const endLine = startLine;
       const endColumn = startColumn + image.length;
 
@@ -57,15 +57,4 @@ export const handleParserErrors = (errors: IRecognitionException[]) => {
 
     throw capturedErrors;
   }
-};
-
-const formatErrorMessage = (original: IRecognitionException["message"]) => {
-  const tokens = original.match(
-    /-->\s(?<expected>.*)\s<--.*-->\s(?<found>.*)\s<--/
-  )?.groups;
-  if (!tokens) return original;
-
-  const { expected, found } = tokens;
-
-  return `Esperado ${expected} mas foi encontrado ${found}.`;
 };
