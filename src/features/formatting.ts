@@ -1,5 +1,5 @@
 import { format, type FormattingStyle, withDefaults } from "@/formatter";
-import { LANGUAGE_SELECTOR } from "@/utils/globals";
+import { LANGUAGE_ID, LANGUAGE_SELECTOR } from "@/utils/globals";
 import { hasError } from "@/utils/safe";
 import {
   CancellationToken,
@@ -20,14 +20,9 @@ class FemaScriptDocumentFormattingEditProvider
     DocumentFormattingEditProvider,
     DocumentRangeFormattingEditProvider
 {
-  private performFormat(
-    document: TextDocument,
-    options: FormattingOptions
-  ): ProviderResult<TextEdit[]> {
-    const formattedText = format(
-      document.getText(),
-      this.settingsFromExtension(options)
-    );
+  private performFormat(document: TextDocument): ProviderResult<TextEdit[]> {
+    const formatterSettings = this.settingsFromExtension();
+    const formattedText = format(document.getText(), formatterSettings);
 
     if (hasError(formattedText)) return;
 
@@ -38,15 +33,20 @@ class FemaScriptDocumentFormattingEditProvider
     return [TextEdit.replace(fullDocumentRange, formattedText)];
   }
 
-  private settingsFromExtension(options: FormattingOptions) {
-    const config = workspace.getConfiguration("femascript");
-    const style = config.get<FormattingStyle>("formatter.style");
+  private settingsFromExtension() {
+    const LANG_ID = { languageId: LANGUAGE_ID };
+    const editorConfig = workspace.getConfiguration("editor", LANG_ID);
+    const languageConfig = workspace.getConfiguration("femascript", LANG_ID);
+
+    const style = languageConfig.get<FormattingStyle>("formatter.style");
+    const spaceSize = editorConfig.get<number>("tabSize");
+    const useTabs = !editorConfig.get<boolean>("insertSpaces");
 
     return withDefaults({
       style,
       indentation: {
-        spaceSize: options.tabSize,
-        useTabs: !options.insertSpaces,
+        spaceSize,
+        useTabs,
       },
     });
   }
@@ -57,7 +57,7 @@ class FemaScriptDocumentFormattingEditProvider
     options: FormattingOptions,
     token: CancellationToken
   ): ProviderResult<TextEdit[]> {
-    return this.performFormat(document, options);
+    return this.performFormat(document);
   }
 
   provideDocumentFormattingEdits(
@@ -65,7 +65,7 @@ class FemaScriptDocumentFormattingEditProvider
     options: FormattingOptions,
     token: CancellationToken
   ): ProviderResult<TextEdit[]> {
-    return this.performFormat(document, options);
+    return this.performFormat(document);
   }
 }
 
