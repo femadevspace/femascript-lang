@@ -44,5 +44,46 @@
     "scope": "femascript",
     "prefix": "atribuir",
     "body": ["${1:nome_da_variavel} <- ${2:valor};", "${0}"]
+  },
+  "Bloco de Decisão \"SE\"": {
+    "description": "Inicia um bloco de decisão `SE`",
+    "scope": "femascript",
+    "prefix": "se",
+    "body": ["SE (${1:condicao})", "\tENTÃO { ${0}", "\t      }"]
+  },
+  "Bloco de Decisão \"SE/SENÃO\"": {
+    "description": "Inicia um bloco de decisão `SE/SENÃO`",
+    "scope": "femascript",
+    "prefix": "sesenao",
+    "body": [
+      "SE (${1:condicao})",
+      "\tENTÃO { ${2}",
+      "\t      }",
+      "\tSENÃO { ${0}",
+      "\t      }"
+    ]
+  },
+  "Bloco de Decisão \"AVALIE\"": {
+    "description": "Inicia um bloco de decisão `AVALIE`",
+    "scope": "femascript",
+    "prefix": "switch",
+    "body": [
+      "AVALIE (${1:variavel})",
+      "\t{ ${0}",
+      "\t  CASO_CONTRARIO",
+      "\t    FAÇA: ${2:comando_padrao};",
+      "\t}"
+    ]
+  },
+  "Declaração \"QUANDO\"": {
+    "description": "Inicia uma declaração de `QUANDO` para os blocos de decisão `AVALIE`",
+    "scope": "femascript",
+    "prefix": "case",
+    "body": [
+      "QUANDO \"${1:valor}\"",
+      "\tFAÇA { ${2:codigo}",
+      "\t     }",
+      "${0}"
+    ]
   }
 }
