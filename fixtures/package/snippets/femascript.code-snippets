@@ -85,5 +85,27 @@
       "\t     }",
       "${0}"
     ]
+  },
+  "Bloco de Loop \"Para\"": {
+    "description": "Inicia um bloco de loop `PARA`",
+    "scope": "femascript",
+    "prefix": "para",
+    "body": [
+      "PARA (${1:index} <- 0; ${1:index} < ${2:N}; ${1:index}++)",
+      "\tFAÇA { LER ${3:m}[${1:index}];${0}",
+      "\t     }"
+    ]
+  },
+  "Bloco de Loop \"ENQUANTO\"": {
+    "description": "Inicia um bloco de loop `ENQUANTO`",
+    "scope": "femascript",
+    "prefix": "enquanto",
+    "body": ["ENQUANTO (${1:condicao})", "\tFAÇA { ${0}", "\t     }"]
+  },
+  "Bloco de Loop \"FAÇA-ENQUANTO\"": {
+    "description": "Inicia um bloco de loop `FAÇA-ENQUANTO`",
+    "scope": "femascript",
+    "prefix": "facaenquanto",
+    "body": ["FAÇA { ${0}", "     }", "ENQUANTO (${1:condicao});"]
   }
 }
