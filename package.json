@@ -13,7 +13,8 @@
   "categories": [
     "Programming Languages",
     "Education",
-    "Formatters"
+    "Formatters",
+    "Snippets"
   ],
   "keywords": [
     "femascript",
@@ -80,6 +81,12 @@
         "language": "femascript",
         "scopeName": "source.femascript",
         "path": "./extension/highlight/femascript-grammar.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "femascript",
+        "path": "./fixtures/package/snippets/femascript.code-snippets"
       }
     ],
     "configuration": {
