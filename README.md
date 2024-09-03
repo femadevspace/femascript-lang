@@ -111,29 +111,39 @@ Enquanto a Wiki não é publicada, aqui está uma tabela de instruções que voc
 </table>
 
 <h3 align='center'>Estrutura de Declarações (statements)</h3>
+
+<blockquote>
+  * Snippets são pequenos trechos de código que você pode usar para acelerar o desenvolvimento e garantir consistência em seu trabalho. Em vez de digitar repetidamente o mesmo código, você pode usar snippets para inserir rapidamente estruturas de código comuns ou padrões. Eles economizam tempo e ajudam a evitar erros ao criar código. Para utilizar-los basta escrever a palavra chave que está na coluna de "Snippet", o VSCode irá mostrar uma janela e, então, basta apertar "Enter" para inserir o Snippet
+</blockquote>
+
 <table align='center'>
   <thead>
     <tr>
       <th>Declaração</th>
+      <th>*Snippet</th>
       <th>Estrutura</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>Se/Senão (if/else)</td>
+      <td><code>se</code> | <code>senao</code></td>
       <td><img src="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/screenshots/if-else-statement.png" alt="Exemplo da estrutura de uma declaração se/então"></td>
     </tr>
     <tr>
       <td>Enquanto/Faça (while/do)</td>
+      <td><code>enquanto</code> | <code>facaenquanto</code></td>
       <td><img src="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/screenshots/do-while-statement.png" alt="Exemplo da estrutura de uma declaração faça/enquanto">
       <img src="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/screenshots/while-do-statement.png" alt="Exemplo da estrutura de uma declaração enquanto/faça"></td>
     </tr>
     <tr>
       <td>Para (for)</td>
+      <td><code>para</code></td>
       <td><img src="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/screenshots/for-statement.png" alt="Exemplo da estrutura de uma declaração para (for statement)"></td>
     </tr>
     <tr>
       <td>Avalie (switch)</td>
+      <td><code>switch</code> | <code>case</code></td>
       <td><img src="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/screenshots/switch-statement.png" alt="Exemplo da estrutura de uma declaração avalie (switch statement)"></td>
     </tr>
   </tbody>
