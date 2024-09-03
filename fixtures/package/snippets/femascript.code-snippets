@@ -26,5 +26,23 @@
     "scope": "femascript",
     "prefix": "const",
     "body": ["${1:nome_da_constante} <- ${2:valor_da_constante};", "${0}"]
+  },
+  "Declarações de Variáveis": {
+    "description": "Inicia um bloco de delcarações de variáveis",
+    "scope": "femascript",
+    "prefix": "vars",
+    "body": ["VAR", "\t${1:nome_da_variavel}: ${2:tipo};", "${0}"]
+  },
+  "Declaração de Variável": {
+    "description": "Inicia uma delcaração de variável",
+    "scope": "femascript",
+    "prefix": "var",
+    "body": ["${1:nome_da_variavel}: ${2:tipo};", "${0}"]
+  },
+  "Atribuir valor a variável": {
+    "description": "Atribui um valor a uma variável",
+    "scope": "femascript",
+    "prefix": "atribuir",
+    "body": ["${1:nome_da_variavel} <- ${2:valor};", "${0}"]
   }
 }
