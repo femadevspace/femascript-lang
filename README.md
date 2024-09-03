@@ -149,6 +149,12 @@ Estamos abertos a contribuições de alunos e interessados. Para contribuir:
 
 > **Atenção:** Este projeto foi desenvolvido utilizando a ferramenta [Bun](https://bun.sh/). Para executá-lo corretamente, por favor, instale as dependências (`bun install`) e utilize os comandos específicos do Bun, como `bun run dev`, para rodar o projeto. _Run with bun!_
 
+<h2 align='center'>👽 Problemas (Des)conhecidos</h2>
+
+Se você encontrar qualquer comportamento inesperado ou suspeitar de um bug, consulte a seção de [Issues Abertas](https://github.com/femadevspace/femascript-lang/issues) do repositório. É possível que o problema já tenha sido relatado por outros usuários ou que esteja em processo de resolução.
+
+Se o problema que você encontrou não estiver listado, sinta-se à vontade para abrir uma nova issue fornecendo o máximo de detalhes possível para ajudar a identificar e corrigir o problema. Agradecemos sua contribuição!
+
 <h2 align='center'>✨ Créditos</h2>
 
 Este projeto foi iniciado em meados de 2024 por [Thiago Ausechi](https://github.com/thiagoausechi), então aluno do 1º ano de Ciências da Computação, com o apoio e orientação dos docentes da área de Informática da [FEMA](https://fema.edu.br/).
