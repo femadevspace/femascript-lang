@@ -1,1 +1,14 @@
-{}
+{
+  "Iniciar Algoritmo": {
+    "description": "Inicia uma estrutura pronta para um algoritmo",
+    "scope": "femascript",
+    "prefix": "algoritmo",
+    "body": [
+      "ALGORITMO ${1:nome_do_algoritmo};",
+      "${2}",
+      "INICIO",
+      "${0}",
+      "FIM."
+    ]
+  }
+}
