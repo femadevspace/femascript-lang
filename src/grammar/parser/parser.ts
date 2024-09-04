@@ -2,6 +2,7 @@ import { getTokens } from "@/grammar";
 import * as lexer from "@/grammar/lexer/tokens";
 import type { EnclosiveNodes } from "@/utils/comments";
 import { type CstNode, CstParser } from "chevrotain";
+import { errorMessageProvider } from "./errors-provider";
 
 export type Production = Exclude<
   keyof FemaScriptLanguageParser,
@@ -436,6 +437,7 @@ export class FemaScriptLanguageParser extends CstParser {
       recoveryEnabled: true,
       maxLookahead: 3,
       nodeLocationTracking: "full",
+      errorMessageProvider,
     });
 
     this.mostEnclosiveCstNodeByStartOffset = {};
