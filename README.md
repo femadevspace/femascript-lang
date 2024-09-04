@@ -82,6 +82,7 @@ Enquanto a Wiki não é publicada, aqui está uma tabela de instruções que voc
  <tbody>
     <tr><td colspan=2 align='center'>🔑 Palavras-chaves</td></tr>
     <tr><td><code>ALGORITMO</code></td><td><code>ALGORITHM</code></td></tr>
+    <tr><td><code>TIPO</code></td><td><code>TIPOS</code> | <code>TYPE</code> | <code>TYPES</code></td></tr>
     <tr><td><code>CONST</code></td><td><code>CONSTANTE</code> | <code>CONSTANTES</code> | <code>CONSTANT</code> | <code>CONSTANTS</code></td></tr>
     <tr><td><code>VAR</code></td><td><code>VARIÁVEIS</code> | <code>VARIABLES</code></td></tr>
     <tr><td><code>INÍCIO</code></td><td><code>START</code></td></tr>
@@ -101,12 +102,13 @@ Enquanto a Wiki não é publicada, aqui está uma tabela de instruções que voc
     <tr><td><code>IMPRIMA</code></td><td><code>IMRPIMIR</code> | <code>PRINT</code> | <code>ESCREVA</code> | <code>ESCREVER</code> | <code>WRITE</code></td></tr>
     <tr><td><code>LER</code></td><td><code>LEIA</code> | <code>READ</code></td></tr>
     <tr><td colspan=2 align='center'>🔎 Tipos de Variáveis</td></tr>
+    <tr><td><code>enum</code></td><td><code>enumeração</code> | <code>enumerate</code></td></tr>
     <tr><td><code>real</code></td><td><code>reais</code> | <code>reals</code></td></tr>
     <tr><td><code>inteiro</code></td><td><code>int</code> | <code>integer</code> | <code>integers</code> | <code>inteiros</code></td></tr>
-    <tr><td><code>caractere</code></td><td><code>char</code> | <code>character</code></td></tr>
+    <tr><td><code>caracter</code></td><td><code>caracteres</code> | <code>char</code> | <code>chars</code> | <code>character</code> | <code>characters</code></td></tr>
     <tr><td><code>texto</code></td><td><code>textos</code> | <code>text</code> | <code>texts</code> | <code>string</code> | <code>strings</code></td></tr>
     <tr><td><code>lógico</code></td><td><code>lógicos</code> | <code>bool</code> | <code>bools</code> | <code>boolean</code> | <code>booleans</code> | <code>booleano</code> | <code>booleanos</code> | <code>logic</code> | <code>logical</code> | <code>logicals</code></td></tr>
-    <tr><td><code>arranjo</code></td><td><code>array</code> | <code>lista</code> | <code>list</code> | <code>matrix</code> | <code>matriz</code></td></tr>
+    <tr><td><code>arranjo</code></td><td><code>array</code> | <code>lista</code> | <code>list</code> | <code>matrix</code> | <code>matriz</code> | <code>vector</code> | <code>vetor</code></td></tr>
     <tr><td><code>de</code></td><td><code>of</code></td></tr>
     <tr><td colspan=2 align='center'>🔠 Literais</td></tr>
     <tr><td><code>verdadeiro</code></td><td><code>true</code></td></tr>
