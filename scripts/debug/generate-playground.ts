@@ -90,6 +90,7 @@ const generatePlaygroundCode = async () => {
     .concat("\n\t}\n}")
     .replaceAll("lexer.", "")
     .replaceAll("getTokens()", "allTokens")
+    .replace(/\s[ \t]*(errorMessageProvider,)/g, "")
     .replace(/\s[ \t]*(this.)?most.*;/g, "");
 
   return `
