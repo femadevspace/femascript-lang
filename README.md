@@ -63,7 +63,9 @@ Você já deve estar familiarizado com a estrutura básica de um algoritmo. Agor
 
 Se tudo estiver correto, você verá a logo da <img src="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/femascript-logo.png" alt="Logo da linguagem FemaScript" height="20"> FEMA no ícone do arquivo. Agora, vamos inserir a estrutura básica do seu algoritmo
 
-![Exemplo de código em FemaScript](https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/screenshots/example-code.png)
+<p align='center'>
+  <img src="https://github.com/femadevspace/femascript-lang/raw/HEAD/assets/screenshots/example-code.png" alt="Exemplo de código em FemaScript">
+</p>
 
 O algoritmo para 'calcular circunferência' apresentado acima inclui vários elementos essenciais: o nome do algoritmo, a inicialização de constantes e variáveis, a lógica do cálculo e o uso de funções como "LEIA" e "IMPRIMA". Para explorar mais sobre as funcionalidades da linguagem, incluindo sintaxes, palavras-chave e outros detalhes, consulte a Wiki da linguagem **(🚧 em construção 🚧)**.
 
