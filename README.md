@@ -32,6 +32,22 @@ Neste repositório você encontrará o código-fonte da extensão para o [Visual
 <img src="https://img.shields.io/visual-studio-marketplace/d/fema-devspace.femascript-lang?style=for-the-badge&label=downloads&color=144E8C&link=https%3A%2F%2Fmarketplace.visualstudio.com%2Fitems%3FitemName%3Dfema-devspace.femascript-lang" alt="Badge da quantidade de downloads da extensão">
 </p>
 
+<table align='center'>
+  <tbody>
+    <tr>
+      <td>
+      <picture>
+        <source srcset="https://github.com/femadevspace/fema-essentials/raw/HEAD/assets/fema-essentials-banner-dark.png#gh-dark-mode-only" media="(prefers-color-scheme: dark)">
+        <img height="100" src="https://github.com/femadevspace/fema-essentials/raw/HEAD/assets/fema-essentials-banner-light.png#gh-light-mode-only" alt="Banner do pacote de extensões essenciais do vscode">
+      </picture>
+      </td>
+      <td>
+        Esta extensão está presente no Pacote de Extensões <a href="https://marketplace.visualstudio.com/items?itemName=fema-devspace.fema-essentials">FEMA Essentials Bundle</a>.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 Você pode acessar diretamente o [Visual Studio MarketPlace](https://marketplace.visualstudio.com/items?itemName=fema-devspace.femascript-lang) para instalar ou baixar a extensão entrando no link anterior ou em qualquer badge (botão) a cima.
 
 Para instalar via [command line](https://code.visualstudio.com/docs/editor/command-line), você deve ter instalado o comando `code` acessando o link anterior. Após isso, execute o seguinte comando no terminal:
