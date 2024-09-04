@@ -45,9 +45,6 @@ const ctx = await esbuild.context({
    * so it's needed to use cjs to avoid any issues.
    */
   format: "cjs",
-  outExtension: {
-    ".js": ".cjs",
-  },
 });
 
 if (watch) {

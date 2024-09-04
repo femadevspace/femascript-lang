@@ -42,7 +42,7 @@
   "bugs": {
     "url": "https://github.com/femadevspace/femascript-lang/issues"
   },
-  "main": "./extension/extension.cjs",
+  "main": "./extension/extension.js",
   "files": [
     "extension",
     "src"
@@ -128,7 +128,7 @@
   "scripts": {
     "dev": "bun run ./scripts/generate-diagram.ts",
     "debug:playground": "bun run ./scripts/debug/generate-playground.ts",
-    "build": "tsc -b tsconfig.src.json && node esbuild.mjs",
+    "build": "node esbuild.mjs",
     "vscode:prepublish": "bun run ./scripts/prepublish/index.ts && bun run build"
   },
   "types": "./src/types/cst.d.ts",
