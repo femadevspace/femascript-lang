@@ -65,7 +65,7 @@
           ".fema",
           ".femascript"
         ],
-        "configuration": "./fixtures/package/language-settings.json",
+        "configuration": "./vscode/language-settings.json",
         "icon": {
           "light": "./assets/femascript-icon-light.svg",
           "dark": "./assets/femascript-icon-dark.svg"
@@ -83,7 +83,7 @@
     "snippets": [
       {
         "language": "femascript",
-        "path": "./fixtures/package/snippets/femascript.code-snippets"
+        "path": "./vscode/snippets/femascript.code-snippets"
       }
     ],
     "configuration": {
