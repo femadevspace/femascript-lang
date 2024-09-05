@@ -1,5 +1,5 @@
-import { getTokens } from "@/grammar";
 import { Lexer } from "chevrotain";
+import { getTokens } from ".";
 
 const lexer = new Lexer(getTokens(), {
   ensureOptimizations: true,

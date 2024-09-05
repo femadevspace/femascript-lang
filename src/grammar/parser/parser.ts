@@ -1,4 +1,4 @@
-import { getTokens } from "@/grammar";
+import { getTokens } from "@/grammar/lexer";
 import * as lexer from "@/grammar/lexer/tokens";
 import type { EnclosiveNodes } from "@/utils/comments";
 import { type CstNode, CstParser } from "chevrotain";
