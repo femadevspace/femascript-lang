@@ -134,9 +134,11 @@ export class ConditionalStatementsVisitors
   elseStatement(ctx: cst.ElseStatementCstContext) {
     const { Else, block, ifStatement } = ctx;
 
+    const whitespaceAfterElse = !!ifStatement ? WS : [WS_KR, WS_COMPACT];
+
     return [
       [WS_KR, [BRK_ALLMAN, BRK_COMPACT]],
-      [imageFrom(Else), WS],
+      [imageFrom(Else), whitespaceAfterElse],
       [this.visit(block), this.visit(ifStatement)],
     ];
   }
