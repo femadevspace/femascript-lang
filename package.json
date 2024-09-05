@@ -43,6 +43,7 @@
     "url": "https://github.com/femadevspace/femascript-lang/issues"
   },
   "main": "./extension/extension.js",
+  "browser": "./extension/extension.js",
   "files": [
     "extension",
     "src"
