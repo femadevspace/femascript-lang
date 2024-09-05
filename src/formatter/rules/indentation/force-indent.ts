@@ -1,7 +1,7 @@
 import { indent } from "../../utils/indentations";
 import { RULE, whenAllman, whenCompact, whenKR } from "../../utils/rules";
 
-export const F_INDT = RULE((opts, indtState) => indent(opts, indtState));
+export const F_INDT = RULE((opts, indtState) => indent(opts, indtState, true));
 
 export const F_INDT_KR = RULE((opts, indtState) =>
   whenKR(indent(opts, indtState, true), opts)
