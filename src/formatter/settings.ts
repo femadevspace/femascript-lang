@@ -10,7 +10,7 @@ export const settingsSchema = z.object({
   indentation: z
     .object({
       spaceSize: z.number().min(1).catch(4),
-      useTabs: z.boolean().catch(true),
+      useTabs: z.boolean().catch(false),
       keepBetweenLines: z.boolean().catch(true),
     })
     .default({}),
