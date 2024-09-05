@@ -35,8 +35,11 @@ const ctx = await esbuild.context({
   target: "ES2017",
   loader: { ".ts": "ts" },
   external: ["vscode"],
-  platform: "node",
+  platform: "browser",
   sourcemap: !minify,
+define: {
+    global: "globalThis",
+  },
   minify,
   plugins,
 
