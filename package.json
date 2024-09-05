@@ -127,6 +127,7 @@
     "publish": "bunx @vscode/vsce@latest publish",
     "dev": "bun run ./scripts/generate-diagram.ts",
     "debug:playground": "bun run ./scripts/debug/generate-playground.ts",
+    "test": "vitest",
     "build": "node esbuild.mjs",
     "vscode:prepublish": "bun run ./scripts/prepublish/index.ts && bun run build"
   },
