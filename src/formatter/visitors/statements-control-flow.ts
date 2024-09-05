@@ -136,7 +136,7 @@ export class ConditionalStatementsVisitors
 
     return [
       [WS_KR, [BRK_ALLMAN, BRK_COMPACT]],
-      [imageFrom(Else), [WS_KR, WS_COMPACT]],
+      [imageFrom(Else), WS],
       [this.visit(block), this.visit(ifStatement)],
     ];
   }
