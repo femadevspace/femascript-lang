@@ -26,6 +26,30 @@ const plugins = [
         result.errors.length === 0 ? console.log(getTime() + success) : null
       ),
   },
+
+  /**
+   * This plugin hooks into the build process to print errors in a format that the problem matcher in
+   * Visual Studio Code can understand.
+   */
+  {
+    name: "esbuild-problem-matcher",
+
+    setup(build) {
+      build.onStart(() => {
+        console.log("[watch] build started");
+      });
+      build.onEnd((result) => {
+        result.errors.forEach(({ text, location }) => {
+          if (!location) return;
+          console.error(`✘ [ERROR] ${text}`);
+          console.error(
+            `    ${location.file}:${location.line}:${location.column}:`
+          );
+        });
+        console.log("[watch] build finished");
+      });
+    },
+  },
 ];
 
 const ctx = await esbuild.context({
@@ -37,7 +61,7 @@ const ctx = await esbuild.context({
   external: ["vscode"],
   platform: "browser",
   sourcemap: !minify,
-define: {
+  define: {
     global: "globalThis",
   },
   minify,
