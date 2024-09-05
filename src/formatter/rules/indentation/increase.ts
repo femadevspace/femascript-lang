@@ -1,21 +1,21 @@
 import { isAllman, isCompact, isKR, RULE } from "../../utils/rules";
 
-export const I_INDT = RULE((opts, indtState) => {
-  indtState.increase();
+export const I_INDT = RULE((opts, { indentState }) => {
+  indentState.increase();
   return null;
 });
 
-export const I_INDT_KR = RULE((opts, indtState) => {
-  if (isKR(opts)) indtState.increase();
+export const I_INDT_KR = RULE((opts, { indentState }) => {
+  if (isKR(opts)) indentState.increase();
   return null;
 });
 
-export const I_INDT_ALLMAN = RULE((opts, indtState) => {
-  if (isAllman(opts)) indtState.increase();
+export const I_INDT_ALLMAN = RULE((opts, { indentState }) => {
+  if (isAllman(opts)) indentState.increase();
   return null;
 });
 
-export const I_INDT_COMPACT = RULE((opts, indtState) => {
-  if (isCompact(opts)) indtState.increase();
+export const I_INDT_COMPACT = RULE((opts, { indentState }) => {
+  if (isCompact(opts)) indentState.increase();
   return null;
 });

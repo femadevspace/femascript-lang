@@ -43,7 +43,7 @@ export const format = (
     .filter((node) => node !== null)
     .map((node) => {
       if (typeof node === "string") return node;
-      return node(options, indentState);
+      return node(options, { indentState });
     })
     .join(NONE)
     .replace(/(\r?\n)+$/, NONE)

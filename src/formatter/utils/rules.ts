@@ -6,7 +6,9 @@ export type RuleResult = string | null;
 
 export type Rule = (
   options: Settings,
-  indentState: IndentationState
+  params: {
+    indentState: IndentationState;
+  }
 ) => RuleResult;
 
 export const RULE = (rule: Rule) => rule;
