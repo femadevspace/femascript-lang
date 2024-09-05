@@ -2,7 +2,7 @@
   "name": "femascript-lang",
   "displayName": "FemaScript - Linguagem de Algoritmo",
   "description": "Suporte a linguaguem FemaScript (inspirado em Portugol) utilizado na Fundação Educacional Do Município De Assis (FEMA).",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "icon": "assets/femascript-logo.png",
   "galleryBanner": {
     "color": "#1A2B34",
