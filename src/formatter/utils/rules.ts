@@ -8,6 +8,7 @@ export type Rule = (
   options: Settings,
   params: {
     indentState: IndentationState;
+    currentLine: string;
   }
 ) => RuleResult;
 

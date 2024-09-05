@@ -34,16 +34,25 @@ export const format = (
 ): Safe<string, PositionableMessage[]> => {
   const options = withDefaults(settings);
   const indentState = createIndentationState();
+  let currentLine = "";
 
   const cst = parse(input, entryPoint);
   if (hasError(cst)) return cst;
+
+  const setCurrentLine = (line: string | null) => {
+    if (!line) return line;
+    if (line.includes("\n")) currentLine = line.slice(1);
+    else currentLine.concat(line);
+
+    return line;
+  };
 
   const visitResult = new FemaScriptFormatterVisitor(options).visit(cst);
   const result = flatten(visitResult)
     .filter((node) => node !== null)
     .map((node) => {
-      if (typeof node === "string") return node;
-      return node(options, { indentState });
+      if (typeof node === "string") return setCurrentLine(node);
+      return setCurrentLine(node(options, { indentState, currentLine }));
     })
     .join(NONE)
     .replace(/(\r?\n)+$/, NONE)
