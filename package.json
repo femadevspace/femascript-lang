@@ -42,12 +42,8 @@
   "bugs": {
     "url": "https://github.com/femadevspace/femascript-lang/issues"
   },
-  "main": "./extension/extension.js",
-  "browser": "./extension/extension.js",
-  "files": [
-    "extension",
-    "src"
-  ],
+  "main": "./extension/extension.cjs",
+  "browser": "./extension/extension.cjs",
   "type": "module",
   "engines": {
     "vscode": "^1.92.0"
