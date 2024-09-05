@@ -28,10 +28,19 @@ export const createIndentationState = (): IndentationState => {
   };
 };
 
-export const indent = (options: Settings, state: IndentationState) => {
+export const indent = (
+  options: Settings,
+  state: IndentationState,
+  forceOneIndent = false
+) => {
   const { useTabs, spaceSize } = options.indentation;
   const char = useTabs ? "\t" : " ";
   const size = useTabs ? 1 : spaceSize;
+  const indentAmount = state.getLevel() * size;
+  const fixedAmount = state.getFixedAmountStack().peek();
+  let amount = fixedAmount ? fixedAmount : indentAmount;
 
-  return char.repeat(state.getLevel() * size);
+  if (forceOneIndent) amount += size;
+
+  return char.repeat(amount);
 };
