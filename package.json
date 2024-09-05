@@ -123,6 +123,8 @@
     "onCommand:femascript-lang.format"
   ],
   "scripts": {
+    "package": "bunx @vscode/vsce@latest package",
+    "publish": "bunx @vscode/vsce@latest publish",
     "dev": "bun run ./scripts/generate-diagram.ts",
     "debug:playground": "bun run ./scripts/debug/generate-playground.ts",
     "build": "node esbuild.mjs",
