@@ -1,15 +1,21 @@
+import { Stack } from "@/utils/stack";
 import { Settings } from "../settings";
 
 export type IndentationState = {
+  getFixedAmountStack(): Stack<number>;
   getLevel(): number;
   increase(): void;
   decrease(): void;
 };
 
-export const createIndentationState = () => {
+export const createIndentationState = (): IndentationState => {
   let level = 0;
+  const fixedAmountStack = new Stack<number>();
 
   return {
+    getFixedAmountStack() {
+      return fixedAmountStack;
+    },
     getLevel() {
       return level;
     },
