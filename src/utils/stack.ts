@@ -10,6 +10,8 @@ export class Stack<T> {
   }
 
   peek() {
+    if (this.isEmpty()) return undefined;
+
     return this.stack[this.stack.length - 1];
   }
 
@@ -18,7 +20,7 @@ export class Stack<T> {
   }
 
   isEmpty() {
-    return this.stack.length === 0;
+    return this.size() === 0;
   }
 
   clear() {
