@@ -10,15 +10,12 @@ export const groupStatements = (
 ): VisitedNode => {
   const grouped: (StatementCstNode[] | StatementCstNode)[] = [];
   let currentGroup: StatementCstNode[] = [];
-  let lastStatementType = null;
 
   for (const statement of statements) {
     const currentStatementType = getStatementType(statement);
 
-    if (shoudGroup(lastStatementType, currentStatementType)) {
-      lastStatementType = currentStatementType;
-      currentGroup.push(statement);
-    } else {
+    if (shoudGroup(currentStatementType)) currentGroup.push(statement);
+    else {
       if (currentGroup.length > 0) {
         grouped.push(currentGroup);
         currentGroup = [];
@@ -58,15 +55,8 @@ const getStatementType = ({ children }: StatementCstNode) => {
   return type;
 };
 
-const shoudGroup = (lastType: string | null, currentType: string) => {
-  const isGroupableType = [
+const shoudGroup = (currentType: string) =>
+  [
     currentType === "assignmentStatement",
     currentType === "operationsStatements",
   ].some(Boolean);
-
-  if (lastType === null) return isGroupableType;
-  if (lastType !== currentType) return false;
-  if (lastType === currentType) return isGroupableType;
-
-  return isGroupableType;
-};
