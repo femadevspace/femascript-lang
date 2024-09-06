@@ -41,8 +41,8 @@ export const format = (
 
   const setCurrentLine = (line: string | null) => {
     if (!line) return line;
-    if (line.includes("\n")) currentLine = line.slice(1);
-    else currentLine.concat(line);
+    if (line.includes("\n")) currentLine = line.split("\n").pop()!;
+    else currentLine += line;
 
     return line;
   };
