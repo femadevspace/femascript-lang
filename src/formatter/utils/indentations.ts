@@ -40,7 +40,7 @@ export const indent = (
   const fixedAmount = state.getFixedAmountStack().peek();
   let amount = fixedAmount ? fixedAmount : indentAmount;
 
-  if (forceOneIndent) amount += size;
+  if (forceOneIndent && fixedAmount) amount += size;
 
   return char.repeat(amount);
 };
