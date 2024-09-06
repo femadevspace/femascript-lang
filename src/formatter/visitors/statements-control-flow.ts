@@ -1,16 +1,21 @@
 import * as cst from "@/types/cst";
 import { imageFrom, imagesFrom } from "@/utils";
 import { FemaScriptFormatterVisitor } from "../formatter";
-import { BLOCK } from "../rules/block";
-import { BRK_ALLMAN, BRK_COMPACT, BRK_KR, BRK_LN } from "../rules/breaklines";
+import { BLOCK, CASE } from "../rules/block";
 import {
-  D_INDT,
+  BRK_ALLMAN,
+  BRK_COMPACT,
+  BRK_LN,
+  F_BRK_COMPACT,
+} from "../rules/breaklines";
+import {
   D_INDT_COMPACT,
-  I_INDT,
   I_INDT_COMPACT,
+  POP_ALIGN_COMPACT,
+  PUSH_ALIGN_COMPACT,
 } from "../rules/indentation";
 import { PARENS } from "../rules/parentheses";
-import { WS, WS_ALLMAN, WS_COMPACT, WS_KR } from "../rules/whitespaces";
+import { NONE, WS, WS_COMPACT, WS_KR } from "../rules/whitespaces";
 import { separateWith } from "../utils/rules";
 
 export class IterationStatementsVisitors
@@ -41,7 +46,7 @@ export class IterationStatementsVisitors
     return [
       [imageFrom(Do), [WS_KR, WS_COMPACT]],
       this.visit(block),
-      [[WS_KR], [BRK_ALLMAN, BRK_COMPACT], imageFrom(While)],
+      [[WS_KR, WS_COMPACT], [BRK_ALLMAN], imageFrom(While)],
       [
         WS,
         PARENS(LParen, this.visit(expression), RParen, false),
@@ -56,7 +61,7 @@ export class IterationStatementsVisitors
     return [
       [imageFrom(While), WS],
       PARENS(LParen, this.visit(expression), RParen),
-      [I_INDT_COMPACT, BRK_COMPACT],
+      [I_INDT_COMPACT, F_BRK_COMPACT],
       [imageFrom(Do), [WS_KR, WS_COMPACT]],
       this.visit(block),
       [D_INDT_COMPACT],
@@ -90,7 +95,7 @@ export class IterationStatementsVisitors
         ],
         RParen
       ),
-      [I_INDT_COMPACT, BRK_COMPACT],
+      [I_INDT_COMPACT, F_BRK_COMPACT],
       [imageFrom(Do), [WS_KR, WS_COMPACT]],
       this.visit(block),
       [D_INDT_COMPACT],
@@ -120,13 +125,15 @@ export class ConditionalStatementsVisitors
   ifStatement(ctx: cst.IfStatementCstContext) {
     const { If, LParen, expression, RParen, Then, block, elseStatement } = ctx;
 
+    const ELSE_ALIGN = elseStatement ? PUSH_ALIGN_COMPACT : NONE;
+
     return [
       [imageFrom(If), WS],
       PARENS(LParen, this.visit(expression), RParen),
-      [I_INDT_COMPACT, BRK_COMPACT],
-      [imageFrom(Then), [WS_KR, WS_COMPACT]],
+      [I_INDT_COMPACT, F_BRK_COMPACT],
+      [ELSE_ALIGN, imageFrom(Then), [WS_KR, WS_COMPACT]],
       this.visit(block),
-      this.visit(elseStatement),
+      [this.visit(elseStatement)],
       [D_INDT_COMPACT],
     ];
   }
@@ -138,7 +145,7 @@ export class ConditionalStatementsVisitors
 
     return [
       [WS_KR, [BRK_ALLMAN, BRK_COMPACT]],
-      [imageFrom(Else), whitespaceAfterElse],
+      [imageFrom(Else), [POP_ALIGN_COMPACT, whitespaceAfterElse]],
       [this.visit(block), this.visit(ifStatement)],
     ];
   }
@@ -165,7 +172,7 @@ export class ConditionalStatementsVisitors
         imageFrom(Switch),
         WS,
         parenthesizedVariable,
-        [WS_KR, I_INDT_COMPACT, BRK_COMPACT],
+        [WS_KR, I_INDT_COMPACT, F_BRK_COMPACT],
       ],
       BLOCK(
         LCurly,
@@ -187,58 +194,17 @@ export class ConditionalStatementsVisitors
       ? imageFrom(StringLiteral)
       : this.visit(variableAccess);
 
-    const isAssignmentStatement =
-      !!statement?.at(0)?.children.assignmentStatement;
-
-    const shouldBreakLine = !isAssignmentStatement
-      ? [[I_INDT, BRK_KR, BRK_ALLMAN], [D_INDT]]
-      : [[], []];
-
-    const content = !!statement
-      ? [
-          imageFrom(Colon),
-          WS,
-          shouldBreakLine[0],
-          this.visit(statement),
-          shouldBreakLine[1],
-        ]
-      : [WS_KR, WS_COMPACT, this.visit(block)];
-
     return [
       imageFrom(Case),
       WS,
       caseValue,
-      [
-        [WS_KR, WS_ALLMAN],
-        [I_INDT_COMPACT, BRK_COMPACT],
-        imageFrom(Do),
-        content,
-        [D_INDT_COMPACT],
-      ],
+      CASE(Do, Colon, block, statement, this),
     ];
   }
 
   defaultStatement(ctx: cst.DefaultStatementCstContext) {
     const { Default, Do, Colon, block, statement } = ctx;
 
-    const isAssignmentStatement =
-      !!statement?.at(0)?.children.assignmentStatement;
-
-    const shouldBreakLine = !isAssignmentStatement ? ["🚨", BRK_LN] : [];
-
-    const content = !!statement
-      ? [imageFrom(Colon), WS, shouldBreakLine, this.visit(statement)]
-      : [WS_KR, WS_COMPACT, this.visit(block)];
-
-    return [
-      imageFrom(Default),
-      [
-        [WS_KR, WS_ALLMAN],
-        [I_INDT_COMPACT, BRK_COMPACT],
-        imageFrom(Do),
-        content,
-        [D_INDT_COMPACT],
-      ],
-    ];
+    return [imageFrom(Default), CASE(Do, Colon, block, statement, this)];
   }
 }
