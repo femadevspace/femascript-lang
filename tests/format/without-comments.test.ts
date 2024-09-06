@@ -1,6 +1,6 @@
 import { format } from "@/formatter";
 import { describe, expect, it } from "vitest";
-import { loadFixture } from "../../helpers";
+import { loadFixture } from "../helpers";
 
 const fixture = (fileName: string) =>
   loadFixture(`format/without-comments/${fileName}`);
