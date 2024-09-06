@@ -52,18 +52,18 @@ export const CASE = (
     !!statementNode?.at(0)?.children.assignmentStatement;
 
   const behaviorAfterColon = isAssignmentStatement
-    ? [WS]
-    : [BRK_KR, BRK_ALLMAN, [WS_COMPACT, PUSH_ALIGN_COMPACT]];
+    ? WS
+    : [[WS_COMPACT], [I_INDT_KR, BRK_KR], [I_INDT_ALLMAN, BRK_ALLMAN]];
 
-  const behaviorAfterStatement = isAssignmentStatement
+  const behaviorStatement = isAssignmentStatement
     ? NONE
-    : POP_ALIGN_COMPACT;
+    : [D_INDT_KR, D_INDT_ALLMAN];
 
   const withColon = [
     imageFrom(colonToken),
-    behaviorAfterColon,
+    [behaviorAfterColon, PUSH_ALIGN_COMPACT],
     visitor.visit(statementNode),
-    behaviorAfterStatement,
+    [behaviorStatement, POP_ALIGN_COMPACT],
   ];
 
   const withBlock = [WS_KR, WS_COMPACT, visitor.visit(blockNode)];
