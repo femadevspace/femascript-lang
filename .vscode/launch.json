@@ -8,7 +8,7 @@
       "runtimeExecutable": "${execPath}",
       "args": [
         "--extensionDevelopmentPath=${workspaceFolder}",
-        "${workspaceFolder}/fixtures"
+        "${workspaceFolder}/tests/fixtures"
       ],
       "outFiles": ["${workspaceFolder}/extension/**/*.js"],
       "preLaunchTask": "npm: vscode:prepublish"
