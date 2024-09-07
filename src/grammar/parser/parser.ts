@@ -157,7 +157,11 @@ export class FemaScriptLanguageParser extends CstParser {
     this.SUBRULE(this.expression);
     this.CONSUME(lexer.RParen);
     this.CONSUME(lexer.ThenKeyword);
-    this.SUBRULE(this.block);
+
+    this.OR([
+      { ALT: () => this.SUBRULE(this.block) },
+      { ALT: () => this.SUBRULE(this.assignmentStatement) },
+    ]);
 
     this.OPTION(() => this.SUBRULE(this.elseStatement));
   });
@@ -166,8 +170,14 @@ export class FemaScriptLanguageParser extends CstParser {
     this.CONSUME(lexer.ElseKeyword);
 
     this.OR([
+      {
+        ALT: () =>
+          this.OR2([
+            { ALT: () => this.SUBRULE(this.block) },
+            { ALT: () => this.SUBRULE(this.assignmentStatement) },
+          ]),
+      },
       { ALT: () => this.SUBRULE(this.ifStatement) },
-      { ALT: () => this.SUBRULE(this.block) },
     ]);
   });
 

@@ -193,7 +193,8 @@ export type IfStatementCstContext = {
   expression: ExpressionCstNode[];
   RParen: IToken[];
   Then: IToken[];
-  block: BlockCstNode[];
+  block?: BlockCstNode[];
+  assignmentStatement?: AssignmentStatementCstNode[];
   elseStatement?: ElseStatementCstNode[];
 };
 
@@ -204,8 +205,9 @@ export interface ElseStatementCstNode extends CstNode {
 
 export type ElseStatementCstContext = {
   Else: IToken[];
-  ifStatement?: IfStatementCstNode[];
   block?: BlockCstNode[];
+  assignmentStatement?: AssignmentStatementCstNode[];
+  ifStatement?: IfStatementCstNode[];
 };
 
 export interface SwitchStatementCstNode extends CstNode {

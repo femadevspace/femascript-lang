@@ -5,12 +5,17 @@ import { BLOCK, CASE } from "../rules/block";
 import {
   BRK_ALLMAN,
   BRK_COMPACT,
+  BRK_KR,
   BRK_LN,
   F_BRK_COMPACT,
 } from "../rules/breaklines";
 import {
+  D_INDT_ALLMAN,
   D_INDT_COMPACT,
+  D_INDT_KR,
+  I_INDT_ALLMAN,
   I_INDT_COMPACT,
+  I_INDT_KR,
   POP_ALIGN_COMPACT,
   PUSH_ALIGN_COMPACT,
 } from "../rules/indentation";
@@ -123,30 +128,49 @@ export class ConditionalStatementsVisitors
   }
 
   ifStatement(ctx: cst.IfStatementCstContext) {
-    const { If, LParen, expression, RParen, Then, block, elseStatement } = ctx;
+    const {
+      If,
+      LParen,
+      expression,
+      RParen,
+      Then,
+      block,
+      assignmentStatement,
+      elseStatement,
+    } = ctx;
 
     const ELSE_ALIGN = elseStatement ? PUSH_ALIGN_COMPACT : NONE;
+    const behaviorAfterThen = assignmentStatement
+      ? [WS_COMPACT, [I_INDT_KR, BRK_KR], [I_INDT_ALLMAN, BRK_ALLMAN]]
+      : [WS_KR, WS_COMPACT];
+
+    const behaviorAfterContent = assignmentStatement
+      ? [[D_INDT_KR, BRK_KR], [D_INDT_ALLMAN]]
+      : [WS_KR];
 
     return [
       [imageFrom(If), WS],
       PARENS(LParen, this.visit(expression), RParen),
       [I_INDT_COMPACT, F_BRK_COMPACT],
-      [ELSE_ALIGN, imageFrom(Then), [WS_KR, WS_COMPACT]],
-      this.visit(block),
+      [ELSE_ALIGN, imageFrom(Then), behaviorAfterThen],
+      [this.visit(assignmentStatement), this.visit(block)],
+      [behaviorAfterContent],
       [this.visit(elseStatement)],
       [D_INDT_COMPACT],
     ];
   }
 
   elseStatement(ctx: cst.ElseStatementCstContext) {
-    const { Else, block, ifStatement } = ctx;
-
-    const whitespaceAfterElse = !!ifStatement ? WS : [WS_KR, WS_COMPACT];
+    const { Else, block, assignmentStatement, ifStatement } = ctx;
 
     return [
-      [WS_KR, [BRK_ALLMAN, BRK_COMPACT]],
-      [imageFrom(Else), [POP_ALIGN_COMPACT, whitespaceAfterElse]],
-      [this.visit(block), this.visit(ifStatement)],
+      [BRK_ALLMAN, BRK_COMPACT],
+      [imageFrom(Else), [POP_ALIGN_COMPACT, WS]],
+      [
+        this.visit(assignmentStatement),
+        this.visit(block),
+        this.visit(ifStatement),
+      ],
     ];
   }
 
