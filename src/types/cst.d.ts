@@ -37,7 +37,10 @@ export interface TypesDeclaratorsCstNode extends CstNode {
 
 export type TypesDeclaratorsCstContext = {
   Type: IToken[];
-  enumeratorDeclarator?: EnumeratorDeclaratorCstNode[];
+  Identifier?: IToken[];
+  Colon?: IToken[];
+  typeDeclarator?: TypeDeclaratorCstNode[];
+  SemiColon?: IToken[];
 };
 
 export interface ConstantsDeclaratorsCstNode extends CstNode {
@@ -399,20 +402,26 @@ export type VariableAccessCstContext = {
   arrayAccessSuffix?: ArrayAccessSuffixCstNode[];
 };
 
+export interface TypeDeclaratorCstNode extends CstNode {
+  name: "typeDeclarator";
+  children: TypeDeclaratorCstContext;
+}
+
+export type TypeDeclaratorCstContext = {
+  enumeratorDeclarator?: EnumeratorDeclaratorCstNode[];
+};
+
 export interface EnumeratorDeclaratorCstNode extends CstNode {
   name: "enumeratorDeclarator";
   children: EnumeratorDeclaratorCstContext;
 }
 
 export type EnumeratorDeclaratorCstContext = {
-  Identifier: IToken[];
-  Colon: IToken[];
   Enum: IToken[];
   LCurly: IToken[];
   enumaratorEntry: EnumaratorEntryCstNode[];
   Comma?: IToken[];
   RCurly: IToken[];
-  SemiColon: IToken[];
 };
 
 export interface EnumaratorEntryCstNode extends CstNode {
@@ -493,6 +502,7 @@ export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
   readExpression(ctx: ReadExpressionCstContext, param?: IN): OUT;
   variableDeclarator(ctx: VariableDeclaratorCstContext, param?: IN): OUT;
   variableAccess(ctx: VariableAccessCstContext, param?: IN): OUT;
+  typeDeclarator(ctx: TypeDeclaratorCstContext, param?: IN): OUT;
   enumeratorDeclarator(ctx: EnumeratorDeclaratorCstContext, param?: IN): OUT;
   enumaratorEntry(ctx: EnumaratorEntryCstContext, param?: IN): OUT;
   arrayAccessSuffix(ctx: ArrayAccessSuffixCstContext, param?: IN): OUT;
@@ -536,6 +546,7 @@ export interface PrintExpressionVisitor<OUT = void> { printExpression(ctx: Print
 export interface ReadExpressionVisitor<OUT = void> { readExpression(ctx: ReadExpressionCstContext): OUT }
 export interface VariableDeclaratorVisitor<OUT = void> { variableDeclarator(ctx: VariableDeclaratorCstContext): OUT }
 export interface VariableAccessVisitor<OUT = void> { variableAccess(ctx: VariableAccessCstContext): OUT }
+export interface TypeDeclaratorVisitor<OUT = void> { typeDeclarator(ctx: TypeDeclaratorCstContext): OUT }
 export interface EnumeratorDeclaratorVisitor<OUT = void> { enumeratorDeclarator(ctx: EnumeratorDeclaratorCstContext): OUT }
 export interface EnumaratorEntryVisitor<OUT = void> { enumaratorEntry(ctx: EnumaratorEntryCstContext): OUT }
 export interface ArrayAccessSuffixVisitor<OUT = void> { arrayAccessSuffix(ctx: ArrayAccessSuffixCstContext): OUT }
@@ -576,6 +587,7 @@ export type CstNodeTypes = {
   readExpression: ReadExpressionCstNode;
   variableDeclarator: VariableDeclaratorCstNode;
   variableAccess: VariableAccessCstNode;
+  typeDeclarator: TypeDeclaratorCstNode;
   enumeratorDeclarator: EnumeratorDeclaratorCstNode;
   enumaratorEntry: EnumaratorEntryCstNode;
   arrayAccessSuffix: ArrayAccessSuffixCstNode;

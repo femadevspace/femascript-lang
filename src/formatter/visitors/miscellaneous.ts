@@ -1,15 +1,17 @@
 import * as cst from "@/types/cst";
-import { imageFrom } from "@/utils";
+import { imageFrom, imagesFrom } from "@/utils";
 import { FemaScriptFormatterVisitor } from "../formatter";
 import { BLOCK } from "../rules/block";
-import { WS } from "../rules/whitespaces";
+import { BRK_COMPACT, BRK_LN } from "../rules/breaklines";
+import { D_INDT_COMPACT, I_INDT_COMPACT } from "../rules/indentation";
+import { NONE, WS, WS_ALLMAN, WS_COMPACT, WS_KR } from "../rules/whitespaces";
 import { groupStatements } from "../utils/group-statements";
-import { separateWith } from "../utils/rules";
 
 export class MiscellaneousVisitors
   extends FemaScriptFormatterVisitor
   implements
     cst.BlockVisitor,
+    cst.TypeDeclaratorVisitor,
     cst.EnumeratorDeclaratorVisitor,
     cst.EnumaratorEntryVisitor,
     cst.VariableAccessVisitor,
@@ -20,32 +22,45 @@ export class MiscellaneousVisitors
     return BLOCK(ctx.LCurly, groupStatements(ctx.statement, this), ctx.RCurly);
   }
 
+  typeDeclarator(ctx: cst.TypeDeclaratorCstContext) {
+    return Object.values(ctx).map((node) => this.visit(node));
+  }
+
   enumeratorDeclarator(ctx: cst.EnumeratorDeclaratorCstContext) {
-    const {
-      Identifier,
-      Colon,
-      Enum,
-      LCurly,
-      enumaratorEntry,
-      RCurly,
-      SemiColon,
-    } = ctx;
+    const { Enum, LCurly, enumaratorEntry, Comma, RCurly } = ctx;
+
+    const commaImages = imagesFrom(Comma)!;
+    const shouldBreak = enumaratorEntry.some(
+      ({ children }) => !!children.AssignmentOperator
+    );
+
+    const enumEntries = enumaratorEntry.map((entry, i) => {
+      const isLast = i === enumaratorEntry.length - 1;
+      const behaviorAfterComma = shouldBreak ? BRK_LN : WS;
+      const comma = isLast ? [] : [commaImages[i], behaviorAfterComma];
+
+      return [this.visit(entry), comma];
+    });
+
+    const behaviorBeforeEnum = shouldBreak
+      ? [
+          [WS_KR, WS_ALLMAN],
+          [I_INDT_COMPACT, BRK_COMPACT],
+        ]
+      : [WS];
+
+    const behaviorAfterEnum = shouldBreak ? [WS_KR, [WS_COMPACT]] : [WS];
+
+    const behaviorAfterContent = shouldBreak ? D_INDT_COMPACT : NONE;
+
+    const content = shouldBreak
+      ? BLOCK(LCurly, enumEntries, RCurly)
+      : [[imageFrom(LCurly), WS], enumEntries, [WS, imageFrom(RCurly)]];
 
     return [
-      imageFrom(Identifier),
-      imageFrom(Colon),
-      WS,
-      imageFrom(Enum),
-      // This may change to `BLOCK`
-      [
-        WS,
-        imageFrom(LCurly),
-        WS,
-        separateWith([",", WS], this.visit(enumaratorEntry)),
-        WS,
-        imageFrom(RCurly),
-        imageFrom(SemiColon),
-      ],
+      [behaviorBeforeEnum, imageFrom(Enum), behaviorAfterEnum],
+      content,
+      behaviorAfterContent,
     ];
   }
 

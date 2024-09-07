@@ -40,12 +40,25 @@ export class AlgorithmStructureVisitors
   }
 
   typesDeclarators(ctx: cst.TypesDeclaratorsCstContext) {
-    const { Type, enumeratorDeclarator } = ctx;
+    const { Type, Identifier, Colon, typeDeclarator, SemiColon } = ctx;
+
+    const typeKeyword = imageFrom(Type);
+    if (!Identifier) return [typeKeyword];
+
+    const colonsImages = imagesFrom(Colon)!;
+    const semiColonsImages = imagesFrom(SemiColon)!;
+
+    const declarators = imagesFrom(Identifier)!.map((typeName, i) => [
+      typeName,
+      colonsImages[i],
+      this.visit(typeDeclarator![i]),
+      semiColonsImages[i],
+    ]);
 
     return [
       imageFrom(Type),
       [I_INDT, BRK_LN],
-      separateWith(BRK_LN, this.visit(enumeratorDeclarator)),
+      separateWith(BRK_LN, declarators),
       [D_INDT],
     ];
   }

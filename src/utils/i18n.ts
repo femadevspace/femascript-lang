@@ -35,6 +35,7 @@ export const RulesDictionary: Record<Production, string> = {
   readExpression: "Expressão de Leitura",
   variableDeclarator: "Declarador de Variável",
   variableAccess: "Acesso à Variável",
+  typeDeclarator: "Declarador de Tipo",
   enumeratorDeclarator: "Declarador de Enumerador",
   enumaratorEntry: "Entrada de Enumerador",
   arrayAccessSuffix: "Sufixo de Acesso a Array",
