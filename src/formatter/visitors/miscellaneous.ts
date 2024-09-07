@@ -16,6 +16,8 @@ export class MiscellaneousVisitors
     cst.TypeDeclaratorVisitor,
     cst.EnumeratorDeclaratorVisitor,
     cst.EnumaratorEntryVisitor,
+    cst.StructDeclaratorVisitor,
+    cst.StructPropertyVisitor,
     cst.VariableAccessVisitor,
     cst.ArrayAccessSuffixVisitor,
     cst.ArrayAccessVisitor
@@ -93,6 +95,33 @@ export class MiscellaneousVisitors
       : [];
 
     return [imageFrom(Identifier), assingment];
+  }
+
+  structDeclarator(ctx: cst.StructDeclaratorCstContext) {
+    const { Struct, LCurly, structProperty, RCurly } = ctx;
+
+    return [
+      [
+        [WS_KR, WS_ALLMAN],
+        [I_INDT_COMPACT, BRK_COMPACT],
+        imageFrom(Struct),
+        [WS_KR, WS_COMPACT],
+      ],
+      BLOCK(LCurly, separateWith([BRK_LN], this.visit(structProperty)), RCurly),
+      [D_INDT_COMPACT],
+    ];
+  }
+
+  structProperty(ctx: cst.StructPropertyCstContext) {
+    const { Identifier, Colon, type, SemiColon } = ctx;
+
+    return [
+      imageFrom(Identifier),
+      imageFrom(Colon),
+      WS,
+      this.visit(type),
+      imageFrom(SemiColon),
+    ];
   }
 
   variableAccess(ctx: cst.VariableAccessCstContext) {
