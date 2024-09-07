@@ -163,14 +163,18 @@ export class ConditionalStatementsVisitors
   elseStatement(ctx: cst.ElseStatementCstContext) {
     const { Else, block, assignmentStatement, ifStatement } = ctx;
 
+    const behaviorAfterElse = ifStatement ? NONE : POP_ALIGN_COMPACT;
+    const behaviorAfterContent = ifStatement ? POP_ALIGN_COMPACT : NONE;
+
     return [
       [BRK_ALLMAN, BRK_COMPACT],
-      [imageFrom(Else), [POP_ALIGN_COMPACT, WS]],
+      [imageFrom(Else), [WS, behaviorAfterElse]],
       [
         this.visit(assignmentStatement),
         this.visit(block),
         this.visit(ifStatement),
       ],
+      [behaviorAfterContent],
     ];
   }
 
