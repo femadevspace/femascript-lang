@@ -11,21 +11,7 @@ export class StatementsVisitors
     cst.OperationsStatementsVisitor
 {
   statement(ctx: cst.StatementCstContext) {
-    const {
-      assignmentStatement,
-      controlStatements,
-      operationsStatements,
-      ...res
-    } = ctx;
-
-    if (Object.keys(res).length > 0)
-      throw new Error("Unimplemented statement: " + JSON.stringify(res));
-
-    return [
-      this.visit(assignmentStatement),
-      this.visit(controlStatements),
-      this.visit(operationsStatements),
-    ];
+    return Object.values(ctx).map((node) => this.visit(node));
   }
 
   assignmentStatement(ctx: cst.AssignmentStatementCstContext) {
@@ -33,20 +19,10 @@ export class StatementsVisitors
   }
 
   controlStatements(ctx: cst.ControlStatementsCstContext) {
-    const { conditionalStatements, iterationStatements, ...res } = ctx;
-
-    if (Object.keys(res).length > 0)
-      throw new Error("Unimplemented statement: " + JSON.stringify(res));
-
-    return [this.visit(conditionalStatements), this.visit(iterationStatements)];
+    return Object.values(ctx).map((node) => this.visit(node));
   }
 
   operationsStatements(ctx: cst.OperationsStatementsCstContext) {
-    const { printExpression, readExpression, ...res } = ctx;
-
-    if (Object.keys(res).length > 0)
-      throw new Error("Unimplemented statement: " + JSON.stringify(res));
-
-    return [this.visit(printExpression), this.visit(readExpression)];
+    return Object.values(ctx).map((node) => this.visit(node));
   }
 }

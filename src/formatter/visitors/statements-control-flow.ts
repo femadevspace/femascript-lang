@@ -32,17 +32,7 @@ export class IterationStatementsVisitors
     cst.ForLoopStatementVisitor
 {
   iterationStatements(ctx: cst.IterationStatementsCstContext) {
-    const { doWhileStatement, forLoopStatement, whileDoStatement, ...res } =
-      ctx;
-
-    if (Object.keys(res).length > 0)
-      throw new Error("Unimplemented statement: " + JSON.stringify(res));
-
-    return [
-      this.visit(doWhileStatement),
-      this.visit(whileDoStatement),
-      this.visit(forLoopStatement),
-    ];
+    return Object.values(ctx).map((node) => this.visit(node));
   }
 
   doWhileStatement(ctx: cst.DoWhileStatementCstContext) {
@@ -119,12 +109,7 @@ export class ConditionalStatementsVisitors
     cst.DefaultStatementVisitor
 {
   conditionalStatements(ctx: cst.ConditionalStatementsCstContext) {
-    const { ifStatement, switchStatement, ...res } = ctx;
-
-    if (Object.keys(res).length > 0)
-      throw new Error("Unimplemented statement: " + JSON.stringify(res));
-
-    return [this.visit(ifStatement), this.visit(switchStatement)];
+    return Object.values(ctx).map((node) => this.visit(node));
   }
 
   ifStatement(ctx: cst.IfStatementCstContext) {
