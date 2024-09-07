@@ -57,13 +57,16 @@ export class AlgorithmStructureVisitors
     const constKeyword = imageFrom(Constant);
     if (!Identifier) return [constKeyword];
 
+    const assignmentImages = imagesFrom(AssignmentOperator)!;
+    const semiColonsImages = imagesFrom(SemiColon)!;
+
     const declarators = imagesFrom(Identifier)!.map((constName, i) => [
       constName,
       WS,
-      imageFrom(AssignmentOperator)!,
+      assignmentImages[i],
       WS,
       this.visit(expression![i]),
-      imageFrom(SemiColon)!,
+      semiColonsImages[i],
     ]);
 
     return [
@@ -78,12 +81,13 @@ export class AlgorithmStructureVisitors
     const { Variable, variableDeclarator, SemiColon } = ctx;
 
     const varKeyword = imageFrom(Variable);
-
     if (!variableDeclarator) return [varKeyword];
 
-    const declarators = variableDeclarator.map((declarator) => [
+    const semiColonsImages = imagesFrom(SemiColon)!;
+
+    const declarators = variableDeclarator.map((declarator, i) => [
       this.visit(declarator),
-      imageFrom(SemiColon)!,
+      semiColonsImages[i],
     ]);
 
     return [
