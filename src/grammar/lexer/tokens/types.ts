@@ -61,3 +61,9 @@ export const EnumType = TOKEN({
   pattern: /\b(enum(era([çc][ãa]o|te))?)\b/,
   textmateScope: "storage.type.enum",
 });
+
+export const StructType = TOKEN({
+  name: "Struct",
+  pattern: /\b(struct|estrutura|record|obje(to|ct))\b/,
+  textmateScope: "support.type.builtin",
+});
