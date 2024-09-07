@@ -109,12 +109,7 @@ export class ExpressionsVisitors
   }
 
   parenthesisExpression(ctx: cst.ParenthesisExpressionCstContext) {
-    return PARENS(
-      ctx.LParen,
-      [WS, this.visit(ctx.expression), WS],
-      ctx.RParen,
-      false
-    );
+    return PARENS(ctx.LParen, this.visit(ctx.expression), ctx.RParen, false);
   }
 }
 
