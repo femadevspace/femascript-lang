@@ -43,7 +43,12 @@ export class FemaScriptLanguageParser extends CstParser {
     this.CONSUME(lexer.TypeKeyword);
 
     this.MANY(() => {
-      this.SUBRULE(this.enumeratorDeclarator);
+      this.CONSUME(lexer.Identifier);
+      this.CONSUME(lexer.Colon);
+
+      this.OR([{ ALT: () => this.SUBRULE(this.typeDeclarator) }]);
+
+      this.CONSUME(lexer.SemiColon);
     });
   });
 
@@ -385,9 +390,11 @@ export class FemaScriptLanguageParser extends CstParser {
     this.OPTION(() => this.SUBRULE(this.arrayAccessSuffix));
   });
 
+  typeDeclarator = this.RULE("typeDeclarator", () => {
+    this.OR([{ ALT: () => this.SUBRULE(this.enumeratorDeclarator) }]);
+  });
+
   enumeratorDeclarator = this.RULE("enumeratorDeclarator", () => {
-    this.CONSUME(lexer.Identifier);
-    this.CONSUME(lexer.Colon);
     this.CONSUME(lexer.EnumType);
     this.CONSUME(lexer.LCurly);
 
@@ -399,7 +406,6 @@ export class FemaScriptLanguageParser extends CstParser {
     });
 
     this.CONSUME(lexer.RCurly);
-    this.CONSUME(lexer.SemiColon);
   });
 
   enumaratorEntry = this.RULE("enumaratorEntry", () => {
