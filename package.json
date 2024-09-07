@@ -128,7 +128,7 @@
     "dev": "bun run ./scripts/generate-diagram.ts",
     "debug:playground": "bun run ./scripts/debug/generate-playground.ts",
     "test": "vitest",
-    "build": "node esbuild.mjs",
+    "build": "tsc -p tsconfig.src.json --noEmit && node esbuild.mjs",
     "vscode:prepublish": "bun run ./scripts/prepublish/index.ts && bun run build"
   },
   "types": "./src/types/cst.d.ts",
