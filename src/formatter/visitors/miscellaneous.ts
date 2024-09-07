@@ -6,10 +6,12 @@ import { BRK_COMPACT, BRK_LN } from "../rules/breaklines";
 import { D_INDT_COMPACT, I_INDT_COMPACT } from "../rules/indentation";
 import { NONE, WS, WS_ALLMAN, WS_COMPACT, WS_KR } from "../rules/whitespaces";
 import { groupStatements } from "../utils/group-statements";
+import { separateWith } from "../utils/rules";
 
 export class MiscellaneousVisitors
   extends FemaScriptFormatterVisitor
   implements
+    cst.TypeVisitor,
     cst.BlockVisitor,
     cst.TypeDeclaratorVisitor,
     cst.EnumeratorDeclaratorVisitor,
@@ -18,6 +20,19 @@ export class MiscellaneousVisitors
     cst.ArrayAccessSuffixVisitor,
     cst.ArrayAccessVisitor
 {
+  type(ctx: cst.TypeCstContext) {
+    const { PrimitiveTypes, ArrayType, arrayAccessSuffix, Of } = ctx;
+    const primiteTypeImage = imageFrom(PrimitiveTypes);
+
+    if (!ArrayType) return [primiteTypeImage];
+
+    return separateWith(WS, [
+      [imageFrom(ArrayType), this.visit(arrayAccessSuffix)],
+      imageFrom(Of),
+      primiteTypeImage,
+    ]);
+  }
+
   block(ctx: cst.BlockCstContext) {
     return BLOCK(ctx.LCurly, groupStatements(ctx.statement, this), ctx.RCurly);
   }

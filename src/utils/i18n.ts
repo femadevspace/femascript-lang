@@ -33,6 +33,7 @@ export const RulesDictionary: Record<Production, string> = {
   assignmentExpression: "Expressão de Atribuição",
   printExpression: "Expressão de Impressão",
   readExpression: "Expressão de Leitura",
+  type: "Tipo",
   variableDeclarator: "Declarador de Variável",
   variableAccess: "Acesso à Variável",
   typeDeclarator: "Declarador de Tipo",

@@ -45,9 +45,7 @@ export class FemaScriptLanguageParser extends CstParser {
     this.MANY(() => {
       this.CONSUME(lexer.Identifier);
       this.CONSUME(lexer.Colon);
-
-      this.OR([{ ALT: () => this.SUBRULE(this.typeDeclarator) }]);
-
+      this.SUBRULE(this.typeDeclarator);
       this.CONSUME(lexer.SemiColon);
     });
   });
@@ -364,14 +362,7 @@ export class FemaScriptLanguageParser extends CstParser {
 
   // ======================= MISCELLANEOUS =======================
 
-  variableDeclarator = this.RULE("variableDeclarator", () => {
-    this.AT_LEAST_ONE_SEP({
-      DEF: () => this.CONSUME(lexer.Identifier),
-      SEP: lexer.Comma,
-    });
-
-    this.CONSUME(lexer.Colon);
-
+  type = this.RULE("type", () => {
     this.OR([
       { ALT: () => this.CONSUME(lexer.PrimitiveTypes) },
       {
@@ -383,6 +374,16 @@ export class FemaScriptLanguageParser extends CstParser {
         },
       },
     ]);
+  });
+
+  variableDeclarator = this.RULE("variableDeclarator", () => {
+    this.AT_LEAST_ONE_SEP({
+      DEF: () => this.CONSUME(lexer.Identifier),
+      SEP: lexer.Comma,
+    });
+
+    this.CONSUME(lexer.Colon);
+    this.SUBRULE(this.type);
   });
 
   variableAccess = this.RULE("variableAccess", () => {

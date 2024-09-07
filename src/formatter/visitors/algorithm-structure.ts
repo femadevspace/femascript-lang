@@ -1,6 +1,6 @@
 import * as cst from "@/types/cst";
 import { imageFrom, imagesFrom } from "@/utils";
-import { FemaScriptFormatterVisitor, VisitedNode } from "../formatter";
+import { FemaScriptFormatterVisitor } from "../formatter";
 import { BRK_LN, SKIP_LN } from "../rules/breaklines";
 import { D_INDT, I_INDT } from "../rules/indentation";
 import { WS } from "../rules/whitespaces";
@@ -112,26 +112,15 @@ export class AlgorithmStructureVisitors
   }
 
   variableDeclarator(ctx: cst.VariableDeclaratorCstContext) {
-    const {
-      Identifier,
-      ArrayType,
-      arrayAccessSuffix,
-      Of,
-      PrimitiveTypes,
-      Colon,
-    } = ctx;
+    const { Identifier, Comma, Colon, type } = ctx;
 
-    const names = separateWith([",", WS], [...imagesFrom(Identifier)!]);
-    let type: VisitedNode = [imageFrom(PrimitiveTypes)!];
+    const commaImages = imagesFrom(Comma)!;
+    const names = imagesFrom(Identifier)!.map((name, i) => {
+      const isLast = i === Identifier.length - 1;
+      return isLast ? name : [name, [commaImages[i], WS]];
+    });
 
-    if (ArrayType)
-      type = separateWith(WS, [
-        [imageFrom(ArrayType)!, this.visit(arrayAccessSuffix)],
-        imageFrom(Of)!,
-        type,
-      ]);
-
-    return [names, [imageFrom(Colon), WS], type];
+    return [names, [imageFrom(Colon), WS], this.visit(type)];
   }
 
   program(ctx: cst.ProgramCstContext) {

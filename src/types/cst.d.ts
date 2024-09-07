@@ -377,6 +377,18 @@ export type ReadExpressionCstContext = {
   SemiColon: IToken[];
 };
 
+export interface TypeCstNode extends CstNode {
+  name: "type";
+  children: TypeCstContext;
+}
+
+export type TypeCstContext = {
+  PrimitiveTypes?: (IToken)[];
+  ArrayType?: IToken[];
+  arrayAccessSuffix?: ArrayAccessSuffixCstNode[];
+  Of?: IToken[];
+};
+
 export interface VariableDeclaratorCstNode extends CstNode {
   name: "variableDeclarator";
   children: VariableDeclaratorCstContext;
@@ -386,10 +398,7 @@ export type VariableDeclaratorCstContext = {
   Identifier: IToken[];
   Comma?: IToken[];
   Colon: IToken[];
-  PrimitiveTypes?: (IToken)[];
-  ArrayType?: IToken[];
-  arrayAccessSuffix?: ArrayAccessSuffixCstNode[];
-  Of?: IToken[];
+  type: TypeCstNode[];
 };
 
 export interface VariableAccessCstNode extends CstNode {
@@ -500,6 +509,7 @@ export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
   assignmentExpression(ctx: AssignmentExpressionCstContext, param?: IN): OUT;
   printExpression(ctx: PrintExpressionCstContext, param?: IN): OUT;
   readExpression(ctx: ReadExpressionCstContext, param?: IN): OUT;
+  type(ctx: TypeCstContext, param?: IN): OUT;
   variableDeclarator(ctx: VariableDeclaratorCstContext, param?: IN): OUT;
   variableAccess(ctx: VariableAccessCstContext, param?: IN): OUT;
   typeDeclarator(ctx: TypeDeclaratorCstContext, param?: IN): OUT;
@@ -544,6 +554,7 @@ export interface ParenthesisExpressionVisitor<OUT = void> { parenthesisExpressio
 export interface AssignmentExpressionVisitor<OUT = void> { assignmentExpression(ctx: AssignmentExpressionCstContext): OUT }
 export interface PrintExpressionVisitor<OUT = void> { printExpression(ctx: PrintExpressionCstContext): OUT }
 export interface ReadExpressionVisitor<OUT = void> { readExpression(ctx: ReadExpressionCstContext): OUT }
+export interface TypeVisitor<OUT = void> { type(ctx: TypeCstContext): OUT }
 export interface VariableDeclaratorVisitor<OUT = void> { variableDeclarator(ctx: VariableDeclaratorCstContext): OUT }
 export interface VariableAccessVisitor<OUT = void> { variableAccess(ctx: VariableAccessCstContext): OUT }
 export interface TypeDeclaratorVisitor<OUT = void> { typeDeclarator(ctx: TypeDeclaratorCstContext): OUT }
@@ -585,6 +596,7 @@ export type CstNodeTypes = {
   assignmentExpression: AssignmentExpressionCstNode;
   printExpression: PrintExpressionCstNode;
   readExpression: ReadExpressionCstNode;
+  type: TypeCstNode;
   variableDeclarator: VariableDeclaratorCstNode;
   variableAccess: VariableAccessCstNode;
   typeDeclarator: TypeDeclaratorCstNode;
