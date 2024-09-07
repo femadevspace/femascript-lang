@@ -392,7 +392,10 @@ export class FemaScriptLanguageParser extends CstParser {
   });
 
   typeDeclarator = this.RULE("typeDeclarator", () => {
-    this.OR([{ ALT: () => this.SUBRULE(this.enumeratorDeclarator) }]);
+    this.OR([
+      { ALT: () => this.SUBRULE(this.enumeratorDeclarator) },
+      { ALT: () => this.SUBRULE(this.structDeclarator) },
+    ]);
   });
 
   enumeratorDeclarator = this.RULE("enumeratorDeclarator", () => {
@@ -418,6 +421,33 @@ export class FemaScriptLanguageParser extends CstParser {
         { ALT: () => this.CONSUME(lexer.NumberLiteral) },
         { ALT: () => this.CONSUME(lexer.StringLiteral) },
       ]);
+    });
+  });
+
+  structDeclarator = this.RULE("structDeclarator", () => {
+    this.CONSUME(lexer.StructType);
+    this.CONSUME(lexer.LCurly);
+
+    this.AT_LEAST_ONE(() => {
+      this.SUBRULE(this.structProperty);
+    });
+
+    this.CONSUME(lexer.RCurly);
+  });
+
+  structProperty = this.RULE("structProperty", () => {
+    this.CONSUME(lexer.Identifier);
+    this.CONSUME(lexer.Colon);
+    this.SUBRULE(this.type);
+    this.CONSUME(lexer.SemiColon);
+  });
+
+  qualifiedIdentifier = this.RULE("qualifiedIdentifier", () => {
+    this.CONSUME(lexer.Identifier);
+
+    this.MANY(() => {
+      this.CONSUME(lexer.Dot);
+      this.CONSUME2(lexer.Identifier);
     });
   });
 

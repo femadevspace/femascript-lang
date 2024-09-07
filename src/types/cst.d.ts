@@ -418,6 +418,7 @@ export interface TypeDeclaratorCstNode extends CstNode {
 
 export type TypeDeclaratorCstContext = {
   enumeratorDeclarator?: EnumeratorDeclaratorCstNode[];
+  structDeclarator?: StructDeclaratorCstNode[];
 };
 
 export interface EnumeratorDeclaratorCstNode extends CstNode {
@@ -443,6 +444,40 @@ export type EnumaratorEntryCstContext = {
   AssignmentOperator?: IToken[];
   NumberLiteral?: IToken[];
   StringLiteral?: IToken[];
+};
+
+export interface StructDeclaratorCstNode extends CstNode {
+  name: "structDeclarator";
+  children: StructDeclaratorCstContext;
+}
+
+export type StructDeclaratorCstContext = {
+  Struct: IToken[];
+  LCurly: IToken[];
+  structProperty: StructPropertyCstNode[];
+  RCurly: IToken[];
+};
+
+export interface StructPropertyCstNode extends CstNode {
+  name: "structProperty";
+  children: StructPropertyCstContext;
+}
+
+export type StructPropertyCstContext = {
+  Identifier: IToken[];
+  Colon: IToken[];
+  type: TypeCstNode[];
+  SemiColon: IToken[];
+};
+
+export interface QualifiedIdentifierCstNode extends CstNode {
+  name: "qualifiedIdentifier";
+  children: QualifiedIdentifierCstContext;
+}
+
+export type QualifiedIdentifierCstContext = {
+  Identifier: (IToken)[];
+  Dot?: IToken[];
 };
 
 export interface ArrayAccessSuffixCstNode extends CstNode {
@@ -515,6 +550,9 @@ export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
   typeDeclarator(ctx: TypeDeclaratorCstContext, param?: IN): OUT;
   enumeratorDeclarator(ctx: EnumeratorDeclaratorCstContext, param?: IN): OUT;
   enumaratorEntry(ctx: EnumaratorEntryCstContext, param?: IN): OUT;
+  structDeclarator(ctx: StructDeclaratorCstContext, param?: IN): OUT;
+  structProperty(ctx: StructPropertyCstContext, param?: IN): OUT;
+  qualifiedIdentifier(ctx: QualifiedIdentifierCstContext, param?: IN): OUT;
   arrayAccessSuffix(ctx: ArrayAccessSuffixCstContext, param?: IN): OUT;
   arrayAccess(ctx: ArrayAccessCstContext, param?: IN): OUT;
   block(ctx: BlockCstContext, param?: IN): OUT;
@@ -560,6 +598,9 @@ export interface VariableAccessVisitor<OUT = void> { variableAccess(ctx: Variabl
 export interface TypeDeclaratorVisitor<OUT = void> { typeDeclarator(ctx: TypeDeclaratorCstContext): OUT }
 export interface EnumeratorDeclaratorVisitor<OUT = void> { enumeratorDeclarator(ctx: EnumeratorDeclaratorCstContext): OUT }
 export interface EnumaratorEntryVisitor<OUT = void> { enumaratorEntry(ctx: EnumaratorEntryCstContext): OUT }
+export interface StructDeclaratorVisitor<OUT = void> { structDeclarator(ctx: StructDeclaratorCstContext): OUT }
+export interface StructPropertyVisitor<OUT = void> { structProperty(ctx: StructPropertyCstContext): OUT }
+export interface QualifiedIdentifierVisitor<OUT = void> { qualifiedIdentifier(ctx: QualifiedIdentifierCstContext): OUT }
 export interface ArrayAccessSuffixVisitor<OUT = void> { arrayAccessSuffix(ctx: ArrayAccessSuffixCstContext): OUT }
 export interface ArrayAccessVisitor<OUT = void> { arrayAccess(ctx: ArrayAccessCstContext): OUT }
 export interface BlockVisitor<OUT = void> { block(ctx: BlockCstContext): OUT }
@@ -602,6 +643,9 @@ export type CstNodeTypes = {
   typeDeclarator: TypeDeclaratorCstNode;
   enumeratorDeclarator: EnumeratorDeclaratorCstNode;
   enumaratorEntry: EnumaratorEntryCstNode;
+  structDeclarator: StructDeclaratorCstNode;
+  structProperty: StructPropertyCstNode;
+  qualifiedIdentifier: QualifiedIdentifierCstNode;
   arrayAccessSuffix: ArrayAccessSuffixCstNode;
   arrayAccess: ArrayAccessCstNode;
   block: BlockCstNode;
