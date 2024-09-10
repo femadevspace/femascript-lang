@@ -407,7 +407,7 @@ export interface VariableAccessCstNode extends CstNode {
 }
 
 export type VariableAccessCstContext = {
-  Identifier: IToken[];
+  qualifiedIdentifier: QualifiedIdentifierCstNode[];
   arrayAccessSuffix?: ArrayAccessSuffixCstNode[];
 };
 
@@ -496,9 +496,11 @@ export interface ArrayAccessCstNode extends CstNode {
 
 export type ArrayAccessCstContext = {
   LSquare: IToken[];
-  Identifier?: IToken[];
+  qualifiedIdentifier?: QualifiedIdentifierCstNode[];
   NumberLiteral?: IToken[];
   RSquare: IToken[];
+  Dot?: IToken[];
+  variableAccess?: VariableAccessCstNode[];
 };
 
 export interface BlockCstNode extends CstNode {

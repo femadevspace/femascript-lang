@@ -387,7 +387,7 @@ export class FemaScriptLanguageParser extends CstParser {
   });
 
   variableAccess = this.RULE("variableAccess", () => {
-    this.CONSUME(lexer.Identifier);
+    this.SUBRULE(this.qualifiedIdentifier);
     this.OPTION(() => this.SUBRULE(this.arrayAccessSuffix));
   });
 
@@ -461,11 +461,15 @@ export class FemaScriptLanguageParser extends CstParser {
     this.CONSUME(lexer.LSquare);
 
     this.OR([
-      { ALT: () => this.CONSUME(lexer.Identifier) },
+      { ALT: () => this.SUBRULE(this.qualifiedIdentifier) },
       { ALT: () => this.CONSUME(lexer.NumberLiteral) },
     ]);
 
     this.CONSUME(lexer.RSquare);
+    this.OPTION(() => {
+      this.CONSUME(lexer.Dot);
+      this.SUBRULE2(this.variableAccess);
+    });
   });
 
   block = this.RULE("block", () => {
