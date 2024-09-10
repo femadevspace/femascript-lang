@@ -1,6 +1,6 @@
 import { format } from "@/formatter";
 import { describe, expect, it } from "vitest";
-import { loadFixture } from "../helpers";
+import { forEachStyle, loadFixture } from "../helpers";
 
 const fixture = (fileName: string) =>
   loadFixture(`format/without-comments/${fileName}`);
@@ -8,24 +8,12 @@ const fixture = (fileName: string) =>
 describe("Format without comments", () => {
   const schema = fixture("schema.alg");
 
-  it("should pass with K&R style", () => {
-    const expected = fixture("expected_kr.alg");
-    const formated = format(schema, { style: "k&r" });
+  forEachStyle(({ styleName, style, fileName }) => {
+    it(`should pass with ${styleName}`, () => {
+      const expected = fixture(fileName);
+      const formated = format(schema, { style });
 
-    expect(formated).equal(expected);
-  });
-
-  it("should pass with Allman style", () => {
-    const expected = fixture("expected_allman.alg");
-    const formated = format(schema, { style: "allman" });
-
-    expect(formated).equal(expected);
-  });
-
-  it("should pass with Compact style", () => {
-    const expected = fixture("expected_compact.alg");
-    const formated = format(schema, { style: "compact" });
-
-    expect(formated).equal(expected);
+      expect(formated).equal(expected);
+    });
   });
 });
