@@ -64,6 +64,6 @@ export const EnumType = TOKEN({
 
 export const StructType = TOKEN({
   name: "Struct",
-  pattern: /\b(struct|estrutura|record|obje(to|ct))\b/,
+  pattern: /\b(struct|estrutura|record|registro|obje(to|ct))\b/,
   textmateScope: "support.type.builtin",
 });
