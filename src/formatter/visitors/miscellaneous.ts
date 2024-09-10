@@ -18,6 +18,7 @@ export class MiscellaneousVisitors
     cst.EnumaratorEntryVisitor,
     cst.StructDeclaratorVisitor,
     cst.StructPropertyVisitor,
+    cst.QualifiedIdentifierVisitor,
     cst.VariableAccessVisitor,
     cst.ArrayAccessSuffixVisitor,
     cst.ArrayAccessVisitor
@@ -124,10 +125,21 @@ export class MiscellaneousVisitors
     ];
   }
 
-  variableAccess(ctx: cst.VariableAccessCstContext) {
-    const { Identifier, arrayAccessSuffix } = ctx;
+  qualifiedIdentifier(ctx: cst.QualifiedIdentifierCstContext) {
+    const { Identifier, Dot } = ctx;
+    const dotImages = imagesFrom(Dot)!;
 
-    return [imageFrom(Identifier), this.visit(arrayAccessSuffix)];
+    return Identifier.map((id, i) => {
+      const isLast = i === Identifier.length - 1;
+      const dot = isLast ? [] : dotImages[i];
+      return [imageFrom([id]), dot];
+    });
+  }
+
+  variableAccess(ctx: cst.VariableAccessCstContext) {
+    const { qualifiedIdentifier, arrayAccessSuffix } = ctx;
+
+    return [this.visit(qualifiedIdentifier), this.visit(arrayAccessSuffix)];
   }
 
   arrayAccessSuffix(ctx: cst.ArrayAccessSuffixCstContext) {
@@ -135,12 +147,20 @@ export class MiscellaneousVisitors
   }
 
   arrayAccess(ctx: cst.ArrayAccessCstContext) {
-    const { LSquare, Identifier, NumberLiteral, RSquare } = ctx;
+    const {
+      LSquare,
+      qualifiedIdentifier,
+      NumberLiteral,
+      RSquare,
+      Dot,
+      variableAccess,
+    } = ctx;
 
     return [
       imageFrom(LSquare),
-      [imageFrom(Identifier), imageFrom(NumberLiteral)],
+      [this.visit(qualifiedIdentifier), imageFrom(NumberLiteral)],
       imageFrom(RSquare),
+      [imageFrom(Dot), this.visit(variableAccess)],
     ];
   }
 }
