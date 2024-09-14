@@ -124,7 +124,6 @@ INICIO
         QUANDO "case_block_with_statement_inline" FAÇA {
             SE (condicao) ENTÃO
                 x <- 0;
-            
         }
         CASO_CONTRARIO FAÇA {
             x <- 0;
@@ -136,7 +135,6 @@ INICIO
         QUANDO "case_inline_with_statement_inline" FAÇA:
             SE (condicao) ENTÃO
                 x <- 0;
-            
         QUANDO "case_inline_with_statement_block" FAÇA:
             SE (condicao) ENTÃO {
                 x <- 0;
