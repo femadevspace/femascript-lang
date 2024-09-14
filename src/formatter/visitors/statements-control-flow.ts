@@ -22,6 +22,7 @@ import {
 import { PARENS } from "../rules/parentheses";
 import { NONE, WS, WS_COMPACT, WS_KR } from "../rules/whitespaces";
 import { separateWith } from "../utils/rules";
+import { WS_ALLMAN } from "./../rules/whitespaces";
 
 export class IterationStatementsVisitors
   extends FemaScriptFormatterVisitor
@@ -130,8 +131,8 @@ export class ConditionalStatementsVisitors
       : [WS_KR, WS_COMPACT];
 
     const behaviorAfterContent = assignmentStatement
-      ? [[D_INDT_KR, BRK_KR], [D_INDT_ALLMAN]]
-      : [WS_KR];
+      ? [[D_INDT_KR, elseStatement ? BRK_KR : NONE], [D_INDT_ALLMAN]]
+      : [elseStatement ? WS_KR : NONE];
 
     return [
       [imageFrom(If), WS],
@@ -148,12 +149,14 @@ export class ConditionalStatementsVisitors
   elseStatement(ctx: cst.ElseStatementCstContext) {
     const { Else, block, assignmentStatement, ifStatement } = ctx;
 
-    const behaviorAfterElse = ifStatement ? NONE : POP_ALIGN_COMPACT;
+    const hasAssignment = assignmentStatement ? WS_ALLMAN : NONE;
+    const hasIfStatement = ifStatement ? WS_ALLMAN : POP_ALIGN_COMPACT;
+    const behaviorAfterElse = [hasAssignment, hasIfStatement];
     const behaviorAfterContent = ifStatement ? POP_ALIGN_COMPACT : NONE;
 
     return [
       [BRK_ALLMAN, BRK_COMPACT],
-      [imageFrom(Else), [WS, behaviorAfterElse]],
+      [imageFrom(Else), [WS_KR, WS_COMPACT, behaviorAfterElse]],
       [
         this.visit(assignmentStatement),
         this.visit(block),
