@@ -147,18 +147,11 @@ export class MiscellaneousVisitors
   }
 
   arrayAccess(ctx: cst.ArrayAccessCstContext) {
-    const {
-      LSquare,
-      qualifiedIdentifier,
-      NumberLiteral,
-      RSquare,
-      Dot,
-      variableAccess,
-    } = ctx;
+    const { LSquare, expression, RSquare, Dot, variableAccess } = ctx;
 
     return [
       imageFrom(LSquare),
-      [this.visit(qualifiedIdentifier), imageFrom(NumberLiteral)],
+      this.visit(expression),
       imageFrom(RSquare),
       [imageFrom(Dot), this.visit(variableAccess)],
     ];

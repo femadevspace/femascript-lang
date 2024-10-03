@@ -496,8 +496,7 @@ export interface ArrayAccessCstNode extends CstNode {
 
 export type ArrayAccessCstContext = {
   LSquare: IToken[];
-  qualifiedIdentifier?: QualifiedIdentifierCstNode[];
-  NumberLiteral?: IToken[];
+  expression: ExpressionCstNode[];
   RSquare: IToken[];
   Dot?: IToken[];
   variableAccess?: VariableAccessCstNode[];

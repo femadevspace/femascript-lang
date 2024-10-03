@@ -459,13 +459,9 @@ export class FemaScriptLanguageParser extends CstParser {
 
   arrayAccess = this.RULE("arrayAccess", () => {
     this.CONSUME(lexer.LSquare);
-
-    this.OR([
-      { ALT: () => this.SUBRULE(this.qualifiedIdentifier) },
-      { ALT: () => this.CONSUME(lexer.NumberLiteral) },
-    ]);
-
+    this.SUBRULE(this.expression);
     this.CONSUME(lexer.RSquare);
+
     this.OPTION(() => {
       this.CONSUME(lexer.Dot);
       this.SUBRULE2(this.variableAccess);
