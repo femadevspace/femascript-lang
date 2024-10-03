@@ -373,6 +373,15 @@ export class FemaScriptLanguageParser extends CstParser {
           this.CONSUME2(lexer.PrimitiveTypes);
         },
       },
+      {
+        ALT: () => {
+          this.OR2([
+            { ALT: () => this.CONSUME(lexer.TextType) },
+            { ALT: () => this.CONSUME(lexer.CharType) },
+          ]);
+          this.OPTION(() => this.SUBRULE2(this.arrayAccessSuffix));
+        },
+      },
     ]);
   });
 

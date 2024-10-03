@@ -385,8 +385,10 @@ export interface TypeCstNode extends CstNode {
 export type TypeCstContext = {
   PrimitiveTypes?: (IToken)[];
   ArrayType?: IToken[];
-  arrayAccessSuffix?: ArrayAccessSuffixCstNode[];
+  arrayAccessSuffix?: (ArrayAccessSuffixCstNode)[];
   Of?: IToken[];
+  TextType?: IToken[];
+  CharType?: IToken[];
 };
 
 export interface VariableDeclaratorCstNode extends CstNode {

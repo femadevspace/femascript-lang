@@ -24,16 +24,29 @@ export class MiscellaneousVisitors
     cst.ArrayAccessVisitor
 {
   type(ctx: cst.TypeCstContext) {
-    const { PrimitiveTypes, ArrayType, arrayAccessSuffix, Of } = ctx;
+    const {
+      PrimitiveTypes,
+      ArrayType,
+      arrayAccessSuffix,
+      Of,
+      CharType,
+      TextType,
+    } = ctx;
     const primiteTypeImage = imageFrom(PrimitiveTypes);
 
-    if (!ArrayType) return [primiteTypeImage];
+    if (ArrayType)
+      return separateWith(WS, [
+        [imageFrom(ArrayType), this.visit(arrayAccessSuffix)],
+        imageFrom(Of),
+        primiteTypeImage,
+      ]);
+    if (CharType || TextType)
+      return [
+        [imageFrom(CharType), imageFrom(TextType)],
+        this.visit(arrayAccessSuffix),
+      ];
 
-    return separateWith(WS, [
-      [imageFrom(ArrayType), this.visit(arrayAccessSuffix)],
-      imageFrom(Of),
-      primiteTypeImage,
-    ]);
+    return [primiteTypeImage];
   }
 
   block(ctx: cst.BlockCstContext) {

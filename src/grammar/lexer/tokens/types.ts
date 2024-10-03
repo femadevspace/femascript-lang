@@ -26,14 +26,12 @@ export const IntegerType = TOKEN({
 export const CharType = TOKEN({
   name: "CharType",
   pattern: /\b(((char(acter)?)|caractere)s?)\b/,
-  categories: [PrimitiveTypes],
   textmateScope,
 });
 
 export const TextType = TOKEN({
   name: "TextType",
   pattern: /\b((string|texto?)s?)\b/,
-  categories: [PrimitiveTypes],
   textmateScope,
 });
 
