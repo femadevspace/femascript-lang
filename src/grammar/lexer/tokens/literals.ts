@@ -17,7 +17,7 @@ export const BooleanLiteral = TOKEN({
 
 export const NumberLiteral = TOKEN({
   name: "NumberLiteral",
-  pattern: /-?(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d+)?/,
+  pattern: /(0|[1-9]\d*)(\.\d+)?([eE][+-]?\d+)?/,
   categories: [Literal],
   textmateScope: "constant.numeric",
 });

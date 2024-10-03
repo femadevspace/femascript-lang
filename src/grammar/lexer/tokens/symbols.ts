@@ -181,7 +181,7 @@ export const Minus = TOKEN({
   name: "Minus",
   pattern: /(\-)/,
   label: "'-'",
-  categories: [op.AdditiveOperator],
+  categories: [op.AdditiveOperator, op.UnaryPrefixOperator],
   textmateScope: "keyword.operator.arithmetic",
 });
 
